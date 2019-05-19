@@ -1,0 +1,9 @@
+#youtubeリンクの上でctrl-aすると、再生(映像無)
+keymap C-a EXTERN_LINK "youtube-dl %s -o - | mplayer - -novideo &"
+keymap C-v EXTERN_LINK "youtube-dl %s -o - | mplayer - &"
+#keymap C-a EXTERN_LINK "if [ -f /home/taichi/.w3m/test.mp3 ]; then rm -rf /home/taichi/.w3m/test.mp3 ; fi && youtube-dl --extract-audio --audio-format mp3 %s -o /home/taichi/.w3m/test.mp3 && mplayer /home/taichi/.w3m/test.mp3 &"
+
+#Ctrl-qで上の再生をストップ
+keymap C-k EXEC_SHELL "killall mplayer &"
+#keymap C-q EXEC_SHELL "a=`ps axu|grep \"mplayer /home/taichi/.w3m/test.mp3\"| awk '{print $2}'|sort|sed -n 2P` && kill $a &"
+
