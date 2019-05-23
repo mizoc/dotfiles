@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -u
 export LANG=C
 export LC_ALL=C
@@ -10,7 +10,7 @@ read password
 stty echo
 echo
 
-function dot(){
+function dotwait(){
 	echo -n $1
 	while :;do
 		echo -ne "."
@@ -23,16 +23,22 @@ if [ $? -ne 0 ];then
 	echo "Installing pip..."
 	echo "$password"|sudo -S python3 -m pip install pip
 fi
+
 #pip packages
 echo "$password"|sudo -S pip install -r "$path/requirements.txt" >/dev/null 2>&1&
 pid=$!
-dot "Downloading python packages" &
+echo Downloading python packages
+dotwait "It may take a minutes" &
 dot_pid=$!
 wait $pid
 kill $dot_pid
-echo
+echo 'done'
 
 #vim-plug
-echo "Downloading vim-plug..."
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+echo -n "Downloading vim-plug..."
+#curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && echo done
+echo 'done'
+#Last msg
+echo 
+echo "OK. Finished every settings."
+echo 'Now, execute ./install.sh && vim and execute :pluginstall'
