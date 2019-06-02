@@ -201,7 +201,7 @@ function spin(){
 	while :;do
 		for i in "$chars[@]";do
 			echo -ne $1 "`reds $i`\r"
-			sleep 0.2
+			sleep 0.1
 		done
 	done
 }
