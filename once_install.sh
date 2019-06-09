@@ -36,8 +36,8 @@ echo 'done'
 
 #vim-plug
 echo -n "Downloading vim-plug..."
-#curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && echo done
-echo 'done'
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && echo done
+
 #Last msg
 echo 
 echo "OK. Finished every settings."
