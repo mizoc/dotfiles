@@ -18,6 +18,12 @@ function dotwait(){
 	done
 }
 
+#Make directrys
+cat << END >> $HOME/.zsh_ownrc
+#This is your ~/.zsh_ownrc
+#This file will load automaly when zsh started
+END
+
 which pip >/dev/null 2>&1
 if [ $? -ne 0 ];then
 	echo "Installing pip..."

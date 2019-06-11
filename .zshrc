@@ -15,6 +15,11 @@ export TERM="xterm-256color"
 #export LANG=ja_JP.UTF-8
 export LANG=C
 
+#システムごとの設定ファイルがあれば読み込む
+if test -f $HOME/.zsh_ownrc;then
+	. $HOME/.zsh_ownrc
+fi
+
 # Ctrl + Dでログアウトされることを防ぐ
 #setopt IGNOREEOF
 
