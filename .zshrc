@@ -1,4 +1,5 @@
-#mizoc <yaesuft729@gmail.com> `s .zshrc
+#Author:mizoc <yaesuft729@gmail.com>
+#https://github.com/mizoc/dotfiles
 
 #これをしないとpowerlineが表示エラーになる
 export LC_CTYPE="en_US.UTF-8"
@@ -112,11 +113,11 @@ alias dir="sl2" #sl2はslのnewバージョン/usr/local/bin/sl2にリンク貼�
 
 alias ...="cd ../../"
 
-# setting of prompt
+#コマンドプロンプトの設定
 PROMPT="%(?.%{${fg[green]}%}.%{${fg[red]}%})%n${reset_color}@${fg[blue]}%m${reset_color} %~
 %# "
 
-#Setting of Git
+#Gitのステータス表示
 function prompt-git-current-branch(){
 	local branch_name st branch_status
 
@@ -228,6 +229,10 @@ function cal(){
 			seireki=$(($year + 1925))
 			k="S$year = $seireki"
 			;;
+		R|'r')
+			seireki=$(($year + 2018))
+			k="R$year = $seireki"
+			;;
 		*)
 			seireki=$1
 			k=""
@@ -262,5 +267,13 @@ function what(){
 
 }
 
-#ロゴ表示
-printf "\033[31m\033[1m\033[4m%s\033[m\n" "`zsh --version|awk '{$3=""; print}'|tr -d " "`@`cat /etc/slackware-version|tr -d " "`"
+#ディストリビューション名表示
+if test -f /etc/slackware-version;then
+	distro=`cat /etc/slackware-version`
+elif test -f /etc/issue;then
+	distro=`cat /etc/issue`
+else
+	distro='localhost'
+fi
+
+printf "\033[31m\033[1m\033[4m%s\033[m\n" "`zsh --version|awk '{$3=""; print}'|tr -d " "`@`echo $distro|tr -d " "`"
