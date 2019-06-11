@@ -1,3 +1,6 @@
+"Author:mizoc <yaesuft729@gmail.com>
+"https://github.com/mizoc/dotfiles
+"MIT license
 call plug#begin('~/.vim/plugged')
 
 "markdownのプラグイン 下で設定
@@ -158,7 +161,9 @@ set list listchars=tab:\▸\-
 set tabstop=4
 " 行頭でのTab文字の表示幅
 set shiftwidth=4
-
+"eコマンドなどのtab補完
+set wildmenu
+set wildmode=full
 
 " 検索系
 " 検索文字列が小文字の場合は大文字小文字を区別なく検索しない
@@ -210,6 +215,7 @@ autocmd BufNewFile,BufRead *.* TableModeEnable
 set laststatus=2
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+
 "Ctrl-mでタブの切り替え
 nmap <C-m> <Plug>AirlineSelectPrevTab
 let g:airline#extensions#tabline#buffer_idx_mode = 1
@@ -259,13 +265,11 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
-" old vim-powerline symbols
+"" old vim-powerline symbols
 " let g:airline_left_sep = '⮀'
 " let g:airline_left_alt_sep = '⮁'
-let g:airline_right_sep = '⮂'
-let g:airline_right_alt_sep = '⮃'
+"let g:airline_right_sep = '⮂'
+"let g:airline_right_alt_sep = '⮃'
 " let g:airline_symbols.branch = '⭠'
 " let g:airline_symbols.readonly = '⭤'
 " let g:airline_symbols.linenr = '⭡'
-"
-" powerlineふぉんと ~/.local/share/fonts/
