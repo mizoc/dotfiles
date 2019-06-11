@@ -7,6 +7,9 @@ Plug 'tyru/open-browser.vim'
 "ツリー表示
 Plug 'scrooloose/nerdtree'
 
+"文法的間違いを指摘
+Plug 'w0rp/ale'
+
 "vimでw3m
 Plug 'yuratomo/w3m.vim'
 
