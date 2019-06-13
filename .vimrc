@@ -103,6 +103,16 @@ call plug#end()
 
 
 " カスタムsetting
+"viとの互換性を無効にする(INSERT中にカーソルキーが有効になる)
+set nocompatible
+"BSで削除できるものを指定する
+
+" indent  : 行頭の空白
+
+" eol     : 改行
+
+" start   : 挿入モード開始位置より手前の文字
+set backspace=indent,eol,start
 "文字コードをUFT-8に設定
 set fenc=utf-8
 " バックアップファイルを作らない

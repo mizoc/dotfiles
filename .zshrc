@@ -75,7 +75,7 @@ function chpwd() { tree --charset=C -L 1 }
 bindkey "^[[3~" delete-char #これをコメントアウトすると、deleteで大文字になってしまう
 
 #Setting of z.sh
-source ~/bin/z/z.sh
+#source ~/bin/z/z.sh
 alias clearz="rm -rf ~/.z && touch ~/.z"
 
 #Setting of pushd
@@ -84,6 +84,7 @@ setopt pushd_ignore_dups #重複削除
 
 #Setting of alias
 alias vz="vim ~/.zshrc"
+alias vzo="vim ~/.zsh_ownrc"
 alias vv="vim ~/.vimrc"
 
 
@@ -276,7 +277,7 @@ function what(){
 if test -f /etc/slackware-version;then
 	distro=`cat /etc/slackware-version`
 elif test -f /etc/issue;then
-	distro=`cat /etc/issue`
+	distro=`cat /etc/issue|tr -d "\n"`
 else
 	distro='localhost'
 fi
