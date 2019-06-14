@@ -276,10 +276,10 @@ function what(){
 #ディストリビューション名表示
 if test -f /etc/slackware-version;then
 	distro=`cat /etc/slackware-version`
-elif test -f /etc/issue;then
-	distro=`cat /etc/issue|tr -d "\n"`
+#elif test -f /etc/issue;then
+#	distro=`cat /etc/issue|tr -d "\n"`
 else
-	distro='localhost'
+	distro=`uname`
 fi
 
 printf "\033[31m\033[1m\033[4m%s\033[m\n" "`zsh --version|awk '{$3=""; print}'|tr -d " "`@`echo $distro|tr -d " "`"
