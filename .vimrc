@@ -1,8 +1,10 @@
-"Author:mizoc <yaesuft729@gmail.com>
-"https://github.com/mizoc/dotfiles
-"MIT license
+"Author:mizoc <yaesuft729@gmail.com> https://github.com/mizoc/dotfiles MIT
+"license
+"
+"Setting of Plugin
 call plug#begin('~/.vim/plugged')
 
+Plug 'ryanoasis/vim-devicons'
 "markdownのプラグイン 下で設定
 Plug 'kannokanno/previm'
 Plug 'tyru/open-browser.vim'
@@ -102,15 +104,11 @@ Plug 'vim-ruby/vim-ruby'
 call plug#end()
 
 
-" カスタムsetting
 "viとの互換性を無効にする(INSERT中にカーソルキーが有効になる)
 set nocompatible
 "BSで削除できるものを指定する
-
 " indent  : 行頭の空白
-
 " eol     : 改行
-
 " start   : 挿入モード開始位置より手前の文字
 set backspace=indent,eol,start
 "文字コードをUFT-8に設定
@@ -230,6 +228,7 @@ let g:airline#extensions#tabline#enabled = 1
 nmap <C-m> <Plug>AirlineSelectPrevTab
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#whitespace#mixed_indent_algo = 1
+"タブを大文字にする
 let g:airline#extensions#tabline#buffer_idx_format = {
 			\'0':'0',
 			\'1':'1',
@@ -283,3 +282,34 @@ let g:airline_symbols.linenr = ''
 " let g:airline_symbols.branch = '⭠'
 " let g:airline_symbols.readonly = '⭤'
 " let g:airline_symbols.linenr = '⭡'
+"
+" Setting of Nerdtree
+" ブックマーク初期表示
+let g:NERDTreeShowBookmarks=1
+" 起動時に実行(ファイル名無指定時のみ)
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"ctrl-eで開く
+nnoremap <silent><C-e> :NERDTreeToggle<CR>
+" sign of Directory
+let g:NERDTreeDirArrows = 1
+let g:NERDTreeDirArrowExpandable  = '▶'
+let g:NERDTreeDirArrowCollapsible = '▼'
+" NERDTress File highlighting
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+ exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+ exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+call NERDTreeHighlightFile('py',     'yellow',  'none', 'yellow',  '#151515')
+call NERDTreeHighlightFile('md',     'blue',    'none', '#3366FF', '#151515')
+call NERDTreeHighlightFile('yml',    'yellow',  'none', 'yellow',  '#151515')
+call NERDTreeHighlightFile('config', 'yellow',  'none', 'yellow',  '#151515')
+call NERDTreeHighlightFile('conf',   'yellow',  'none', 'yellow',  '#151515')
+call NERDTreeHighlightFile('json',   'yellow',  'none', 'yellow',  '#151515')
+call NERDTreeHighlightFile('html',   'yellow',  'none', 'yellow',  '#151515')
+call NERDTreeHighlightFile('styl',   'cyan',    'none', 'cyan',    '#151515')
+call NERDTreeHighlightFile('css',    'cyan',    'none', 'cyan',    '#151515')
+call NERDTreeHighlightFile('rb',     'Red',     'none', 'red',     '#151515')
+call NERDTreeHighlightFile('js',     'Red',     'none', '#ffa500', '#151515')
+call NERDTreeHighlightFile('sh',    'red', 'none', '#ff00ff', '#151515')
+
