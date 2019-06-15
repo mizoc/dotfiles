@@ -68,7 +68,14 @@ cdpath=()
 export PATH="$PATH:/sbin"
 
 # cdしたあとで、自動的に tree する(treeが泣ければls)
-if type "tree" >/dev/null 2>&1;then
+if type "colorls" >/dev/null 2>&1;then
+	function chpwd(){ 
+		if test `ls $(pwd)| wc -w` -gt 10;then
+			tree --charset=C -L 1
+		else
+			colorls --tree
+		fi}
+elif type "tree" >/dev/null 2>&1;then
 	function chpwd() { tree --charset=C -L 1 }
 else
 	function chpwd() { ls }
@@ -93,10 +100,19 @@ alias vv="vim ~/.vimrc"
 
 
 #ls系
-alias ls="ls -FX --color=auto"
-alias l="ls -FXSlth --color=auto"
-alias la="ls -FSXlha --color=auto"
-alias ll="ls -FSXlh --color=auto"
+if type "colorls" >/dev/null 2>&1;then
+	alias ls="colorls --sd"
+	alias l="colorls --sd -lA"
+	alias la="colorls --sd -al"
+	alias ll="colorls --sd -Al"
+	alias ld="colorls -d"
+	alias lf="colorls -f"
+else
+	alias ls="ls -FX --color=auto"
+	alias l="ls -FXSlth --color=auto"
+	alias la="ls -FSXlha --color=auto"
+	alias ll="ls -FSXlh --color=auto"
+fi
 #alias lst="ls -lhtr --color=auto"
 
 # clear系
@@ -112,7 +128,13 @@ alias pbpaste="xsel --clipboard --output"
 
 alias his="history 0"
 
+#git系
+if type "colorls" >/dev/null 2>&1;then
+	alias gs="colorls --gs -A"
+	alias gst="colorls --gs -tA"
+else
 alias gs="git status"
+fi
 alias ga="git add ."
 alias gp="git push"
 
