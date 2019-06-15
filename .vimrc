@@ -1,10 +1,12 @@
 "Author:mizoc <yaesuft729@gmail.com> https://github.com/mizoc/dotfiles MIT
 "license
 "
-"Setting of Plugin
+"---------------Setting of Plugin--------------------
 call plug#begin('~/.vim/plugged')
 
+"フォント(icon)
 Plug 'ryanoasis/vim-devicons'
+
 "markdownのプラグイン 下で設定
 Plug 'kannokanno/previm'
 Plug 'tyru/open-browser.vim'
@@ -157,8 +159,6 @@ set wildmode=list:longest
 " 折り返し時に表示行単位での移動できるようにする
 nnoremap j gj
 nnoremap k gk
-"タブに番号
-let g:airline#extensions#tabline#buffer_idx_mode = 1
 
 " Tab系
 " 不可視文字を可視化(タブが「▸-」と表示される)
@@ -202,25 +202,27 @@ set undofile
 set undodir=~/.vim/undo
 "入力モードでctrl+hjklで移動可
 
-"neocompleteの設定
+"-------------------neocompleteの設定-----------------
 let g:neocomplete#enable_at_startup = 1 "起動時に有効化
 
 ".mdをmarkdown形式として読み込ませる
 autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 
-"previmの設定
+"------------------previmの設定----------------------
 let g:previm_open_cmd = ''
 nnoremap [previm] <Nop>
 nmap <Space>p [previm]
 nnoremap <silent> [previm]o :<C-u>PrevimOpen<CR>
 nnoremap <silent> [previm]r :call previm#refresh()<CR>
 
-"vim-table-modeの設定
+"------------------vim-table-modeの設定---------------
 let g:table_mode_corner = '|'
 autocmd BufNewFile,BufRead *.* TableModeEnable
 
-"airlineの設定
+"---------------airlineの設定-------------
 set laststatus=2
+"タブに番号
+let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
@@ -283,7 +285,7 @@ let g:airline_symbols.linenr = ''
 " let g:airline_symbols.readonly = '⭤'
 " let g:airline_symbols.linenr = '⭡'
 "
-" Setting of Nerdtree
+" -------------------Setting of Nerdtree---------------------
 " ブックマーク初期表示
 let g:NERDTreeShowBookmarks=1
 " 起動時に実行(ファイル名無指定時のみ)
