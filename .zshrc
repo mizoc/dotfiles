@@ -15,7 +15,7 @@ export TERM="xterm-256color"
 #export LANG=ja_JP.UTF-8
 export LANG=C
 
-#システムごとの設定ファイルがあれば読み込む
+#システムごとの設定ファイル(~/.zsh_ownrc)があれば読み込む
 if test -f $HOME/.zsh_ownrc;then
 	. $HOME/.zsh_ownrc
 fi
@@ -61,21 +61,25 @@ colors
 setopt no_tify
 setopt extended_glob
 
-# どこからでも参照できるディレクトリパス
+# どこからでも参照できるディレクトリパス ~/bin等
 cdpath=()
 
 #パス通す
 export PATH="$PATH:/sbin"
 
-# cdしたあとで、自動的に tree する
-function chpwd() { tree --charset=C -L 1 }
+# cdしたあとで、自動的に tree する(treeが泣ければls)
+if type "tree" >/dev/null 2>&1;then
+	function chpwd() { tree --charset=C -L 1 }
+else
+	function chpwd() { ls }
+fi
 
 #deleteを使えるように
 #stty erase ^H #これを有効にすると、zsh起動時にエラー出る
 bindkey "^[[3~" delete-char #これをコメントアウトすると、deleteで大文字になってしまう
 
 #Setting of z.sh
-#source ~/bin/z/z.sh
+test -f ~/bin/z/z.sh && source ~/bin/z/z.sh
 alias clearz="rm -rf ~/.z && touch ~/.z"
 
 #Setting of pushd
@@ -96,7 +100,7 @@ alias ll="ls -FSXlh --color=auto"
 #alias lst="ls -lhtr --color=auto"
 
 # clear系
-alias clear2="echo -e '\026\033c'" #バイナリファイルcatしたとき
+alias clear2="echo -e '\026\033c'" #バイナリファイルcatしたときの文字化け修正
 alias clearcookie="rm -rf ~/.w3m/cookie && touch ~/.w3m/cookie "
 alias clearhistory="rm -rf ~/.w3m/history && touch ~/.w3m/history "
 alias clearw3m="clearcookie && clearhistory" #上2つの統合版
@@ -109,6 +113,8 @@ alias pbpaste="xsel --clipboard --output"
 alias his="history 0"
 
 alias gs="git status"
+alias ga="git add ."
+alias gp="git push"
 
 alias mkdir="mkdir -p"
 
@@ -276,8 +282,16 @@ function what(){
 #ディストリビューション名表示
 if test -f /etc/slackware-version;then
 	distro=`cat /etc/slackware-version`
-#elif test -f /etc/issue;then
-#	distro=`cat /etc/issue|tr -d "\n"`
+elif test -f /etc/redhat-release;then
+	distro=`cat /etc/redhat-release`
+elif test -f /etc/fedora-release;then
+	distro=`cat /etc/fedora-release`
+elif test -f /etc/SuSE-release;then
+	distro=`cat /etc/SuSE-release`
+elif test -f /etc/lsb-release;then
+	distro=`cat /etc/lsb-release|grep 'DISTRIB_DESCRIPTION'|sed 's/DISTRIB_DESCRIPTION=//'|tr -d ' '|tr -d '"'`
+elif test -f /etc/debian_version;then
+	distro=Debian`cat /etc/debian_version`
 else
 	distro=`uname`
 fi
