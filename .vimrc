@@ -11,6 +11,15 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'kannokanno/previm'
 Plug 'tyru/open-browser.vim'
 
+"ruby end 自動入力
+Plug 'tpope/vim-endwise'
+
+"ップレビュー一括置換
+Plug 'osyo-manga/vim-over'
+
+"スムーズなスクロール
+" Plug 'yuttie/comfortable-motion.vim'
+
 "ツリー表示
 Plug 'scrooloose/nerdtree'
 
@@ -63,7 +72,7 @@ Plug 'kana/vim-smartinput'
 "幅跳びゲーム
 Plug 'mattn/habatobi-vim'
 
-"コメントアウト
+"gccで素の行を、V後gcで選択範囲をコメントアウト
 Plug 'tomtom/tcomment_vim'
 "Plug 'emonkak/vim-operator-comment'
 
@@ -217,7 +226,7 @@ nnoremap <silent> [previm]r :call previm#refresh()<CR>
 
 "------------------vim-table-modeの設定---------------
 let g:table_mode_corner = '|'
-autocmd BufNewFile,BufRead *.* TableModeEnable
+autocmd BufNewFile,BufRead *.md* TableModeEnable
 
 "---------------airlineの設定-------------
 set laststatus=2
@@ -315,3 +324,5 @@ call NERDTreeHighlightFile('rb',     'Red',     'none', 'red',     '#151515')
 call NERDTreeHighlightFile('js',     'Red',     'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('sh',    'red', 'none', '#ff00ff', '#151515')
 
+":Aでプレビュー置換の起動
+command A OverCommandLine
