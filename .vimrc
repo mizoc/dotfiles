@@ -295,6 +295,8 @@ let g:airline_symbols.linenr = ''
 " let g:airline_symbols.linenr = '⭡'
 "
 " -------------------Setting of Nerdtree---------------------
+" ファイルアイコンの表示有効化
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 " ブックマーク初期表示
 let g:NERDTreeShowBookmarks=1
 " 起動時に実行(ファイル名無指定時のみ)
