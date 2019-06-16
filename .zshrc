@@ -102,9 +102,9 @@ alias vv="vim ~/.vimrc"
 #ls系
 if type "colorls" >/dev/null 2>&1;then
 	alias ls="colorls --sd"
-	alias l="colorls --sd -lA"
-	alias la="colorls --sd -al"
-	alias ll="colorls --sd -Al"
+	alias l="colorls --sd -lA --report"
+	alias la="colorls --sd -al --report"
+	alias ll="colorls --sd -Al --report"
 	alias ld="colorls -d"
 	alias lf="colorls -f"
 else
