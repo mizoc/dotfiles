@@ -1,5 +1,11 @@
 #Author:mizoc <yaesuft729@gmail.com>
 #https://github.com/mizoc/dotfiles
+#license:MIT
+#___  _____/ /_  __________
+# /_  / / ___/ __ \/ ___/ ___/
+#  / /_(__  ) / / / /  / /__
+# /___/____/_/ /_/_/   \___/
+# --------------------------------------------------
 
 #これをしないとpowerlineが表示エラーになる
 export LC_CTYPE="en_US.UTF-8"
@@ -37,6 +43,11 @@ setopt interactive_comments
 #補完
 autoload -Uz compinit
 compinit
+
+autoload -Uz add-zsh-hook
+autoload -Uz terminfo
+autoload -Uz is-at-least
+
 #補完後に十字キーで選択
 zstyle ':completion:*:default' menu select=2
 # 大文字も補完
@@ -76,14 +87,16 @@ if type "colorls" >/dev/null 2>&1;then
 			colorls --tree
 		fi}
 elif type "tree" >/dev/null 2>&1;then
-	function chpwd() { tree --charset=C -L 1 }
+	function chpwd() { tree --charset=C -L 1; }
 else
-	function chpwd() { ls }
+	function chpwd() { ls; }
 fi
 
 #deleteを使えるように
-#stty erase ^H #これを有効にすると、zsh起動時にエラー出る
 bindkey "^[[3~" delete-char #これをコメントアウトすると、deleteで大文字になってしまう
+
+#vim mode
+bindkey -v
 
 #Setting of z.sh
 test -f ~/bin/z/z.sh && source ~/bin/z/z.sh

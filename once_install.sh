@@ -19,7 +19,7 @@ function dotwait(){
 }
 
 #Make directrys
-cat << END >> $HOME/.zsh_ownrc
+test -f $HOME/.zsh_ownrc || cat << END >> $HOME/.zsh_ownrc
 #This is your ~/.zsh_ownrc.
 #This file will load automaly when zsh started.
 #You can open this file by %vzo on zsh.
@@ -44,6 +44,7 @@ echo 'done'
 #vim-plug
 echo -n "Downloading vim-plug..."
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && echo done
+
 echo -n "Downloading fonts for vim..."
 mkdir -p ~/.local/share/fonts
 cd ~/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf && echo done
