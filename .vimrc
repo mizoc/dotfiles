@@ -1,5 +1,10 @@
-"Author:mizoc <yaesuft729@gmail.com> https://github.com/mizoc/dotfiles MIT
-"license
+"Author:mizoc <yaesuft729@gmail.com> https://github.com/mizoc/dotfiles
+"license:MIT
+"                                         ____             _                 
+"  _   __(_)___ ___  __________    ____  / __/  ____ ___  (_)___  ____  _____
+" | | / / / __ `__ \/ ___/ ___/   / __ \/ /_   / __ `__ \/ /_  / / __ \/ ___/
+" | |/ / / / / / / / /  / /__    / /_/ / __/  / / / / / / / / /_/ /_/ / /__  
+" |___/_/_/ /_/ /_/_/   \___/    \____/_/    /_/ /_/ /_/_/ /___/\____/\___/  
 "
 "---------------Setting of Plugin--------------------
 call plug#begin('~/.vim/plugged')
@@ -74,6 +79,7 @@ Plug 'mattn/habatobi-vim'
 
 "gccで素の行を、V後gcで選択範囲をコメントアウト
 Plug 'tomtom/tcomment_vim'
+Plug 'scrooloose/nerdcommenter'
 "Plug 'emonkak/vim-operator-comment'
 
 "選択したブロックの直感的な移動、複製
@@ -113,7 +119,6 @@ Plug 'ujihisa/unite-colorscheme'
 Plug 'vim-ruby/vim-ruby'
 
 call plug#end()
-
 
 "viとの互換性を無効にする(INSERT中にカーソルキーが有効になる)
 set nocompatible
@@ -209,7 +214,6 @@ nmap <F4> :!ruby %
 "GUNDOの設定
 set undofile
 set undodir=~/.vim/undo
-"入力モードでctrl+hjklで移動可
 
 "-------------------neocompleteの設定-----------------
 let g:neocomplete#enable_at_startup = 1 "起動時に有効化
@@ -254,7 +258,7 @@ let g:airline#extensions#tabline#buffer_idx_format = {
 let g:airline_theme = 'simple'
 
 if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
+	let g:airline_symbols = {}
 endif
 
 " unicode symbols
@@ -310,8 +314,8 @@ let g:NERDTreeDirArrowExpandable  = '▶'
 let g:NERDTreeDirArrowCollapsible = '▼'
 " NERDTress File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
- exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
- exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+	exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+	exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
 endfunction
 call NERDTreeHighlightFile('py',     'yellow',  'none', 'yellow',  '#151515')
 call NERDTreeHighlightFile('md',     'blue',    'none', '#3366FF', '#151515')
@@ -326,5 +330,13 @@ call NERDTreeHighlightFile('rb',     'Red',     'none', 'red',     '#151515')
 call NERDTreeHighlightFile('js',     'Red',     'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('sh',    'red', 'none', '#ff00ff', '#151515')
 
-":Aでプレビュー置換の起動
-command A OverCommandLine
+" setting of leader
+let mapleader="\<Space>"
+"leader-sでプレビュー置換の起動
+nnoremap <leader>s :OverCommandLine<CR>:%s/
+" leader-sでツリー表示・非表示
+nnoremap <silent><leader>e :NERDTreeToggle<CR>
+" leader-iでインデント整形
+nnoremap <leader>i gg=G
+" leader-wで画面分割間の移動
+nnoremap <leader>w <C-w><C-w>
