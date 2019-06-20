@@ -1,10 +1,11 @@
 #Author:mizoc <yaesuft729@gmail.com>
 #https://github.com/mizoc/dotfiles
 #license:MIT
-#___  _____/ /_  __________
-# /_  / / ___/ __ \/ ___/ ___/
-#  / /_(__  ) / / / /  / /__
-# /___/____/_/ /_/_/   \___/
+#
+#  ____  _____/ /_  __________   ____  / __/  ____ ___  (_)___  ____  _____
+# /_  / / ___/ __ \/ ___/ ___/  / __ \/ /_   / __ `__ \/ /_  / / __ \/ ___/
+#  / /_(__  ) / / / /  / /__   / /_/ / __/  / / / / / / / / /_/ /_/ / /__  
+# /___/____/_/ /_/_/   \___/   \____/_/    /_/ /_/ /_/_/ /___/\____/\___/  
 # --------------------------------------------------
 
 #これをしないとpowerlineが表示エラーになる
@@ -65,6 +66,9 @@ SAVEHIST=10000
 #editor
 export EDITOR=vim
 
+#fzfがあれば実行
+test -f ~/.fzf.zsh && source ~/.fzf.zsh
+
 #色
 autoload -Uz colors
 colors
@@ -77,6 +81,7 @@ cdpath=()
 
 #パス通す
 export PATH="$PATH:/sbin"
+export PATH=$PATH:$HOME/bin/bin/
 
 # cdしたあとで、自動的に tree する(treeが泣ければls)
 if type "colorls" >/dev/null 2>&1;then
@@ -135,11 +140,11 @@ alias clearhistory="rm -rf ~/.w3m/history && touch ~/.w3m/history "
 alias clearw3m="clearcookie && clearhistory" #上2つの統合版
 alias cleartrash="rm -rf ~/.local/share/Trash/files/*" #ゴミ箱カラ
 
-#xselをインストールしといて
-alias pbcopy="xsel --clipboard --input"
-alias pbpaste="xsel --clipboard --output"
+# コピペの設定
+which xsel >/dev/null 2>&1 && alias pbcopy="xsel --clipboard --input"; alias pbpaste="xsel --clipboard --output"
 
-alias his="history 0"
+#fzfがあれば実行
+test -f ~/.fzf.zsh && source ~/.fzf.zsh && {alias his="history 0|fzf --ansi --multi --reverse"; alias gl="git log --color|fzf --ansi --select-1 --reverse --multi"} || alias his="history 0"
 
 #git系
 if type "colorls" >/dev/null 2>&1;then
@@ -235,12 +240,6 @@ function reds(){
 			printf "\033[31m%s\033[m\n" "${__str}"
 			;;
 	esac
-}
-
-
-# %h history番号 -->でクリップボードに対応するコマンドをコピー -->Ctrl+Shift+vで貼り付けられる
-function h(){
-	history $1 | sed -n 1P|awk '{$1=""; print}' | tr -d "\n"| sed -e 's/^[ ]*//g' | pbcopy #trで改行捨ててるからコマンドの修正も簡単 素の次のsedで行頭の空白削除
 }
 
 #spin [str]
