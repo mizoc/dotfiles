@@ -2,11 +2,12 @@
 #https://github.com/mizoc/dotfiles
 #license:MIT
 #
+# --------------------------------------------------------------------------
 #  ____  _____/ /_  __________   ____  / __/  ____ ___  (_)___  ____  _____
 # /_  / / ___/ __ \/ ___/ ___/  / __ \/ /_   / __ `__ \/ /_  / / __ \/ ___/
 #  / /_(__  ) / / / /  / /__   / /_/ / __/  / / / / / / / / /_/ /_/ / /__  
 # /___/____/_/ /_/_/   \___/   \____/_/    /_/ /_/ /_/_/ /___/\____/\___/  
-# --------------------------------------------------
+# --------------------------------------------------------------------------
 
 #これをしないとpowerlineが表示エラーになる
 export LC_CTYPE="en_US.UTF-8"
@@ -86,7 +87,7 @@ export PATH=$PATH:$HOME/bin/bin/
 # cdしたあとで、自動的に tree する(treeが泣ければls)
 if type "colorls" >/dev/null 2>&1;then
 	function chpwd(){ 
-		if test `ls $(pwd)| wc -w` -gt 10;then
+		if test `ls $(pwd) -R| wc -w` -gt 10;then
 			tree --charset=C -L 1
 		else
 			colorls --tree
@@ -116,6 +117,8 @@ alias vz="vim ~/.zshrc"
 alias vzo="vim ~/.zsh_ownrc"
 alias vv="vim ~/.vimrc"
 
+alias dot="cd ~/dotfiles/"
+
 
 #ls系
 if type "colorls" >/dev/null 2>&1;then
@@ -127,10 +130,10 @@ if type "colorls" >/dev/null 2>&1;then
 	alias -g ld="colorls -d"
 	alias -g lf="colorls -f"
 else
-	alias ls="ls -FX --color=auto"
-	alias l="ls -FXSlth --color=auto"
-	alias la="ls -FSXlha --color=auto"
-	alias ll="ls -FSXlh --color=auto"
+	alias -g ls="ls -FX --color=auto"
+	alias -g l="ls -FXSlth --color=auto"
+	alias -g la="ls -FSXlha --color=auto"
+	alias -g ll="ls -FSXlh --color=auto"
 fi
 #alias lst="ls -lhtr --color=auto"
 
@@ -142,10 +145,15 @@ alias clearw3m="clearcookie && clearhistory" #上2つの統合版
 alias cleartrash="rm -rf ~/.local/share/Trash/files/*" #ゴミ箱カラ
 
 # コピペの設定
-which xsel >/dev/null 2>&1 && alias pbcopy="xsel --clipboard --input"; alias pbpaste="xsel --clipboard --output"
+which xsel >/dev/null 2>&1 && alias -g pbcopy="xsel --clipboard --input"; alias -g pbpaste="xsel --clipboard --output"
+
+# %h history番号 -->でクリップボードに対応するコマンドをコピー -->Ctrl+Shift+vで貼り付けられる
+function h(){
+	history $1 | sed -n 1P|awk '{$1=""; print}' | tr -d "\n"| sed -e 's/^[ ]*//g' | pbcopy #trで改行捨て,sedで行頭の空白削除
+}
 
 #fzfがあれば実行
-test -f ~/.fzf.zsh && source ~/.fzf.zsh && {alias his="history 0|fzf --ansi --multi --reverse"; alias gl="git log --color|fzf --ansi --select-1 --reverse --multi"} || alias his="history 0"
+test -f ~/.fzf.zsh && source ~/.fzf.zsh && {alias -g his="history 0|fzf --ansi --multi --reverse"; alias gl="git log --color|fzf --ansi --select-1 --reverse --multi"} || alias his="history 0"
 
 #git系
 if type "colorls" >/dev/null 2>&1;then
@@ -157,14 +165,14 @@ fi
 alias ga="git add ."
 alias gp="git push"
 
-alias mkdir="mkdir -p"
+alias -g mkdir="mkdir -p"
 
 alias pacman="myman"
 
 #sl
 alias dir="sl2" #sl2はslのnewバージョン/usr/local/bin/sl2にリンク貼ってる
 
-alias ...="cd ../../"
+alias -g ...="cd ../../"
 
 #コマンドプロンプトの設定
 PROMPT="%(?.%{${fg[green]}%}.%{${fg[red]}%})%n${reset_color}@${fg[blue]}%m${reset_color} %~
@@ -357,4 +365,6 @@ zplug "junegunn/fzf-bin"
 zplug "junegunn/fzf"
 #絵文字
 zplug "stedolan/jq", from:gh-r, as:command
-zplug "b4b4r07/emoji_cli" #, if:"which jq"
+zplug "b4b4r07/emoji_cli"
+
+zplug load
