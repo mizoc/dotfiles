@@ -104,7 +104,7 @@ bindkey "^[[3~" delete-char #これをコメントアウトすると、deleteで
 bindkey -v
 
 #Setting of z.sh
-test -f ~/bin/z/z.sh && source ~/bin/z/z.sh
+# test -f ~/bin/z/z.sh && source ~/bin/z/z.sh
 alias clearz="rm -rf ~/.z && touch ~/.z"
 
 #Setting of pushd
@@ -119,12 +119,13 @@ alias vv="vim ~/.vimrc"
 
 #ls系
 if type "colorls" >/dev/null 2>&1;then
-	alias ls="colorls --sd"
-	alias l="colorls --sd -lA --report"
-	alias la="colorls --sd -al --report"
-	alias ll="colorls --sd -Al --report"
-	alias ld="colorls -d"
-	alias lf="colorls -f"
+	alias -g ls="ls -FX --color=auto"
+	alias -g cls="colorls --sd"
+	alias -g l="colorls --sd -lA --report"
+	alias -g la="colorls --sd -al --report"
+	alias -g ll="colorls --sd -Al --report"
+	alias -g ld="colorls -d"
+	alias -g lf="colorls -f"
 else
 	alias ls="ls -FX --color=auto"
 	alias l="ls -FXSlth --color=auto"
@@ -331,3 +332,29 @@ else
 fi
 
 printf "\033[31m\033[1m\033[4m%s\033[m\n" "`zsh --version|awk '{$3=""; print}'|tr -d " "`@`echo $distro|tr -d " "`"
+
+#setting of zplug
+#installtion
+# eport ZPLUG_HOME=~/.zplug
+# git clone https://github.com/zplug/zplug $ZPLUG_HOME
+source ~/.zplug/init.zsh
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+
+#移動
+zplug "b4b4r07/enhancd", use:enhancd.sh
+#ハイライト
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+#ゴミ箱
+zplug "b4b4r07/zsh-gomi" #, as:command, of:bin, file:rm
+#タイプ補完
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-completions"
+zplug "chrissicool/zsh-256color"
+#peco これをコメントアウトするとなぜかzplugが壊れる
+# zplug "peco/peco", as:command, from:gh-r, use:"*amd64"
+#fzf
+zplug "junegunn/fzf-bin"
+zplug "junegunn/fzf"
+#絵文字
+zplug "stedolan/jq", from:gh-r, as:command
+zplug "b4b4r07/emoji_cli" #, if:"which jq"
