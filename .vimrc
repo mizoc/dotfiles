@@ -53,8 +53,8 @@ Plug 'Shougo/Unite.vim'
 "Plug 'vim-scripts/Align'
 Plug 'vim-scripts/YankRing.vim'
 
-"to do list
-Plug 'vim-scripts/TaskList.vim'
+" "to do list
+" Plug 'vim-scripts/TaskList.vim'
 
 "左側のやつ
 Plug 'Shougo/vimfiler'
@@ -334,8 +334,8 @@ call NERDTreeHighlightFile('sh',    'red', 'none', '#ff00ff', '#151515')
 let mapleader="\<Space>"
 "leader-sでプレビュー置換の起動
 nnoremap <leader>s :OverCommandLine<CR>:%s/
-" leader-sでツリー表示・非表示
-nnoremap <silent><leader>e :NERDTreeToggle<CR>
+" leader-tでツリー表示・非表示
+nnoremap <silent><leader>t :NERDTreeToggle<CR>
 " leader-iでインデント整形
 nnoremap <leader>i gg=G
 " leader-wで画面分割間の移動
