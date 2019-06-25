@@ -7,6 +7,15 @@ export LC_ALL=C
 cd `dirname $0`
 path=`pwd`
 
+#print msg
+cat << END
+      __      __  _____ __
+  ____/ /___  / /_/ __(_) /__  _____
+ / __  / __ \/ __/ /_/ / / _ \/ ___/
+/ /_/ / /_/ / /_/ __/ / /  __(__  )
+\__,_/\____/\__/_/ /_/_/\___/____/
+END
+
 #Make zshownrc
 test -f $HOME/.zsh_ownrc || cat << END >> $HOME/.zsh_ownrc
 #This is your ~/.zsh_ownrc.
@@ -19,23 +28,23 @@ mkdir -p $HOME/src
 mkdir -p $HOME/bin
 
 #vim-plug
-echo -n "Downloading vim-plug..."
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && echo done
+echo "Downloading vim-plug..."
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && echo 'done'
 
 #zplug
-echo -n "Downloading zplug..."
+echo "Downloading zplug..."
 export ZPLUG_HOME=~/.zplug
-git clone https://github.com/zplug/zplug $ZPLUG_HOME && echo done
+git clone https://github.com/zplug/zplug $ZPLUG_HOME && echo 'done'
 
-echo -n "Downloading fonts for vim..."
+echo "Downloading fonts for vim..."
 mkdir -p ~/.local/share/fonts
-cd ~/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf && echo done
+cd ~/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf && echo 'done'
 cd
 
 #git tree
 git config --global alias.tree 'log --graph --all --format="%x09%C(cyan bold)%an%Creset%x09%C(yellow)%h%Creset %C(magenta reverse)%d%Creset %s"'
 
-source  $path/update.sh
+./$path/update.sh
 
 #Last msg
 echo 
@@ -48,7 +57,7 @@ echo 'Now, execute ./install.sh && vim and execute :pluginstall'
 # read password
 # stty echo
 # echo
-#
+# gem install colorls
 # function dotwait(){
 # 	echo -n $1
 # 	while :;do

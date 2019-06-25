@@ -7,6 +7,10 @@ export LC_ALL=C
 cd `dirname $0`
 path=`pwd`
 
+#print msg
+echo
+echo linking...
+
 if test !`hostname` = 'taichi_Linux';then
 	git fetch origin master
 	git reset --hard origin/master

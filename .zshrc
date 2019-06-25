@@ -172,6 +172,7 @@ alias pacman="myman"
 #sl
 alias dir="sl2" #sl2はslのnewバージョン/usr/local/bin/sl2にリンク貼ってる
 
+alias -g ..="cd ../"
 alias -g ...="cd ../../"
 
 #コマンドプロンプトの設定
@@ -343,8 +344,15 @@ printf "\033[31m\033[1m\033[4m%s\033[m\n" "`zsh --version|awk '{$3=""; print}'|t
 
 #setting of zplug
 #installtion
-# eport ZPLUG_HOME=~/.zplug
-# git clone https://github.com/zplug/zplug $ZPLUG_HOME
+if test -f ~/.zplug/init.zsh;then
+	:
+else
+	export ZPLUG_HOME=~/.zplug
+	git clone https://github.com/zplug/zplug $ZPLUG_HOME
+
+fi
+
+#excute
 source ~/.zplug/init.zsh
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
@@ -352,8 +360,6 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 zplug "b4b4r07/enhancd", use:enhancd.sh, lazy:true
 #ハイライト
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
-#ゴミ箱
-zplug "b4b4r07/zsh-gomi", lazy:true #, as:command, of:bin, file:rm
 #タイプ補完
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-completions"
