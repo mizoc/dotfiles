@@ -4,8 +4,11 @@
 `$cd`  
 `$git clone https://github.com/mizoc/dotfiles`  
 `$cd dotfiles`  
-`$./once_install.sh`  
 `$./install.sh`  
+
+## Update
+`$cd ~/dotfiles`  
+`$./update.sh`  
 
 ## Licence
 [MIT](https://github.com/mizoc/dotfiles/blob/master/LICENSE)  
