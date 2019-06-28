@@ -26,6 +26,7 @@ END
 #make dirs
 mkdir -p $HOME/src
 mkdir -p $HOME/bin
+mkdir -p $HOME/tmp
 
 #vim-plug
 echo "Downloading vim-plug..."
@@ -44,13 +45,14 @@ cd
 #git tree
 git config --global alias.tree 'log --graph --all --format="%x09%C(cyan bold)%an%Creset%x09%C(yellow)%h%Creset %C(magenta reverse)%d%Creset %s"'
 
-.$path/update.sh
+#ln dotfiles
+cd $path
+./update.sh
 
 #Last msg
 echo 
 echo "OK. Finished all settings."
 echo 'Now, excute vim and :pluginstall'
-
 
 # stty -echo
 # echo -n "[sudo] Password:"

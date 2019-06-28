@@ -5,8 +5,8 @@
 # --------------------------------------------------------------------------
 #  ____  _____/ /_  __________   ____  / __/  ____ ___  (_)___  ____  _____
 # /_  / / ___/ __ \/ ___/ ___/  / __ \/ /_   / __ `__ \/ /_  / / __ \/ ___/
-#  / /_(__  ) / / / /  / /__   / /_/ / __/  / / / / / / / / /_/ /_/ / /__  
-# /___/____/_/ /_/_/   \___/   \____/_/    /_/ /_/ /_/_/ /___/\____/\___/  
+#  / /_(__  ) / / / /  / /__   / /_/ / __/  / / / / / / / / /_/ /_/ / /__
+# /___/____/_/ /_/_/   \___/   \____/_/    /_/ /_/ /_/_/ /___/\____/\___/
 # --------------------------------------------------------------------------
 
 #これをしないとpowerlineが表示エラーになる
@@ -86,7 +86,7 @@ export PATH=$PATH:$HOME/bin/bin/
 
 # cdしたあとで、自動的に tree する(treeが泣ければls)
 if type "colorls" >/dev/null 2>&1;then
-	function chpwd(){ 
+	function chpwd(){
 		if test `ls $(pwd) -R| wc -w` -gt 10;then
 			tree --charset=C -L 1
 		else
@@ -116,9 +116,9 @@ setopt pushd_ignore_dups #重複削除
 alias vz="vim ~/.zshrc"
 alias vzo="vim ~/.zsh_ownrc"
 alias vv="vim ~/.vimrc"
+alias sz="source ~/.zshrc"
 
 alias dot="cd ~/dotfiles/"
-
 
 #ls系
 if type "colorls" >/dev/null 2>&1;then
@@ -167,13 +167,16 @@ alias gp="git push"
 
 alias -g mkdir="mkdir -p"
 
-alias pacman="myman"
+type "pacman" >/dev/null || alias pacman="myman"
 
 #sl
 alias dir="sl2" #sl2はslのnewバージョン/usr/local/bin/sl2にリンク貼ってる
 
+#cd
 alias -g ..="cd ../"
 alias -g ...="cd ../../"
+
+alias -s py=python3
 
 #コマンドプロンプトの設定
 PROMPT="%(?.%{${fg[green]}%}.%{${fg[red]}%})%n${reset_color}@${fg[blue]}%m${reset_color} %~
@@ -199,7 +202,7 @@ function prompt-git-current-branch(){
 		branch_status="%F{cyan}"
 		k+="%F{cyan}?%F{reset_color}"
 	fi
-	
+
 	if [[ -n `echo "$st"|grep "^Changes not staged for commit"` ]];then
 	  branch_status="%F{red}"
 	  k+="%F{red}+%F{reset_color}"
@@ -209,7 +212,7 @@ function prompt-git-current-branch(){
 	  branch_status="%F{yellow}"
 	  k+="%F{yellow}!%F{reset_color}"
 	fi
-	  
+
 	if [[ -n `echo "$st"|grep "^rebase in progress"` ]];then
 		echo "%F{red}!(no branch)"
 		return

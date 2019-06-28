@@ -1,10 +1,10 @@
 "Author:mizoc <yaesuft729@gmail.com> https://github.com/mizoc/dotfiles
 "license:MIT
-"                                         ____             _                 
+"                                         ____             _
 "  _   __(_)___ ___  __________    ____  / __/  ____ ___  (_)___  ____  _____
 " | | / / / __ `__ \/ ___/ ___/   / __ \/ /_   / __ `__ \/ /_  / / __ \/ ___/
-" | |/ / / / / / / / /  / /__    / /_/ / __/  / / / / / / / / /_/ /_/ / /__  
-" |___/_/_/ /_/ /_/_/   \___/    \____/_/    /_/ /_/ /_/_/ /___/\____/\___/  
+" | |/ / / / / / / / /  / /__    / /_/ / __/  / / / / / / / / /_/ /_/ / /__
+" |___/_/_/ /_/ /_/_/   \___/    \____/_/    /_/ /_/ /_/_/ /___/\____/\___/
 "
 "---------------Setting of Plugin--------------------
 call plug#begin('~/.vim/plugged')
@@ -12,12 +12,21 @@ call plug#begin('~/.vim/plugged')
 "フォント(icon)
 Plug 'ryanoasis/vim-devicons'
 
+"半角スペース可視化
+Plug 'bronson/vim-trailing-whitespace'
+
 "markdownのプラグイン 下で設定
 Plug 'kannokanno/previm'
 Plug 'tyru/open-browser.vim'
 
+":ansiEscでANSIカラー表示
+Plug 'vim-scripts/AnsiEsc.vim'
+
 "ruby end 自動入力
 Plug 'tpope/vim-endwise'
+
+"繰り返しを可能にする
+Plug 'tpope/vim-repeat'
 
 "ップレビュー一括置換
 Plug 'osyo-manga/vim-over'
@@ -117,6 +126,9 @@ Plug 'ujihisa/unite-colorscheme'
 
 "rubyのプラグイン
 Plug 'vim-ruby/vim-ruby'
+
+"nerdtreeにgit情報を
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 call plug#end()
 
@@ -221,6 +233,9 @@ let g:neocomplete#enable_at_startup = 1 "起動時に有効化
 ".mdをmarkdown形式として読み込ませる
 autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 
+" ------------------ansiescの設定------------------
+autocmd BufNewFile,BufRead *.log AnsiEsc
+
 "------------------previmの設定----------------------
 let g:previm_open_cmd = ''
 nnoremap [previm] <Nop>
@@ -231,6 +246,9 @@ nnoremap <silent> [previm]r :call previm#refresh()<CR>
 "------------------vim-table-modeの設定---------------
 let g:table_mode_corner = '|'
 autocmd BufNewFile,BufRead *.md* TableModeEnable
+
+"-------------------ホワイトスペースの可視化設定-----------------------
+autocmd BufNewFile,BufRead * FixWhitespace
 
 "---------------airlineの設定-------------
 set laststatus=2
@@ -299,6 +317,19 @@ let g:airline_symbols.linenr = ''
 " let g:airline_symbols.linenr = '⭡'
 "
 " -------------------Setting of Nerdtree---------------------
+" gitアイコン設定
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
+let g:NERDTreeShowIgnoredStatus = 1
 " ファイルアイコンの表示有効化
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 " ブックマーク初期表示
