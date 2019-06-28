@@ -7,6 +7,7 @@ export LC_ALL=C
 cd `dirname $0`
 path=`pwd`
 
+type "espeak" >/dev/null 2>&1 && espeak "Thank you for installing my dotfiles." ; clear
 #print msg
 cat << END
       __      __  _____ __

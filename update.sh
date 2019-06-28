@@ -9,7 +9,7 @@ path=`pwd`
 
 echo
 
-if test !`hostname` = 'taichi_Linux';then
+if test ! `hostname` = 'taichi_Linux';then
 	echo Downloading new version...
 	git fetch origin master
 	git reset --hard origin/master
