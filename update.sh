@@ -7,11 +7,10 @@ export LC_ALL=C
 cd `dirname $0`
 path=`pwd`
 
-#print msg
 echo
-echo linking...
 
 if test !`hostname` = 'taichi_Linux';then
+	echo Downloading new version...
 	git fetch origin master
 	git reset --hard origin/master
 fi

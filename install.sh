@@ -44,12 +44,12 @@ cd
 #git tree
 git config --global alias.tree 'log --graph --all --format="%x09%C(cyan bold)%an%Creset%x09%C(yellow)%h%Creset %C(magenta reverse)%d%Creset %s"'
 
-./$path/update.sh
+.$path/update.sh
 
 #Last msg
 echo 
-echo "OK. Finished every settings."
-echo 'Now, execute ./install.sh && vim and execute :pluginstall'
+echo "OK. Finished all settings."
+echo 'Now, excute vim and :pluginstall'
 
 
 # stty -echo
