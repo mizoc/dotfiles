@@ -42,7 +42,13 @@ mkdir -p ~/.local/share/fonts
 cd ~/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf && echo 'done'
 cd
 
+#haskell
+echo Installing haskell...
+curl -sSL https://get.haskellstack.org/ | sh && echo done
+
 #git tree
+git config --global core.pager "more" #エスケープコード認識
+git config --global core.quotepath "false" #日本語文字化け対策
 git config --global alias.tree 'log --graph --all --format="%x09%C(cyan bold)%an%Creset%x09%C(yellow)%h%Creset %C(magenta reverse)%d%Creset %s"'
 
 #ln dotfiles
@@ -50,7 +56,7 @@ cd $path
 ./update.sh
 
 #Last msg
-echo 
+echo
 echo "OK. Finished all settings."
 echo 'Now, excute vim and :pluginstall'
 
