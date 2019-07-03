@@ -1,2 +1,4 @@
 *.log
 *.pyc
+..zshrc.un\~
+.zshrc~

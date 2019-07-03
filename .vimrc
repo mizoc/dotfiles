@@ -319,16 +319,16 @@ let g:airline_symbols.linenr = ''
 " -------------------Setting of Nerdtree---------------------
 " gitアイコン設定
 let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "✹",
-    \ "Staged"    : "✚",
-    \ "Untracked" : "✭",
-    \ "Renamed"   : "➜",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖",
-    \ "Dirty"     : "✗",
-    \ "Clean"     : "✔︎",
-    \ "Unknown"   : "?"
-    \ }
+			\ "Modified"  : "✹",
+			\ "Staged"    : "✚",
+			\ "Untracked" : "✭",
+			\ "Renamed"   : "➜",
+			\ "Unmerged"  : "═",
+			\ "Deleted"   : "✖",
+			\ "Dirty"     : "✗",
+			\ "Clean"     : "✔︎",
+			\ "Unknown"   : "?"
+			\ }
 let g:NERDTreeShowIgnoredStatus = 1
 " ファイルアイコンの表示有効化
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
@@ -369,5 +369,9 @@ nnoremap <leader>s :OverCommandLine<CR>:%s/
 nnoremap <silent><leader>t :NERDTreeToggle<CR>
 " leader-iでインデント整形
 nnoremap <leader>i gg=G
-" leader-wで画面分割間の移動
-nnoremap <leader>w <C-w><C-w>
+"leader-wで保存
+nnoremap <leader>w :w<cr>
+"leader-qで終了
+nnoremap <leader>q :q<cr>
+"leader-jで画面間移動
+nnoremap <leader>j <C-w><C-w>

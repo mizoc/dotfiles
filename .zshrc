@@ -118,7 +118,7 @@ alias vzo="vim ~/.zsh_ownrc"
 alias vv="vim ~/.vimrc"
 alias sz="source ~/.zshrc"
 
-alias dot="cd ~/dotfiles/"
+alias dot="cd ~/.dotfiles/"
 
 #ls系
 if type "colorls" >/dev/null 2>&1;then

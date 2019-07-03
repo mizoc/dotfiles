@@ -1,17 +1,19 @@
-# my dotfiles  
+# my dotfiles
 
 ## Installtion
 `$cd`  
-`$git clone https://github.com/mizoc/dotfiles`  
-`$cd dotfiles`  
+`$git clone https://github.com/mizoc/dotfiles ~/.dotfiles`  
+`$cd $_`  
 `$./install.sh`  
+Please install zsh and excute  
+`$chsh -s /bin/zsh`  
 
 ## Update
-`$cd ~/dotfiles`  
+`$cd ~/.dotfiles`  
 `$./update.sh`  
 
-## Licence
+## Licence  
 [MIT](https://github.com/mizoc/dotfiles/blob/master/LICENSE)  
 
-## Author
+## Author  
 [mizoc](https://github.com/mizoc)  
