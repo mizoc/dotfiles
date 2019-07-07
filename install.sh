@@ -5,7 +5,7 @@ set -u
 export LANG=C
 export LC_ALL=C
 cd `dirname $0`
-path=`pwd`
+CURRENT_PATH=`pwd`
 
 type "espeak" >/dev/null 2>&1 && espeak "Thank you for installing my dotfiles." ; clear
 #print msg
@@ -49,7 +49,7 @@ git config --global core.quotepath "false" #日本語文字化け対策
 git config --global alias.tree 'log --graph --all --format="%x09%C(cyan bold)%an%Creset%x09%C(yellow)%h%Creset %C(magenta reverse)%d%Creset %s"'
 
 #ln dotfiles
-cd $path
+cd $CURRENT_PATH
 ./update.sh
 
 #Last msg

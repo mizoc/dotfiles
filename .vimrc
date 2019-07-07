@@ -128,7 +128,7 @@ Plug 'ujihisa/unite-colorscheme'
 Plug 'vim-ruby/vim-ruby'
 
 "nerdtreeにgit情報を
-Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'Xuyuanp/nerdtree-git-plugin'
 
 call plug#end()
 
@@ -317,18 +317,18 @@ let g:airline_symbols.linenr = ''
 " let g:airline_symbols.linenr = '⭡'
 "
 " -------------------Setting of Nerdtree---------------------
-" gitアイコン設定
-let g:NERDTreeIndicatorMapCustom = {
-			\ "Modified"  : "✹",
-			\ "Staged"    : "✚",
-			\ "Untracked" : "✭",
-			\ "Renamed"   : "➜",
-			\ "Unmerged"  : "═",
-			\ "Deleted"   : "✖",
-			\ "Dirty"     : "✗",
-			\ "Clean"     : "✔︎",
-			\ "Unknown"   : "?"
-			\ }
+" " gitアイコン設定
+" let g:NERDTreeIndicatorMapCustom = {
+" 			\ "Modified"  : "✹",
+" 			\ "Staged"    : "✚",
+" 			\ "Untracked" : "✭",
+" 			\ "Renamed"   : "➜",
+" 			\ "Unmerged"  : "═",
+" 			\ "Deleted"   : "✖",
+" 			\ "Dirty"     : "✗",
+" 			\ "Clean"     : "✔︎",
+" 			\ "Unknown"   : "?"
+" 			\ }
 let g:NERDTreeShowIgnoredStatus = 1
 " ファイルアイコンの表示有効化
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1

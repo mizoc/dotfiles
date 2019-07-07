@@ -55,11 +55,35 @@ zstyle ':completion:*:default' menu select=2
 # 大文字も補完
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
+#色
+autoload -Uz colors
+colors
+# tab補完中も色つける
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+#lessに色付ける
+export LESS='-R'
+#manにも色付ける
+export MANPAGER='less -R'
+man() {
+    env \
+        LESS_TERMCAP_mb=$(printf "\e[1;33m") \
+        LESS_TERMCAP_md=$(printf "\e[1;36m") \
+        LESS_TERMCAP_me=$(printf "\e[0m") \
+        LESS_TERMCAP_se=$(printf "\e[0m") \
+        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+        LESS_TERMCAP_ue=$(printf "\e[0m") \
+        LESS_TERMCAP_us=$(printf "\e[1;32m") \
+        man "$@"
+}
+
 #Setting of History
 #他のターミナルとの履歴の共有
 setopt share_history
 # 重複は表示しない
 setopt histignorealldups
+#シェルの終了を待たずにコマンド履歴を保存
+setopt inc_append_history
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
@@ -69,10 +93,6 @@ export EDITOR=vim
 
 #fzfがあれば実行
 test -f ~/.fzf.zsh && source ~/.fzf.zsh
-
-#色
-autoload -Uz colors
-colors
 
 setopt no_tify
 setopt extended_glob
@@ -119,6 +139,9 @@ alias vv="vim ~/.vimrc"
 alias sz="source ~/.zshrc"
 
 alias dot="cd ~/.dotfiles/"
+
+#サブディレクトリを含む容量
+alias lsc='du -sh' #ls capacity
 
 #ls系
 if type "colorls" >/dev/null 2>&1;then
@@ -174,9 +197,17 @@ alias dir="sl2" #sl2はslのnewバージョン/usr/local/bin/sl2にリンク貼�
 
 #cd
 alias -g ..="cd ../"
+alias -g cd1="cd ../"
 alias -g ...="cd ../../"
+alias -g cd2="cd ../../"
+alias -g ....="cd ../../../"
+alias -g cd3="cd ../../../"
 
+#サフィックスのエイリアス設定
 alias -s py=python3
+
+#grep
+alias -g grep='grep --color=always'
 
 #コマンドプロンプトの設定
 PROMPT="%(?.%{${fg[green]}%}.%{${fg[red]}%})%n${reset_color}@${fg[blue]}%m${reset_color} %~
