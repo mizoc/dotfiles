@@ -142,6 +142,7 @@ alias dot="cd ~/.dotfiles/"
 
 #サブディレクトリを含む容量
 alias lsc='du -sh' #ls capacity
+alias du='du -h' #単位をわかりやすく
 
 #ls系
 if type "colorls" >/dev/null 2>&1;then
@@ -152,8 +153,10 @@ if type "colorls" >/dev/null 2>&1;then
 	alias -g ll="colorls --sd -Al --report"
 	alias -g ld="colorls -d"
 	alias -g lf="colorls -f"
+	alias -g lsr="ls -FXR --color=auto"
 else
 	alias -g ls="ls -FX --color=auto"
+	alias -g lsr="ls -FXR --color=auto"
 	alias -g l="ls -FXSlth --color=auto"
 	alias -g la="ls -FSXlha --color=auto"
 	alias -g ll="ls -FSXlh --color=auto"
