@@ -56,6 +56,7 @@ cd $CURRENT_PATH
 echo
 echo "OK. Finished all settings."
 echo 'Now, excute vim and :pluginstall'
+echo You should install GNU source-highlight
 
 # stty -echo
 # echo -n "[sudo] Password:"

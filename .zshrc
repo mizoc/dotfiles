@@ -1,6 +1,7 @@
 #Author:mizoc <yaesuft729@gmail.com>
 #https://github.com/mizoc/dotfiles
 #license:MIT
+#@ (#) my .zshrc
 #
 # --------------------------------------------------------------------------
 #  ____  _____/ /_  __________   ____  / __/  ____ ___  (_)___  ____  _____
@@ -30,6 +31,9 @@ fi
 
 # Ctrl + Dでログアウトされることを防ぐ
 #setopt IGNOREEOF
+#
+#制御構文の短縮形を使用できるようにする
+setopt short_loops
 
 # cdを使わずにディレクトリを移動できる
 setopt auto_cd
@@ -54,6 +58,8 @@ autoload -Uz is-at-least
 zstyle ':completion:*:default' menu select=2
 # 大文字も補完
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+# 補完を水平方向に表示
+setopt list_rows_first
 
 #色
 autoload -Uz colors
@@ -63,6 +69,7 @@ zstyle ':completion:*' verbose yes
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 #lessに色付ける
 export LESS='-R'
+test -f /usr/bin/src-hilite-lesspipe.sh && export LESSOPEN='| /usr/bin/src-hilite-lesspipe.sh %s' #GNU source-h9ighlightのインストール必須
 #manにも色付ける
 export MANPAGER='less -R'
 man() {
@@ -93,6 +100,8 @@ export EDITOR=vim
 
 #fzfがあれば実行
 test -f ~/.fzf.zsh && source ~/.fzf.zsh
+#fzfのオプション
+export FZF_DEFAULT_OPTS="--ansi"
 
 setopt no_tify
 setopt extended_glob
@@ -146,7 +155,7 @@ alias du='du -h' #単位をわかりやすく
 
 #ls系
 if type "colorls" >/dev/null 2>&1;then
-	alias -g ls="ls -FX --color=auto"
+	alias -g ls="ls -FX --color=auto --color=always"
 	alias -g cls="colorls --sd"
 	alias -g l="colorls --sd -lA --report"
 	alias -g la="colorls --sd -al --report"
@@ -155,11 +164,11 @@ if type "colorls" >/dev/null 2>&1;then
 	alias -g lf="colorls -f"
 	alias -g lsr="ls -FXR --color=auto"
 else
-	alias -g ls="ls -FX --color=auto"
-	alias -g lsr="ls -FXR --color=auto"
-	alias -g l="ls -FXSlth --color=auto"
-	alias -g la="ls -FSXlha --color=auto"
-	alias -g ll="ls -FSXlh --color=auto"
+	alias -g ls="ls -FX --color=auto --color=always"
+	alias -g lsr="ls -FXR --color=auto --color=always"
+	alias -g l="ls -FXSlth --color=auto --color=always"
+	alias -g la="ls -FSXlha --color=auto --color=always"
+	alias -g ll="ls -FSXlh --color=auto --color=always"
 fi
 #alias lst="ls -lhtr --color=auto"
 
