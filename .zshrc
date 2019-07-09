@@ -69,7 +69,7 @@ zstyle ':completion:*' verbose yes
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 #lessに色付ける
 export LESS='-R'
-test -f /usr/bin/src-hilite-lesspipe.sh && export LESSOPEN='| /usr/bin/src-hilite-lesspipe.sh %s' #GNU source-h9ighlightのインストール必須
+test -f /usr/bin/src-hilite-lesspipe.sh && export LESSOPEN='| /usr/bin/src-hilite-lesspipe.sh %s' #GNU source-highlightのインストール必須
 #manにも色付ける
 export MANPAGER='less -R'
 man() {
@@ -379,7 +379,7 @@ elif test -f /etc/fedora-release;then
 elif test -f /etc/SuSE-release;then
 	distro=`cat /etc/SuSE-release`
 elif test -f /etc/lsb-release;then
-	distro=`cat /etc/lsb-release|grep 'DISTRIB_DESCRIPTION'|sed 's/DISTRIB_DESCRIPTION=//'|tr -d ' '|tr -d '"'`
+	distro=`cat /etc/lsb-release|/bin/grep 'DISTRIB_DESCRIPTION'|sed 's/DISTRIB_DESCRIPTION=//'|tr -d ' '|tr -d '"'`
 elif test -f /etc/debian_version;then
 	distro=Debian`cat /etc/debian_version`
 else
