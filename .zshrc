@@ -48,7 +48,7 @@ setopt interactive_comments
 
 #補完
 autoload -Uz compinit
-compinit
+compinit -C #セキュリティチェックをしない
 
 autoload -Uz add-zsh-hook
 autoload -Uz terminfo
@@ -417,3 +417,6 @@ zplug "junegunn/fzf-bin", lazy:true
 zplug "junegunn/fzf", lazy:true
 
 zplug load
+
+# 起動速度の計測があればする
+which zprof >/dev/null 2>&1 || return 0 && zprof|less

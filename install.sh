@@ -45,6 +45,8 @@ cd
 
 echo "Downloading tpm..."
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+echo "Downloading tmux-powerline"
+git clone git://github.com/erikw/tmux-powerline.git ~/.tmux-powerline
 
 #git tree
 git config --global core.pager "more" #エスケープコード認識

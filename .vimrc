@@ -115,7 +115,7 @@ Plug 'ryanoasis/vim-devicons'
 
 "python 補完
 Plug 'davidhalter/jedi-vim'
-Plug 'Shougo/neosnippet.vim'
+" Plug 'Shougo/neosnippet.vim'
 
 "補完 下で設定
 Plug 'shougo/neocomplete.vim'
