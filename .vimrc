@@ -19,6 +19,9 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'kannokanno/previm'
 Plug 'tyru/open-browser.vim'
 
+"tab補完
+Plug 'ervandew/supertab'
+
 ":ansiEscでANSIカラー表示
 Plug 'vim-scripts/AnsiEsc.vim'
 
@@ -360,6 +363,10 @@ call NERDTreeHighlightFile('css',    'cyan',    'none', 'cyan',    '#151515')
 call NERDTreeHighlightFile('rb',     'Red',     'none', 'red',     '#151515')
 call NERDTreeHighlightFile('js',     'Red',     'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('sh',    'red', 'none', '#ff00ff', '#151515')
+
+"tabで補完
+let g:SuperTabContextDefaultCompletionType = "context"
+let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " setting of leader
 let mapleader="\<Space>"
