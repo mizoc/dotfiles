@@ -89,6 +89,8 @@ man() {
 setopt share_history
 # 重複は表示しない
 setopt histignorealldups
+# 半角スペースから始まるコマンドを履歴に入れない
+setopt hist_ignore_space
 #シェルの終了を待たずにコマンド履歴を保存
 setopt inc_append_history
 HISTFILE=~/.zsh_history

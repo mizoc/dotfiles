@@ -12,6 +12,9 @@ call plug#begin('~/.vim/plugged')
 "フォント(icon)
 Plug 'ryanoasis/vim-devicons'
 
+"Bash support plugin
+" Plug 'vim-scripts/bash-support.vim'
+
 "半角スペース可視化
 Plug 'bronson/vim-trailing-whitespace'
 
@@ -118,10 +121,13 @@ Plug 'ryanoasis/vim-devicons'
 
 "python 補完
 Plug 'davidhalter/jedi-vim'
-" Plug 'Shougo/neosnippet.vim'
 
 "補完 下で設定
 Plug 'shougo/neocomplete.vim'
+" スニペットの補完機能
+" Plug 'Shougo/neosnippet.vim'
+" スニペット集
+" Plug 'Shougo/neosnippet-snippets'
 
 "カラーテーマ
 Plug 'flazz/vim-colorschemes'
@@ -160,7 +166,11 @@ set formatoptions-=ro
 set hidden
 "対応するカッコをハイライト
 set showmatch
-
+"保存用文字コード
+set fileencoding=utf-8
+set fileencodings=ucs-boms,utf-8,euc-jp,cp932 " 読み込み時の文字コードの自動判別. 左側が優先される
+set fileformats=unix,dos,mac " 改行コードの自動判別. 左側が優先される
+set ambiwidth=double " □や○文字が崩れる問題を解決
 
 " 見た目系
 " テーマの設定
@@ -222,9 +232,10 @@ nmap <F5> :!python3 %
 nmap <F6> :!python %
 "f10でsource
 nmap <F10> :source %
-
 "f8でruby実行
 nmap <F4> :!ruby %
+"クリップボードの設定
+set clipboard=unnamed,autoselect
 
 "GUNDOの設定
 set undofile
@@ -318,6 +329,11 @@ let g:airline_symbols.linenr = ''
 " let g:airline_symbols.branch = '⭠'
 " let g:airline_symbols.readonly = '⭤'
 " let g:airline_symbols.linenr = '⭡'
+"
+" -------------------Setting of Bash-support----------------
+let g:BASH_AuthorName = 'mizoc'
+let g:BASH_Email = 'yaesuft729@gmail.com'
+let g:BASH_Company = 'None'
 "
 " -------------------Setting of Nerdtree---------------------
 " " gitアイコン設定
