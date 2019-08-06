@@ -10,6 +10,7 @@
 # /___/____/_/ /_/_/   \___/   \____/_/    /_/ /_/ /_/_/ /___/\____/\___/
 # --------------------------------------------------------------------------
 
+fpath=(/usr/share/zsh/5.6.2/functions $fpath)
 #これをしないとpowerlineが表示エラーになる
 export LC_CTYPE="en_US.UTF-8"
 #---------参考----------
@@ -134,6 +135,7 @@ bindkey "^[[3~" delete-char #これをコメントアウトすると、deleteで
 
 #vim mode
 bindkey -v
+bindkey -M viins 'jj' vi-cmd-mode
 
 #Setting of z.sh
 # test -f ~/bin/z/z.sh && source ~/bin/z/z.sh
@@ -223,10 +225,6 @@ alias -s py=python3
 #grep
 alias -g grep='grep --color=always'
 
-#コマンドプロンプトの設定
-PROMPT="%(?.%{${fg[green]}%}.%{${fg[red]}%})%n${reset_color}@${fg[blue]}%m${reset_color} %~
-%# "
-
 #Gitのステータス表示
 function prompt-git-current-branch(){
 	local branch_name st branch_status
@@ -266,11 +264,25 @@ function prompt-git-current-branch(){
 	echo "${k}%F${branch_status}[$branch_name]%F{reset_color}"
 }
 
+#コマンドプロンプトの設定
+function zle-line-init zle-keymap-select(){
+	ZLESTATUS="${${KEYMAP/vicmd/${fg[red]}NOR${reset_color}}/(main|viins)/${fg[blue]}INS${reset_color}}"
+	PROMPT="%(?.%{${fg[green]}%}.%{${fg[red]}%})%n${reset_color}@${fg[blue]}%m${reset_color} %~
+$ZLESTATUS%# "
+	RPROMPT=`prompt-git-current-branch`
+	zle reset-prompt
+}
+
+ZLE_RPROMPT_INDENT=0
 setopt prompt_subst
 #コマンド実行前に呼ばれる関数
 precmd(){
-	RPROMPT="`prompt-git-current-branch`"
+	# RPROMPT="`prompt-git-current-branch`"
 }
+
+# change status of zle
+zle -N zle-line-init
+zle -N zle-keymap-select
 
 #入力された文字列を赤色にして返す(パイプ対応)
 function reds(){
