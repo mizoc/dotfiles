@@ -11,6 +11,7 @@
 # --------------------------------------------------------------------------
 
 fpath=(/usr/share/zsh/5.6.2/functions $fpath)
+
 #これをしないとpowerlineが表示エラーになる
 export LC_CTYPE="en_US.UTF-8"
 #---------参考----------
@@ -49,7 +50,7 @@ setopt interactive_comments
 
 #補完
 autoload -Uz compinit
-compinit -C #セキュリティチェックをしない
+compinit -C #セキュリティチェックをしない => fast
 
 autoload -Uz add-zsh-hook
 autoload -Uz terminfo
@@ -265,6 +266,8 @@ function prompt-git-current-branch(){
 }
 
 #コマンドプロンプトの設定
+PROMPT="%(?.%{${fg[green]}%}.%{${fg[red]}%})%n${reset_color}@${fg[blue]}%m${reset_color} %~
+%# "
 function zle-line-init zle-keymap-select(){
 	ZLESTATUS="${${KEYMAP/vicmd/${fg[red]}NOR${reset_color}}/(main|viins)/${fg[blue]}INS${reset_color}}"
 	PROMPT="%(?.%{${fg[green]}%}.%{${fg[red]}%})%n${reset_color}@${fg[blue]}%m${reset_color} %~
@@ -277,12 +280,12 @@ ZLE_RPROMPT_INDENT=0
 setopt prompt_subst
 #コマンド実行前に呼ばれる関数
 precmd(){
-	# RPROMPT="`prompt-git-current-branch`"
+	RPROMPT="`prompt-git-current-branch`"
 }
 
 # change status of zle
-zle -N zle-line-init
-zle -N zle-keymap-select
+# zle -N zle-line-init
+# zle -N zle-keymap-select
 
 #入力された文字列を赤色にして返す(パイプ対応)
 function reds(){

@@ -107,9 +107,8 @@ Plug 'hynek/vim-python-pep8-indent'
 Plug 'hachibeeDI/python_hl_lvar.vim'
 
 "インデント単位での調整が可能
-"Plug 'kana/vim-textobj-indent'
+" Plug 'kana/vim-textobj-indent'
 Plug 'tweekmonster/braceless.vim'
-Plug 'thaerkh/vim-indentguides'
 
 "インデント可視化
 Plug 'nathanaelkane/vim-indent-guides'
@@ -121,6 +120,11 @@ Plug 'ryanoasis/vim-devicons'
 
 "python 補完
 Plug 'davidhalter/jedi-vim'
+
+"多機能セレクター Ctrl-pで起動
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tacahiroy/ctrlp-funky'
+Plug 'suy/vim-ctrlp-commandline'
 
 "補完 下で設定
 Plug 'shougo/neocomplete.vim'
@@ -140,7 +144,7 @@ Plug 'vim-ruby/vim-ruby'
 " Plug 'Xuyuanp/nerdtree-git-plugin'
 
 call plug#end()
-
+"
 "viとの互換性を無効にする(INSERT中にカーソルキーが有効になる)
 set nocompatible
 "BSで削除できるものを指定する
@@ -150,6 +154,8 @@ set nocompatible
 set backspace=indent,eol,start
 "文字コードをUFT-8に設定
 set fenc=utf-8
+set encoding=utf-8
+scriptencoding utf-8
 " バックアップファイルを作らない
 set nobackup
 " スワップファイルを作らない
@@ -193,8 +199,6 @@ set visualbell
 set showmatch
 " ステータスラインを常に表示
 set laststatus=2
-" コマンドラインの補完
-set wildmode=list:longest
 " 折り返し時に表示行単位での移動できるようにする
 nnoremap j gj
 nnoremap k gk
@@ -211,6 +215,7 @@ set shiftwidth=4
 "eコマンドなどのtab補完
 set wildmenu
 set wildmode=full
+set history=1000 "保存コマンド履歴数
 
 " 検索系
 " 検索文字列が小文字の場合は大文字小文字を区別なく検索しない
@@ -241,8 +246,21 @@ set clipboard=unnamed,autoselect
 set undofile
 set undodir=~/.vim/undo
 
+"----------------Setting of Ctrlp------------------------------------------
+let g:ctrlp_match_window = 'order:ttb,min:20,max:20,results:100' " マッチウインドウの設定. 「下部に表示, 大きさ20行で固定, 検索結果100件」
+let g:ctrlp_show_hidden = 1 " .(ドット)から始まるファイルも検索対象にする
+let g:ctrlp_types = ['fil'] "ファイル検索のみ使用
+let g:ctrlp_extensions = ['funky', 'commandline'] " CtrlPの拡張として「funky」と「commandline」を使用
+
+" CtrlPCommandLineの有効化
+command! CtrlPCommandLine call ctrlp#init(ctrlp#commandline#id())
+
+" CtrlPFunkyの有効化
+let g:ctrlp_funky_matchtype = 'path'
+
 "-------------------neocompleteの設定-----------------
 let g:neocomplete#enable_at_startup = 1 "起動時に有効化
+
 
 ".mdをmarkdown形式として読み込ませる
 autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
@@ -384,6 +402,14 @@ call NERDTreeHighlightFile('sh',    'red', 'none', '#ff00ff', '#151515')
 let g:SuperTabContextDefaultCompletionType = "context"
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
+"Settings of braceless
+autocmd FileType python BracelessEnable +indent +fold "+highlight-cc
+
+"settings of vim-indent-guides
+let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'vimrc'] "無効
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_guide_size = 1
+
 " setting of leader
 let mapleader="\<Space>"
 "leader-sでプレビュー置換の起動
@@ -398,3 +424,6 @@ nnoremap <leader>w :w<cr>
 nnoremap <leader>q :q<cr>
 "leader-jで画面間移動
 nnoremap <leader>j <C-w><C-w>
+"leader-pでコマンド履歴起動
+nnoremap <leader>p :CtrlPCommandLine<cr>
+
