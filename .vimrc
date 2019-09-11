@@ -1,5 +1,6 @@
 "Author:mizoc <yaesuft729@gmail.com> https://github.com/mizoc/dotfiles
 "license:MIT
+"@ (#) My .vimrc
 "                                         ____             _
 "  _   __(_)___ ___  __________    ____  / __/  ____ ___  (_)___  ____  _____
 " | | / / / __ `__ \/ ___/ ___/   / __ \/ /_   / __ `__ \/ /_  / / __ \/ ___/
@@ -111,7 +112,7 @@ Plug 'hachibeeDI/python_hl_lvar.vim'
 Plug 'tweekmonster/braceless.vim'
 
 "インデント可視化
-Plug 'nathanaelkane/vim-indent-guides'
+" Plug 'nathanaelkane/vim-indent-guides'
 
 "airline thema(下で設定)
 Plug 'vim-airline/vim-airline'
@@ -181,8 +182,8 @@ set ambiwidth=double " □や○文字が崩れる問題を解決
 " 見た目系
 " テーマの設定
 syntax enable
-"colorscheme BlackSea
-colorscheme molokai
+" colorscheme molokai
+colorscheme badwolf
 "行番号を表示
 set number
 " 現在の行を強調表示

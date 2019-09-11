@@ -1,7 +1,7 @@
 #Author:mizoc <yaesuft729@gmail.com>
 #https://github.com/mizoc/dotfiles
 #license:MIT
-#@ (#) my .zshrc
+#@ (#) My .zshrc
 #
 # --------------------------------------------------------------------------
 #  ____  _____/ /_  __________   ____  / __/  ____ ___  (_)___  ____  _____
@@ -61,7 +61,7 @@ zstyle ':completion:*:default' menu select=2
 # 大文字も補完
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 # 補完を水平方向に表示
-setopt list_rows_first
+# setopt list_rows_first
 
 #色
 autoload -Uz colors
@@ -120,7 +120,7 @@ export PATH=$PATH:$HOME/bin/bin/
 # cdしたあとで、自動的に tree する(treeが泣ければls)
 if type "colorls" >/dev/null 2>&1;then
 	function chpwd(){
-		if test `ls $(pwd) -R| wc -w` -gt 10;then
+		if test `ls $(pwd) -R| wc -w` -gt 10 ;then
 			tree --charset=C -L 1
 		else
 			colorls --tree
@@ -128,7 +128,7 @@ if type "colorls" >/dev/null 2>&1;then
 elif type "tree" >/dev/null 2>&1;then
 	function chpwd() { tree --charset=C -L 1; }
 else
-	function chpwd() { ls; }
+	function chpwd() { pwd;ls|sed -e 's/^/|-- /g'; }
 fi
 
 #deleteを使えるように
@@ -150,6 +150,7 @@ setopt pushd_ignore_dups #重複削除
 alias vz="vim ~/.zshrc"
 alias vzo="vim ~/.zsh_ownrc"
 alias vv="vim ~/.vimrc"
+alias vt="vim ~/.tmux.conf"
 alias sz="source ~/.zshrc"
 
 alias dot="cd ~/.dotfiles/"
@@ -187,13 +188,14 @@ alias cleartrash="rm -rf ~/.local/share/Trash/files/*" #ゴミ箱カラ
 # コピペの設定
 which xsel >/dev/null 2>&1 && alias -g pbcopy="xsel --clipboard --input"; alias -g pbpaste="xsel --clipboard --output"
 
+#Ctrl-rでいけるけどね
 # %h history番号 -->でクリップボードに対応するコマンドをコピー -->Ctrl+Shift+vで貼り付けられる
 function h(){
 	history $1 | sed -n 1P|awk '{$1=""; print}' | tr -d "\n"| sed -e 's/^[ ]*//g' | pbcopy #trで改行捨て,sedで行頭の空白削除
 }
 
 #fzfがあれば実行
-test -f ~/.fzf.zsh && source ~/.fzf.zsh && {alias -g his="history 0|fzf --ansi --multi --reverse"; alias gl="git log --color|fzf --ansi --select-1 --reverse --multi"} || alias his="history 0"
+test -f ~/.fzf.zsh && source ~/.fzf.zsh && {alias -g his="history 0|tac|fzf --ansi --multi --reverse"; alias gl="git log --color|fzf --ansi --select-1 --reverse --multi"} || alias his="history 0"
 
 #git系
 if type "colorls" >/dev/null 2>&1;then
@@ -268,16 +270,16 @@ function prompt-git-current-branch(){
 #コマンドプロンプトの設定
 PROMPT="%(?.%{${fg[green]}%}.%{${fg[red]}%})%n${reset_color}@${fg[blue]}%m${reset_color} %~
 %# "
-function zle-line-init zle-keymap-select(){
-	ZLESTATUS="${${KEYMAP/vicmd/${fg[red]}NOR${reset_color}}/(main|viins)/${fg[blue]}INS${reset_color}}"
-	PROMPT="%(?.%{${fg[green]}%}.%{${fg[red]}%})%n${reset_color}@${fg[blue]}%m${reset_color} %~
-$ZLESTATUS%# "
-	RPROMPT=`prompt-git-current-branch`
-	zle reset-prompt
-}
-
-ZLE_RPROMPT_INDENT=0
-setopt prompt_subst
+# function zle-line-init zle-keymap-select(){
+# 	ZLESTATUS="${${KEYMAP/vicmd/${fg[red]}NOR${reset_color}}/(main|viins)/${fg[blue]}INS${reset_color}}"
+# 	PROMPT="%(?.%{${fg[green]}%}.%{${fg[red]}%})%n${reset_color}@${fg[blue]}%m${reset_color} %~
+# $ZLESTATUS%# "
+# 	RPROMPT=`prompt-git-current-branch`
+# 	zle reset-prompt
+# }
+#
+# ZLE_RPROMPT_INDENT=0
+# setopt prompt_subst
 #コマンド実行前に呼ばれる関数
 precmd(){
 	RPROMPT="`prompt-git-current-branch`"
@@ -335,6 +337,15 @@ function dot(){
 	done
 }
 
+function volume(){
+	amixer -c0 sset Headphone $1%,$1% unmute
+	amixer -c0 sset Master $1%,$1% unmute
+}
+
+function calc(){
+	echo "$*" | bc -l
+}
+
 # calは元号入力に対応させた関数(第一引数は年号)
 function cal(){
 	year=`echo $1|awk '{print substr($0,2)}'`
@@ -361,12 +372,20 @@ function cal(){
 	/usr/bin/cal $seireki $other
 }
 
-# 引数に検索したい文字列を入れる(空白を含む場合は""でかこう) --> w3mでgoogle検索
 function what(){
+	if test -f "$1" ;then
+		head "$1" | /bin/grep -m 1 '#@' | sed 's/.*)//g'
+	else
+		exit 1
+	fi
+}
+
+# 引数に検索したい文字列を入れる(空白を含む場合は""でかこう) --> w3mでgoogle検索
+function whats(){
 	case $1 in
 		--help|-h)
 			echo Usage
-			echo "what [keyworld]  -->google search"
+			echo "whats [keyworld]  -->google search"
 			;;
 		*)
 			if [ -p /dev/stdin ]; then
