@@ -57,6 +57,10 @@ git config --global alias.tree 'log --graph --all --format="%x09%C(cyan bold)%an
 cd $CURRENT_PATH
 ./update.sh
 
+#compile C/CXX functions
+test "$CURRENT_PATH" = "" || rm -rf "$CURRENT_PATH/bin/"; mkdir "$CURRENT_PATH/bin/"
+(cd $CURRENT_PATH/src;make clean; make && make install)
+
 #Last msg
 echo
 echo "OK. Finished all settings."

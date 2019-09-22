@@ -13,6 +13,8 @@ call plug#begin('~/.vim/plugged')
 "フォント(icon)
 Plug 'ryanoasis/vim-devicons'
 
+Plug 'vim-jp/cpp-vim'
+
 "Bash support plugin
 " Plug 'vim-scripts/bash-support.vim'
 
@@ -213,6 +215,9 @@ set list listchars=tab:\▸\-
 set tabstop=4
 " 行頭でのTab文字の表示幅
 set shiftwidth=4
+autocmd BufEnter *.cpp,*.c set tabstop=2
+autocmd BufEnter *.cpp,*.c set shiftwidth=2
+autocmd BufEnter *.cpp,*.c set cindent
 "eコマンドなどのtab補完
 set wildmenu
 set wildmode=full
@@ -396,6 +401,8 @@ call NERDTreeHighlightFile('html',   'yellow',  'none', 'yellow',  '#151515')
 call NERDTreeHighlightFile('styl',   'cyan',    'none', 'cyan',    '#151515')
 call NERDTreeHighlightFile('css',    'cyan',    'none', 'cyan',    '#151515')
 call NERDTreeHighlightFile('rb',     'Red',     'none', 'red',     '#151515')
+call NERDTreeHighlightFile('cpp',     'blue',     'none', 'red',     '#151515')
+call NERDTreeHighlightFile('c',     'green',     'none', 'red',     '#151515')
 call NERDTreeHighlightFile('js',     'Red',     'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('sh',    'red', 'none', '#ff00ff', '#151515')
 

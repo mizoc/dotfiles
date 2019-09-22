@@ -116,6 +116,7 @@ cdpath=()
 #パス通す
 export PATH="$PATH:/sbin"
 export PATH=$PATH:$HOME/bin/bin/
+export PATH=$PATH:$HOME/.dotfiles/bin/
 
 # cdしたあとで、自動的に tree する(treeが泣ければls)
 if type "colorls" >/dev/null 2>&1;then
@@ -152,6 +153,8 @@ alias vzo="vim ~/.zsh_ownrc"
 alias vv="vim ~/.vimrc"
 alias vt="vim ~/.tmux.conf"
 alias sz="source ~/.zshrc"
+
+alias svim="vim -u ~/.simple_vimrc"
 
 alias dot="cd ~/.dotfiles/"
 
@@ -344,6 +347,14 @@ function volume(){
 
 function calc(){
 	echo "$*" | bc -l
+}
+
+function co(){
+	gcc $1 && ./a.out
+}
+
+function cpo(){
+	g++ $1 && ./a.out
 }
 
 # calは元号入力に対応させた関数(第一引数は年号)
