@@ -354,7 +354,31 @@ function co(){
 }
 
 function cpo(){
-	g++ $1 && ./a.out
+	g++ $1 && {shift
+	./a.out $@
+	}
+}
+
+function cppt(){
+	local template=`cat <<EOF
+#include<iostream>
+#include<string>
+#include<cstdio>
+using namespace std;
+
+int main(){
+
+	return 0;
+}
+EOF
+`
+	if test -f "$1";then
+		echo "File $1 is already exist" 1>&2
+		echo "[Usage] \$$0 NEW-CPP-FILEPATH" 1>&2
+	else
+		echo $template >"$1"
+	fi
+
 }
 
 # calは元号入力に対応させた関数(第一引数は年号)
