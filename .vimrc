@@ -10,6 +10,9 @@
 "---------------Setting of Plugin--------------------
 call plug#begin('~/.vim/plugged')
 
+"c++補完
+Plug 'justmao945/vim-clang'
+
 "フォント(icon)
 Plug 'ryanoasis/vim-devicons'
 
@@ -218,6 +221,8 @@ set shiftwidth=4
 autocmd BufEnter *.cpp,*.c set tabstop=2
 autocmd BufEnter *.cpp,*.c set shiftwidth=2
 autocmd BufEnter *.cpp,*.c set cindent
+autocmd BufEnter *.cpp,*.c ClangCompleteInit
+
 "eコマンドなどのtab補完
 set wildmenu
 set wildmode=full
@@ -245,6 +250,7 @@ nmap <F6> :!python %
 nmap <F10> :source %
 "f8でruby実行
 nmap <F4> :!ruby %
+nmap <F2> :!g++ % && ./a.out
 "クリップボードの設定
 set clipboard=unnamed,autoselect
 
@@ -417,6 +423,13 @@ autocmd FileType python BracelessEnable +indent +fold "+highlight-cc
 let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'vimrc'] "無効
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
+
+"setting of clang
+let g:clang_c_option = '-std=c11'
+let g:clang_cpp_option = '-std=c++1z'
+let g:clang_format_style = 'Google'
+let g:clang_format_auto = 1
+let g:clang_check_syntax = 1
 
 " setting of leader
 let mapleader="\<Space>"

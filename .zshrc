@@ -12,17 +12,9 @@
 
 fpath=(/usr/share/zsh/5.6.2/functions $fpath)
 
-#これをしないとpowerlineが表示エラーになる
 export LC_CTYPE="en_US.UTF-8"
-#---------参考----------
-# $echo -e '\u2190\u2191\u2192\u2193'
-# 	これがエラーなく動く-->OK
-# 	以下のようなエラーが出る --> $export LC_CTYPE="en_US.UTF-8"
-# 		zsh: character not in range
 export colors
 export TERM="xterm-256color"
-
-# 日本語にすると表示が日本語になって嫌なので、コメントアウト
 #export LANG=ja_JP.UTF-8
 export LANG=C
 
@@ -139,10 +131,6 @@ bindkey "^[[3~" delete-char #これをコメントアウトすると、deleteで
 bindkey -v
 bindkey -M viins 'jj' vi-cmd-mode
 
-#Setting of z.sh
-# test -f ~/bin/z/z.sh && source ~/bin/z/z.sh
-alias clearz="rm -rf ~/.z && touch ~/.z"
-
 #Setting of pushd
 setopt auto_pushd #自動でpushd実行
 setopt pushd_ignore_dups #重複削除
@@ -187,6 +175,7 @@ alias clearcookie="rm -rf ~/.w3m/cookie && touch ~/.w3m/cookie "
 alias clearhistory="rm -rf ~/.w3m/history && touch ~/.w3m/history "
 alias clearw3m="clearcookie && clearhistory" #上2つの統合版
 alias cleartrash="rm -rf ~/.local/share/Trash/files/*" #ゴミ箱カラ
+alias clearconky="kill `pgrep -f 'conky -b -c'`"
 
 # コピペの設定
 which xsel >/dev/null 2>&1 && alias -g pbcopy="xsel --clipboard --input"; alias -g pbpaste="xsel --clipboard --output"
@@ -273,24 +262,11 @@ function prompt-git-current-branch(){
 #コマンドプロンプトの設定
 PROMPT="%(?.%{${fg[green]}%}.%{${fg[red]}%})%n${reset_color}@${fg[blue]}%m${reset_color} %~
 %# "
-# function zle-line-init zle-keymap-select(){
-# 	ZLESTATUS="${${KEYMAP/vicmd/${fg[red]}NOR${reset_color}}/(main|viins)/${fg[blue]}INS${reset_color}}"
-# 	PROMPT="%(?.%{${fg[green]}%}.%{${fg[red]}%})%n${reset_color}@${fg[blue]}%m${reset_color} %~
-# $ZLESTATUS%# "
-# 	RPROMPT=`prompt-git-current-branch`
-# 	zle reset-prompt
-# }
-#
-# ZLE_RPROMPT_INDENT=0
-# setopt prompt_subst
+
 #コマンド実行前に呼ばれる関数
 precmd(){
 	RPROMPT="`prompt-git-current-branch`"
 }
-
-# change status of zle
-# zle -N zle-line-init
-# zle -N zle-keymap-select
 
 #入力された文字列を赤色にして返す(パイプ対応)
 function reds(){
@@ -340,25 +316,33 @@ function dot(){
 	done
 }
 
+#change volume
 function volume(){
 	amixer -c0 sset Headphone $1%,$1% unmute
+	amixer -c0 sset Speaker $1%,$1% unmute
 	amixer -c0 sset Master $1%,$1% unmute
 }
 
+#calculate
 function calc(){
 	echo "$*" | bc -l
 }
 
+#compile c program && excute
 function co(){
-	gcc $1 && ./a.out
+	gcc "$1" && {shift
+	./a.out $@
+	}
 }
 
+#compile c++ program && excute
 function cpo(){
 	g++ $1 && {shift
 	./a.out $@
 	}
 }
 
+#enter template of C++ program to $1 file.
 function cppt(){
 	local template=`cat <<EOF
 #include<iostream>
