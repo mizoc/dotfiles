@@ -214,6 +214,18 @@ alias -g cd2="cd ../../"
 alias -g ....="cd ../../../"
 alias -g cd3="cd ../../../"
 
+#awk
+alias -g a1="awk '{print \$1}'"
+alias -g a2="awk '{print \$2}'"
+alias -g a3="awk '{print \$3}'"
+alias -g a4="awk '{print \$4}'"
+alias -g a5="awk '{print \$5}'"
+alias -g a6="awk '{print \$6}'"
+alias -g a7="awk '{print \$7}'"
+alias -g a8="awk '{print \$8}'"
+alias -g a9="awk '{print \$9}'"
+alias -g a10="awk '{print \$10}'"
+
 #サフィックスのエイリアス設定
 alias -s py=python3
 
@@ -259,13 +271,17 @@ function prompt-git-current-branch(){
 	echo "${k}%F${branch_status}[$branch_name]%F{reset_color}"
 }
 
+function prompt-ssh(){
+	[[ -n "${REMOTEHoST}${SSH_CONNECTION}" ]] && echo "%F{blue}[SSH]%F{reset_color}"
+}
+
 #コマンドプロンプトの設定
 PROMPT="%(?.%{${fg[green]}%}.%{${fg[red]}%})%n${reset_color}@${fg[blue]}%m${reset_color} %~
 %# "
 
 #コマンド実行前に呼ばれる関数
 precmd(){
-	RPROMPT="`prompt-git-current-branch`"
+	RPROMPT="`prompt-ssh``prompt-git-current-branch`"
 }
 
 #入力された文字列を赤色にして返す(パイプ対応)
