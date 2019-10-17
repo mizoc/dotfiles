@@ -10,13 +10,16 @@
 # /___/____/_/ /_/_/   \___/   \____/_/    /_/ /_/ /_/_/ /___/\____/\___/
 # --------------------------------------------------------------------------
 
-fpath=(/usr/share/zsh/5.6.2/functions $fpath)
+fpath=(/usr/share/zsh/5.6.2/functions $fpath $HOME/.dotfiles/bin)
 
 export LC_CTYPE="en_US.UTF-8"
 export colors
 export TERM="xterm-256color"
 #export LANG=ja_JP.UTF-8
 export LANG=C
+export GOPATH=$HOME/go
+export GOOS=linux
+export GOARCH=amb64
 
 #システムごとの設定ファイル(~/.zsh_ownrc)があれば読み込む
 if test -f $HOME/.zsh_ownrc;then
@@ -52,8 +55,6 @@ autoload -Uz is-at-least
 zstyle ':completion:*:default' menu select=2
 # 大文字も補完
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-# 補完を水平方向に表示
-# setopt list_rows_first
 
 #色
 autoload -Uz colors
@@ -108,7 +109,7 @@ cdpath=()
 #パス通す
 export PATH="$PATH:/sbin"
 export PATH=$PATH:$HOME/bin/bin/
-export PATH=$PATH:$HOME/.dotfiles/bin/
+# export PATH=$PATH:$HOME/.dotfiles/bin/
 
 # cdしたあとで、自動的に tree する(treeが泣ければls)
 if type "colorls" >/dev/null 2>&1;then
@@ -290,7 +291,7 @@ function reds(){
 		--help|-h)
 			printf "\033[31m\033[1m%s\033[m\n"  "This is a program that echo red colored strings."
 			echo ""
-			echo [Usage]
+			echo '[Usage]'
 			printf "\033[31m%s\033[m\n"  "\$reds [-h|--help] string  OR  \$reds [-h|--help] \"two strings\"  OR  \$cat filename|reds"
 			;;
 
@@ -311,6 +312,7 @@ function reds(){
 			;;
 	esac
 }
+
 
 #spin [str]
 function spin(){
@@ -437,8 +439,22 @@ function whats(){
 			w3m "https://www.google.com/search?q=${__str}"
 			;;
 	esac
-
 }
+
+#自作関数等の補完設定
+_color(){
+	_values \
+		'colors' \
+		'black' \
+		'red' \
+		'green' \
+		'yellow' \
+		'blue' \
+		'magenta' \
+		'cyan' \
+		'white'
+}
+compdef _color color
 
 #ディストリビューション名表示
 if test -f /etc/slackware-version;then

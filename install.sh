@@ -28,6 +28,7 @@ END
 mkdir -p $HOME/src
 mkdir -p $HOME/bin
 mkdir -p $HOME/tmp
+mkdir -p $HOME/go
 
 #vim-plug
 echo "Downloading vim-plug..."
