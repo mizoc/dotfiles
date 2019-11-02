@@ -17,9 +17,9 @@ export colors
 export TERM="xterm-256color"
 #export LANG=ja_JP.UTF-8
 export LANG=C
-export GOPATH=$HOME/go
 export GOOS=linux
-export GOARCH=amb64
+export GOARCH=amd64
+export GOPATH=$HOME/go
 
 #システムごとの設定ファイル(~/.zsh_ownrc)があれば読み込む
 if test -f $HOME/.zsh_ownrc;then

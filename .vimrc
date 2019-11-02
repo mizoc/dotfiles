@@ -445,6 +445,8 @@ nnoremap <leader>w :w<cr>
 nnoremap <leader>q :q<cr>
 "leader-jで画面間移動
 nnoremap <leader>j <C-w><C-w>
-"leader-pでコマンド履歴起動
-nnoremap <leader>p :CtrlPCommandLine<cr>
-
+"leader-hでコマンド履歴起動
+nnoremap <leader>h :CtrlPCommandLine<cr>
+"leader-pでpaste mode
+nnoremap <leader>p :set paste<cr>
+nnoremap <leader>o :set nopaste<cr>
