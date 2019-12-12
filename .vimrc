@@ -13,6 +13,9 @@ call plug#begin('~/.vim/plugged')
 "c++補完
 Plug 'justmao945/vim-clang'
 
+"golang
+" Plug 'fatih/vim-go'
+
 "フォント(icon)
 Plug 'ryanoasis/vim-devicons'
 
@@ -218,8 +221,8 @@ set list listchars=tab:\▸\-
 set tabstop=4
 " 行頭でのTab文字の表示幅
 set shiftwidth=4
-autocmd BufEnter *.cpp,*.c set tabstop=2
-autocmd BufEnter *.cpp,*.c set shiftwidth=2
+autocmd BufEnter *.go,*.cpp,*.c set tabstop=2
+autocmd BufEnter *.go,*.cpp,*.c set shiftwidth=2
 autocmd BufEnter *.cpp,*.c set cindent
 autocmd BufEnter *.cpp,*.c ClangCompleteInit
 
@@ -360,11 +363,6 @@ let g:airline_symbols.linenr = ''
 " let g:airline_symbols.readonly = '⭤'
 " let g:airline_symbols.linenr = '⭡'
 "
-" -------------------Setting of Bash-support----------------
-let g:BASH_AuthorName = 'mizoc'
-let g:BASH_Email = 'yaesuft729@gmail.com'
-let g:BASH_Company = 'None'
-"
 " -------------------Setting of Nerdtree---------------------
 " " gitアイコン設定
 " let g:NERDTreeIndicatorMapCustom = {
@@ -418,6 +416,10 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 
 "Settings of braceless
 autocmd FileType python BracelessEnable +indent +fold "+highlight-cc
+
+"Setting of vim-go
+" autocmd BufNewFile,BufRead *.go let g:go_fmt_command = "goimports"
+" let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 
 "settings of vim-indent-guides
 let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'vimrc'] "無効

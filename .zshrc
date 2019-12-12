@@ -12,7 +12,7 @@
 
 fpath=(/usr/share/zsh/5.6.2/functions $fpath $HOME/.dotfiles/bin)
 
-export LC_CTYPE="en_US.UTF-8"
+export LC_CTYPE="ja_JP.UTF-8"
 export colors
 export TERM="xterm-256color"
 #export LANG=ja_JP.UTF-8
@@ -31,6 +31,9 @@ fi
 #
 #制御構文の短縮形を使用できるようにする
 setopt short_loops
+
+#ログアウト時のバックグラウンドジョブ継続
+setopt nohup
 
 # cdを使わずにディレクトリを移動できる
 setopt auto_cd
@@ -381,6 +384,11 @@ EOF
 		echo $template >"$1"
 	fi
 
+}
+
+#disable r(remove) option
+function crontab(){
+	test "$1" = "-r" -o "$1" = "--remove" && return 1 || crontab "$@"
 }
 
 # calは元号入力に対応させた関数(第一引数は年号)
