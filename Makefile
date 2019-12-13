@@ -1,2 +1,2 @@
 all:
-	./first
+	./first && ./install.sh
