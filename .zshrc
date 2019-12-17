@@ -148,8 +148,6 @@ alias sz="source ~/.zshrc"
 
 alias svim="vim -u ~/.simple_vimrc"
 
-alias dot="cd ~/.dotfiles/"
-
 #サブディレクトリを含む容量
 alias lsc='du -sh' #ls capacity
 alias du='du -h' #単位をわかりやすく
@@ -317,6 +315,22 @@ function reds(){
 }
 
 
+function dot(){
+	case "$1" in
+		'')
+			cd ~/.dotfiles;;
+		'install')
+			cd ~/.dotfiles
+			./install.sh;;
+		'uninstall')
+			cd ~/.dotfiles
+			./uninstall.sh;;
+		'version'|'ver')
+			cat ~/.dotfiles/version.txt;;
+	esac
+}
+
+
 #spin [str]
 function spin(){
 	chars=('/' '-' '\' '|')
@@ -328,8 +342,8 @@ function spin(){
 	done
 }
 
-#dot [str]
-function dot(){
+#dots [str]
+function dots(){
 	echo -n $1
 	while :;do
 		echo -ne "."
