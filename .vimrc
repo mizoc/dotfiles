@@ -21,6 +21,17 @@ Plug 'ryanoasis/vim-devicons'
 
 Plug 'vim-jp/cpp-vim'
 
+"lsp
+":LspInstallServer
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'Shougo/deoplete.nvim'
+Plug 'lighttiger2505/deoplete-vim-lsp'
+
+
 "Bash support plugin
 " Plug 'vim-scripts/bash-support.vim'
 
@@ -224,7 +235,7 @@ set shiftwidth=4
 autocmd BufEnter *.go,*.cpp,*.c set tabstop=2
 autocmd BufEnter *.go,*.cpp,*.c set shiftwidth=2
 autocmd BufEnter *.cpp,*.c set cindent
-autocmd BufEnter *.cpp,*.c ClangCompleteInit
+" autocmd BufEnter *.cpp,*.c ClangCompleteInit
 
 "eコマンドなどのtab補完
 set wildmenu
@@ -451,4 +462,13 @@ nnoremap <leader>j <C-w><C-w>
 nnoremap <leader>h :CtrlPCommandLine<cr>
 "leader-pでpaste mode
 nnoremap <leader>p :set paste<cr>
-nnoremap <leader>o :set nopaste<cr>
+nnoremap <leader>pp :set nopaste<cr>
+"leader-oでsplit
+nnoremap <leader>o :split<cr>
+"leader-oでvs
+nnoremap <leader>e :vsplit<cr>
+"leader-a+hjklでpain間の移動
+nnoremap <leader>aj <C-w>j
+nnoremap <leader>ah <C-w>h
+nnoremap <leader>ak <C-w>k
+nnoremap <leader>al <C-w>l
