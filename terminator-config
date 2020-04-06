@@ -1,0 +1,28 @@
+[global_config]
+  broadcast_default = off
+  dbus = False
+  enabled_plugins = ActivityWatch, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+  geometry_hinting = True
+  hide_from_taskbar = True
+  sticky = True
+  title_font = Waree Bold Oblique 10
+  title_use_system_font = False
+[keybindings]
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]
+[profiles]
+  [[default]]
+    copy_on_selection = True
+    cursor_color = "#aaaaaa"
+    font = Monospace Bold Italic 10
+    foreground_color = "#00ff00"
+    login_shell = True
+    scrollback_lines = 10000
+    use_system_font = False

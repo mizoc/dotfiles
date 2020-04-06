@@ -19,4 +19,4 @@ fi
 for i in .??* ;do
 	[ "$i" = ".git" ] && continue
 	ln -sf "$path/$i" "$HOME"/"$i"
-done && echo 'done' || echo failed
+done && ln -fs "$path/terminator-config" "$HOME/.config/terminator/config" && echo 'done' || echo failed
