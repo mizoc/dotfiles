@@ -23,7 +23,7 @@
   [[default]]
     copy_on_selection = True
     cursor_color = "#aaaaaa"
-    font = Monospace Bold Italic 10
+    font = Ricty Diminished Discord Bold Oblique 11
     foreground_color = "#00ff00"
     login_shell = True
     scrollback_lines = 10000

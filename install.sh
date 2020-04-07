@@ -62,38 +62,18 @@ cd $CURRENT_PATH
 test "$CURRENT_PATH" = "" || rm -rf "$CURRENT_PATH/bin/"; mkdir "$CURRENT_PATH/bin/"
 (cd $CURRENT_PATH/src;make clean; make && make install)
 
+#python pkgs
+sudo python3 -m pip install --upgrade pip
+sudo pip install -r $CURRENT_PATH/python-pkgs.txt
+
+#if solus, eopkg
+which 'eopkg' >/dev/null 2>&1
+if $? -eq 0;then
+	sh $CURRENT_PATH/myeopkg.sh
+fi
+
 #Last msg
 echo
 echo "OK. Finished all settings."
-echo 'Now, excute vim and :pluginstall'
+echo 'Now, excute vim and :pluginstall and $zplug install'
 echo You should install GNU source-highlight
-
-# stty -echo
-# echo -n "[sudo] Password:"
-# read password
-# stty echo
-# echo
-# gem install colorls
-# function dotwait(){
-# 	echo -n $1
-# 	while :;do
-# 		echo -ne "."
-# 		sleep 0.5
-# 	done
-# }
-#
-# which pip >/dev/null 2>&1
-# if [ $? -ne 0 ];then
-# 	echo "Installing pip..."
-# 	echo "$password"|sudo -S python3 -m pip install pip
-# fi
-#
-# #pip packages
-# echo "$password"|sudo -S pip install -r "$path/requirements.txt" >/dev/null 2>&1&
-# pid=$!
-# echo Downloading python packages
-# dotwait "It may take a minutes" &
-# dot_pid=$!
-# wait $pid
-# kill $dot_pid
-# echo 'done'

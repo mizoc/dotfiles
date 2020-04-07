@@ -9,6 +9,3 @@ all:
 uninstall:
 	./last_darwin && ./uninstall.sh
 endif
-
-install:
-	./install.sh
