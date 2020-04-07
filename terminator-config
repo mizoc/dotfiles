@@ -17,6 +17,8 @@
       parent = ""
       type = Window
 [plugins]
+  [[ActivityWatch]]
+    hush_period = 30.0
 [profiles]
   [[default]]
     copy_on_selection = True
@@ -25,4 +27,5 @@
     foreground_color = "#00ff00"
     login_shell = True
     scrollback_lines = 10000
+    show_titlebar = False
     use_system_font = False

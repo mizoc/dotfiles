@@ -128,12 +128,11 @@ else
 	function chpwd() { pwd;ls|sed -e 's/^/|-- /g'; }
 fi
 
-#deleteを使えるように
-bindkey "^[[3~" delete-char #これをコメントアウトすると、deleteで大文字になってしまう
-
 #vim mode
 bindkey -v
 bindkey -M viins 'jj' vi-cmd-mode
+#deleteを使えるように
+bindkey "^[[3~" delete-char #これをコメントアウトすると、deleteで大文字になってしまう
 
 #Setting of pushd
 setopt auto_pushd #自動でpushd実行
@@ -209,12 +208,12 @@ type "pacman" >/dev/null || alias pacman="myman"
 alias dir="sl2" #sl2はslのnewバージョン/usr/local/bin/sl2にリンク貼ってる
 
 #cd
-alias -g ..="cd ../"
-alias -g cd1="cd ../"
-alias -g ...="cd ../../"
-alias -g cd2="cd ../../"
-alias -g ....="cd ../../../"
-alias -g cd3="cd ../../../"
+alias -g ..="../"
+alias -g cd1="../"
+alias -g ...="../../"
+alias -g cd2="../../"
+alias -g ....="../../../"
+alias -g cd3="../../../"
 
 #awk
 alias -g a1="awk '{print \$1}'"
