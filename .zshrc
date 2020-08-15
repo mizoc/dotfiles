@@ -17,6 +17,7 @@ export colors
 export TERM="xterm-256color"
 #export LANG=ja_JP.UTF-8
 export LANG=C
+export LC_ALL=C
 export GOOS=linux
 export GOARCH=amd64
 export GOPATH=$HOME/go

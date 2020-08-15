@@ -21,6 +21,7 @@
     hush_period = 30.0
 [profiles]
   [[default]]
+    background_darkness = 0.87
     copy_on_selection = True
     cursor_color = "#aaaaaa"
     font = Ricty Diminished Discord Bold Oblique 11

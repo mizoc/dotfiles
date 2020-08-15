@@ -13,13 +13,19 @@ call plug#begin('~/.vim/plugged')
 "c++補完
 Plug 'justmao945/vim-clang'
 
+"cal
+Plug 'itchyny/calendar.vim'
+
 "golang
 " Plug 'fatih/vim-go'
 
 "フォント(icon)
 Plug 'ryanoasis/vim-devicons'
 
-Plug 'vim-jp/cpp-vim'
+"show relative number
+Plug 'vim-scripts/RltvNmbr.vim'
+
+" Plug 'vim-jp/cpp-vim'
 
 "lsp
 ":LspInstallServer
@@ -267,6 +273,9 @@ nmap <F4> :!ruby %
 nmap <F2> :!g++ % && ./a.out
 "クリップボードの設定
 set clipboard=unnamed,autoselect
+
+"show relative number
+autocmd BufEnter * RltvNmbr
 
 "GUNDOの設定
 set undofile
