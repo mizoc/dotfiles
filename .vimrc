@@ -312,7 +312,9 @@ nnoremap <silent> [previm]r :call previm#refresh()<CR>
 
 "------------------vim-table-modeの設定---------------
 let g:table_mode_corner = '|'
-autocmd BufNewFile,BufRead *.md* TableModeEnable
+let g:table_mode_corner_corner='+'
+let g:table_mode_header_fillchar='='
+silent autocmd BufNewFile,BufRead *.md,*.txt TableModeEnable
 
 "-------------------ホワイトスペースの可視化設定-----------------------
 autocmd BufNewFile,BufRead * FixWhitespace
