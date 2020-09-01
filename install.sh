@@ -34,6 +34,9 @@ mkdir -p $HOME/go
 echo "Downloading vim-plug..."
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && echo 'done'
 
+#z.sh
+git clone https://github.com/rupa/z.git $HOME/src/z
+
 #zplug
 echo "Downloading zplug..."
 export ZPLUG_HOME=~/.zplug

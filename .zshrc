@@ -191,6 +191,9 @@ function h(){
 #fzfがあれば実行
 test -f ~/.fzf.zsh && source ~/.fzf.zsh && {alias -g his="history 0|tac|fzf --ansi --multi --reverse"; alias gl="git log --color|fzf --ansi --select-1 --reverse --multi"} || alias his="history 0"
 
+#z.shがあれば実行
+test -f ~/src/z/z.sh && . ~/src/z/z.sh
+
 #git系
 if type "colorls" >/dev/null 2>&1;then
 	alias gs="colorls --gs -A"
@@ -403,6 +406,15 @@ EOF
 #disable r(remove) option
 function crontab(){
 	test "$1" = "-r" -o "$1" = "--remove" && return 1 || crontab "$@"
+}
+
+#youtube download
+function ydl(){
+if type "youtube-dl" >/dev/null 2>&1;then
+	youtube-dl -i --extract-audio --audio-format mp3 --audio-quality 0 "$0"
+else
+	ydl $@
+fi
 }
 
 # calは元号入力に対応させた関数(第一引数は年号)

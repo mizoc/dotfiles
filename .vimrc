@@ -90,7 +90,7 @@ Plug 'mattn/excitetranslate-vim'
 "便利なもの
 Plug 'Shougo/Unite.vim'
 "Plug 'rhysd/vim-operator-surround'
-"Plug 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 "Plug 'vim-scripts/Align'
 Plug 'vim-scripts/YankRing.vim'
 
