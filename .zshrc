@@ -277,7 +277,7 @@ function prompt-git-current-branch(){
 }
 
 function prompt-ssh(){
-	[[ -n "${REMOTEHoST}${SSH_CONNECTION}" ]] && echo "%F{blue}[SSH]%F{reset_color}"
+	[[ -n "${REMOTEHoST}${SSH_CONNECTION}" ]] && echo "%F{blue}[SSH]%F{reset}"
 }
 
 #コマンドプロンプトの設定
