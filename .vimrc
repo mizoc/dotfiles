@@ -275,7 +275,7 @@ nmap <F2> :!g++ % && ./a.out
 set clipboard=unnamed,autoselect
 
 "show relative number
-autocmd BufEnter * RltvNmbr
+" autocmd BufEnter * RltvNmbr
 
 "GUNDOの設定
 set undofile

@@ -1,4 +1,3 @@
-echo This is a born again shell.
 #powerline-shell
 # function _update_ps1() {
 #    PS1=$(powerline-shell $?)

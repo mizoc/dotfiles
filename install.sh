@@ -56,6 +56,10 @@ git clone git://github.com/erikw/tmux-powerline.git ~/.tmux-powerline
 git config --global core.pager "more" #エスケープコード認識
 git config --global core.quotepath "false" #日本語文字化け対策
 git config --global alias.tree 'log --graph --all --format="%x09%C(cyan bold)%an%Creset%x09%C(yellow)%h%Creset %C(magenta reverse)%d%Creset %s"'
+git config --global alias.tags "tag -l"
+git config --global alias.branches 'branch -a'
+git config --global alias.cm 'commit'
+git config --global alias.st 'status -sb'
 
 #ln dotfiles
 cd $CURRENT_PATH

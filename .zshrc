@@ -195,14 +195,15 @@ test -f ~/.fzf.zsh && source ~/.fzf.zsh && {alias -g his="history 0|tac|fzf --an
 test -f ~/src/z/z.sh && . ~/src/z/z.sh
 
 #git系
-if type "colorls" >/dev/null 2>&1;then
-	alias gs="colorls --gs -A"
-	alias gst="colorls --gs -tA"
-else
-alias gs="git status"
-fi
+# if type "colorls" >/dev/null 2>&1;then
+# 	alias gs="colorls --gs -A"
+# 	alias gst="colorls --gs -tA"
+# else
+alias gs="git status -sb"
+# fi
 alias ga="git add ."
 alias gp="git push"
+alias gc="git commit"
 
 alias -g mkdir="mkdir -p"
 
