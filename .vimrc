@@ -45,6 +45,8 @@ Plug 'lighttiger2505/deoplete-vim-lsp'
 Plug 'bronson/vim-trailing-whitespace'
 
 "markdownのプラグイン 下で設定
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
 Plug 'kannokanno/previm'
 Plug 'tyru/open-browser.vim'
 
@@ -435,6 +437,9 @@ call NERDTreeHighlightFile('sh',    'red', 'none', '#ff00ff', '#151515')
 "tabで補完
 let g:SuperTabContextDefaultCompletionType = "context"
 let g:SuperTabDefaultCompletionType = "<c-n>"
+
+"disable auto fold of markdown
+let g:vim_markdown_folding_disabled = 1
 
 "Settings of braceless
 autocmd FileType python BracelessEnable +indent +fold "+highlight-cc

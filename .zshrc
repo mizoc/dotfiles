@@ -112,7 +112,7 @@ cdpath=()
 
 #パス通す
 export PATH="$PATH:/sbin"
-export PATH=$PATH:$HOME/bin/bin/
+export PATH=$PATH:$HOME/bin/bin/:"/home/taichi/.local/bin"
 # export PATH=$PATH:$HOME/.dotfiles/bin/
 
 # cdしたあとで、自動的に tree する(treeが泣ければls)
@@ -188,6 +188,12 @@ function h(){
 	history $1 | sed -n 1P|awk '{$1=""; print}' | tr -d "\n"| sed -e 's/^[ ]*//g' | pbcopy #trで改行捨て,sedで行頭の空白削除
 }
 
+#新しいシェルスクリプトを作るとき.実行権限付与する
+function newsh(){
+	[ -z "$1" ] && exit 1
+	vim "$1" && chmod +x "$1"
+}
+
 #fzfがあれば実行
 test -f ~/.fzf.zsh && source ~/.fzf.zsh && {alias -g his="history 0|tac|fzf --ansi --multi --reverse"; alias gl="git log --color|fzf --ansi --select-1 --reverse --multi"} || alias his="history 0"
 
@@ -204,6 +210,7 @@ alias gs="git status -sb"
 alias ga="git add ."
 alias gp="git push"
 alias gc="git commit"
+alias gd="git diff"
 
 alias -g mkdir="mkdir -p"
 
