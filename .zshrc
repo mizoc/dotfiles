@@ -129,6 +129,9 @@ else
 	function chpwd() { pwd;ls|sed -e 's/^/|-- /g'; }
 fi
 
+#github cli
+eval "$(gh completion -s zsh)"
+
 #vim mode
 bindkey -v
 bindkey -M viins 'jj' vi-cmd-mode
@@ -190,8 +193,8 @@ function h(){
 
 #新しいシェルスクリプトを作るとき.実行権限付与する
 function newsh(){
-	[ -z "$1" ] && exit 1
-	vim "$1" && chmod +x "$1"
+	[ -z "$1.sh" ] && exit 1
+	vim "$1.sh" && chmod +x "$1.sh"
 }
 
 #fzfがあれば実行

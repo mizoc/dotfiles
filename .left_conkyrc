@@ -41,7 +41,7 @@ conky.text = [[
 ${font DejaVu Sans Mono:size=14}JST ${alignc}${time %I:%M:%S}
 ${font Impact:size=10}${alignc}${time %A, %B %e, %Y}
 ${font Entopia:bold:size=12}${color orange}CALENDAR ${hr 2}$color
-${font DejaVu Sans Mono:size=9}${execpi 1800 DA=`date +%_d`; cal | sed s/"\(^\|[^0-9]\)$DA"'\b'/'\1${color orange}'"$DA"'$color'/}
+${font DejaVu Sans Mono:size=9}${execpi 1800 DA=`date +%_d`;export LANG=C; cal | sed s/"\(^\|[^0-9]\)$DA"'\b'/'\1${color orange}'"$DA"'$color'/}
 ${font Entopia:bold:size=12}${color red}FILE SYSTEM ${hr 2}${font Noto sans:size=8}
 #${offset 4}${color}dev ${alignr}FREE     USED
 ${offset 4}${color}root (${fs_type /}) ${color yellow}${alignr}${fs_free /} ${fs_used /}
