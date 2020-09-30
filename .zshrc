@@ -72,16 +72,16 @@ test -f /usr/bin/src-hilite-lesspipe.sh && export LESSOPEN='| /usr/bin/src-hilit
 #manにも色付ける
 export MANPAGER='less -R'
 man() {
-    env \
-        LESS_TERMCAP_mb=$(printf "\e[1;33m") \
-        LESS_TERMCAP_md=$(printf "\e[1;36m") \
-        LESS_TERMCAP_me=$(printf "\e[0m") \
-        LESS_TERMCAP_se=$(printf "\e[0m") \
-        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-        LESS_TERMCAP_ue=$(printf "\e[0m") \
-        LESS_TERMCAP_us=$(printf "\e[1;32m") \
-        man "$@"
-}
+	env \
+		LESS_TERMCAP_mb=$(printf "\e[1;33m") \
+		LESS_TERMCAP_md=$(printf "\e[1;36m") \
+		LESS_TERMCAP_me=$(printf "\e[0m") \
+		LESS_TERMCAP_se=$(printf "\e[0m") \
+		LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+		LESS_TERMCAP_ue=$(printf "\e[0m") \
+		LESS_TERMCAP_us=$(printf "\e[1;32m") \
+		man "$@"
+	}
 
 #Setting of History
 #他のターミナルとの履歴の共有
@@ -122,7 +122,8 @@ if type "colorls" >/dev/null 2>&1;then
 			tree --charset=C -L 1
 		else
 			colorls --tree
-		fi}
+		fi
+	}
 elif type "tree" >/dev/null 2>&1;then
 	function chpwd() { tree --charset=C -L 1; }
 else
@@ -130,7 +131,7 @@ else
 fi
 
 #github cli
-eval "$(gh completion -s zsh)"
+type "gh" >/dev/null 2>&1 && eval "$(gh completion -s zsh)"
 
 #vim mode
 bindkey -v
@@ -182,6 +183,11 @@ alias clearw3m="clearcookie && clearhistory" #上2つの統合版
 alias cleartrash="rm -rf ~/.local/share/Trash/files/*" #ゴミ箱カラ
 alias clearconky="kill `pgrep -f 'conky -b -c'`"
 
+# colordiff
+if [[ -x `which colordiff` ]]; then
+	alias diff='colordiff'
+fi
+
 # コピペの設定
 which xsel >/dev/null 2>&1 && alias -g pbcopy="xsel --clipboard --input"; alias -g pbpaste="xsel --clipboard --output"
 
@@ -193,8 +199,14 @@ function h(){
 
 #新しいシェルスクリプトを作るとき.実行権限付与する
 function newsh(){
-	[ -z "$1.sh" ] && exit 1
-	vim "$1.sh" && chmod +x "$1.sh"
+	if test "`echo "$1"|rev |cut -c 1-3`" = "hs.";then
+		local FILENAME="$1"
+	else
+		local FILENAME="$1.sh"
+	fi
+
+	[ -z "$FILENAME" -o -f "$FILENAME" ] && return 1
+	echo '#!/bin/bash\n' >"$FILENAME" && chmod +x "$FILENAME" && vim "$FILENAME"
 }
 
 #fzfがあれば実行
@@ -250,45 +262,45 @@ alias -g grep='grep --color=always'
 
 #Gitのステータス表示
 function prompt-git-current-branch(){
-	local branch_name st branch_status
+local branch_name st branch_status
 
-	if [ ! -e ".git" ]; then
-		return
-	fi
-	branch_name=`git branch|grep "*"|awk '{$1="";print}'|sed -e 's/^[ ]*//g'`
-	st=`git status 2> /dev/null`
-	k=" "
+if [ ! -e ".git" ]; then
+	return
+fi
+branch_name=`git branch|grep "*"|awk '{$1="";print}'|sed -e 's/^[ ]*//g'`
+st=`git status 2> /dev/null`
+k=" "
 
-	if [[ -n `echo "$st" | grep "^nothing to"` ]];then
-		branch_status="%F{blue}"
-		k="%F{blue}"
-	fi
+if [[ -n `echo "$st" | grep "^nothing to"` ]];then
+	branch_status="%F{blue}"
+	k="%F{blue}"
+fi
 
-	if [[ -n `echo "$st" | grep "^Untracked files"` ]];then
-		branch_status="%F{cyan}"
-		k+="%F{cyan}?%F{reset_color}"
-	fi
+if [[ -n `echo "$st" | grep "^Untracked files"` ]];then
+	branch_status="%F{cyan}"
+	k+="%F{cyan}?%F{reset_color}"
+fi
 
-	if [[ -n `echo "$st"|grep "^Changes not staged for commit"` ]];then
-	  branch_status="%F{red}"
-	  k+="%F{red}+%F{reset_color}"
-	fi
+if [[ -n `echo "$st"|grep "^Changes not staged for commit"` ]];then
+	branch_status="%F{red}"
+	k+="%F{red}+%F{reset_color}"
+fi
 
-	if [[ -n `echo "$st"|grep "^Changes to be committed"` ]];then
-	  branch_status="%F{yellow}"
-	  k+="%F{yellow}!%F{reset_color}"
-	fi
+if [[ -n `echo "$st"|grep "^Changes to be committed"` ]];then
+	branch_status="%F{yellow}"
+	k+="%F{yellow}!%F{reset_color}"
+fi
 
-	if [[ -n `echo "$st"|grep "^rebase in progress"` ]];then
-		echo "%F{red}!(no branch)"
-		return
-	fi
+if [[ -n `echo "$st"|grep "^rebase in progress"` ]];then
+	echo "%F{red}!(no branch)"
+	return
+fi
 
-	echo "${k}%F${branch_status}[$branch_name]%F{reset_color}"
+echo "${k}%F${branch_status}[$branch_name]%F{reset_color}"
 }
 
 function prompt-ssh(){
-	[[ -n "${REMOTEHoST}${SSH_CONNECTION}" ]] && echo "%F{blue}[SSH]%F{reset}"
+[[ -n "${REMOTEHoST}${SSH_CONNECTION}" ]] && echo "%F{blue}[SSH]%F{reset}"
 }
 
 #コマンドプロンプトの設定
@@ -381,14 +393,14 @@ function calc(){
 function co(){
 	gcc "$1" && {shift
 	./a.out $@
-	}
+}
 }
 
 #compile c++ program && excute
 function cpo(){
 	g++ $1 && {shift
 	./a.out $@
-	}
+}
 }
 
 #enter template of C++ program to $1 file.
@@ -405,12 +417,12 @@ int main(){
 }
 EOF
 `
-	if test -f "$1";then
-		echo "File $1 is already exist" 1>&2
-		echo "[Usage] \$$0 NEW-CPP-FILEPATH" 1>&2
-	else
-		echo $template >"$1"
-	fi
+if test -f "$1";then
+	echo "File $1 is already exist" 1>&2
+	echo "[Usage] \$$0 NEW-CPP-FILEPATH" 1>&2
+else
+	echo $template >"$1"
+fi
 
 }
 
@@ -421,11 +433,11 @@ function crontab(){
 
 #youtube download
 function ydl(){
-if type "youtube-dl" >/dev/null 2>&1;then
-	youtube-dl -i --extract-audio --audio-format mp3 --audio-quality 0 "$0"
-else
-	ydl $@
-fi
+	if type "youtube-dl" >/dev/null 2>&1;then
+		youtube-dl -i --extract-audio --audio-format mp3 --audio-quality 0 "$0"
+	else
+		ydl $@
+	fi
 }
 
 # calは元号入力に対応させた関数(第一引数は年号)
@@ -498,7 +510,7 @@ _color(){
 		'magenta' \
 		'cyan' \
 		'white'
-}
+	}
 compdef _color color
 
 #ディストリビューション名表示

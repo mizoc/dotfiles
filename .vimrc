@@ -44,6 +44,9 @@ Plug 'lighttiger2505/deoplete-vim-lsp'
 "半角スペース可視化
 Plug 'bronson/vim-trailing-whitespace'
 
+"minimap
+Plug 'severin-lemaignan/vim-minimap'
+
 "markdownのプラグイン 下で設定
 Plug 'kannokanno/previm'
 Plug 'tyru/open-browser.vim'
@@ -454,6 +457,16 @@ let g:clang_cpp_option = '-std=c++1z'
 let g:clang_format_style = 'Google'
 let g:clang_format_auto = 1
 let g:clang_check_syntax = 1
+let g:clang_format_style#style_options = {
+	\ "Standard" : "C++11",
+	\ "AlignAfterOpenBracket" : "true",
+	\ "AlignConsecutiveAssignments" : "true",
+	\ "AlignEscapedNewlines" : "Right",
+	\ "AlignTrailingComments" : "true",
+	\ "AllowShortIfStatementsOnASingleLine" : "true",
+	\ "AllowShortBlocksOnASingleLine" : "true",
+	\ "AllowShortLoopsOnASingleLine" : "true",
+	\ "AlwaysBreakBeforeMultilineStrings" : "true"}
 
 " setting of leader
 let mapleader="\<Space>"
