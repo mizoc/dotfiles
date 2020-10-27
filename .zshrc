@@ -560,18 +560,24 @@ source ~/.zplug/init.zsh
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
 #移動
-zplug "b4b4r07/enhancd", use:enhancd.sh, lazy:true
+zplug "b4b4r07/enhancd", use:init.sh
+zplug "mollifier/cd-gitroot", lazy:true
 #ハイライト
 zplug "zsh-users/zsh-syntax-highlighting"
 #タイプ補完
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-completions"
 zplug "chrissicool/zsh-256color"
+
 #peco これをコメントアウトするとなぜかzplugが壊れる
 # zplug "peco/peco", as:command, from:gh-r, use:"*amd64"
 #fzf
 zplug "junegunn/fzf-bin", lazy:true
 zplug "junegunn/fzf", lazy:true
+
+#絵文字
+zplug "stedolan/jq", from:gh-r, as:command \
+    | zplug "b4b4r07/emoji-cli", if:"which jq"
 
 zplug load
 
