@@ -11,7 +11,7 @@
 call plug#begin('~/.vim/plugged')
 
 "c++補完
-Plug 'justmao945/vim-clang'
+" Plug 'justmao945/vim-clang'
 
 "cal
 Plug 'itchyny/calendar.vim'
@@ -133,7 +133,7 @@ Plug 't9md/vim-textmanip'
 Plug 'hynek/vim-python-pep8-indent'
 
 "編集中の関数の中のローカル変数をハイライト
-Plug 'hachibeeDI/python_hl_lvar.vim'
+" Plug 'hachibeeDI/python_hl_lvar.vim'
 
 "インデント単位での調整が可能
 " Plug 'kana/vim-textobj-indent'
@@ -463,10 +463,14 @@ let g:clang_format_style#style_options = {
 	\ "AlignConsecutiveAssignments" : "true",
 	\ "AlignEscapedNewlines" : "Right",
 	\ "AlignTrailingComments" : "true",
+	\ "ColumnLimit" : "150",
 	\ "AllowShortIfStatementsOnASingleLine" : "true",
 	\ "AllowShortBlocksOnASingleLine" : "true",
 	\ "AllowShortLoopsOnASingleLine" : "true",
 	\ "AlwaysBreakBeforeMultilineStrings" : "true"}
+
+" オムニ補完設定
+autocmd FileType typescript setlocal omnifunc=lsp#complete
 
 " setting of leader
 let mapleader="\<Space>"

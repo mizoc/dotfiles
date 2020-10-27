@@ -68,7 +68,7 @@ zstyle ':completion:*' verbose yes
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 #lessに色付ける
 export LESS='-R'
-test -f /usr/bin/src-hilite-lesspipe.sh && export LESSOPEN='| /usr/bin/src-hilite-lesspipe.sh %s' #GNU source-highlightのインストール必須
+test -f /usr/share/source-highlight/src-hilite-lesspipe.sh && export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s' #GNU source-highlightのインストール必須
 #manにも色付ける
 export MANPAGER='less -R'
 man() {
@@ -112,13 +112,13 @@ cdpath=()
 
 #パス通す
 export PATH="$PATH:/sbin"
-export PATH=$PATH:$HOME/bin/bin/:"/home/taichi/.local/bin"
+export PATH=$PATH:$HOME/bin/bin/:"/home/taichi/.local/bin:/snap/bin"
 # export PATH=$PATH:$HOME/.dotfiles/bin/
 
 # cdしたあとで、自動的に tree する(treeが泣ければls)
 if type "colorls" >/dev/null 2>&1;then
 	function chpwd(){
-		if test `ls $(pwd) -R| wc -w` -gt 10 ;then
+		if test `ls $(pwd) -R| wc -w` -gt 10 -o '/home/taichi' = "$(pwd)";then
 			tree --charset=C -L 1
 		else
 			colorls --tree
@@ -139,6 +139,18 @@ bindkey -M viins 'jj' vi-cmd-mode
 #deleteを使えるように
 bindkey "^[[3~" delete-char #これをコメントアウトすると、deleteで大文字になってしまう
 
+#Ctrl-rで履歴検索
+if type "fzf" >/dev/null 2>&1;then
+	function select-history() {
+	  BUFFER=$(history -r 1 | fzf --no-sort +m --query "$LBUFFER" --prompt="History > "|awk '{$1="";print }'|sed 's/^ //g')
+	  CURSOR=$#BUFFER
+	}
+	zle -N select-history
+	bindkey '^r' select-history
+else
+	bindkey '^R' history-incremental-search-backward
+fi
+
 #Setting of pushd
 setopt auto_pushd #自動でpushd実行
 setopt pushd_ignore_dups #重複削除
@@ -155,6 +167,8 @@ alias svim="vim -u ~/.simple_vimrc"
 #サブディレクトリを含む容量
 alias lsc='du -sh' #ls capacity
 alias du='du -h' #単位をわかりやすく
+
+which pip3 >/dev/null 2>&1 && alias pip='pip3'
 
 #ls系
 if type "colorls" >/dev/null 2>&1;then
@@ -212,8 +226,6 @@ function newsh(){
 #fzfがあれば実行
 test -f ~/.fzf.zsh && source ~/.fzf.zsh && {alias -g his="history 0|tac|fzf --ansi --multi --reverse"; alias gl="git log --color|fzf --ansi --select-1 --reverse --multi"} || alias his="history 0"
 
-#z.shがあれば実行
-test -f ~/src/z/z.sh && . ~/src/z/z.sh
 
 #git系
 # if type "colorls" >/dev/null 2>&1;then
@@ -256,6 +268,7 @@ alias -g a10="awk '{print \$10}'"
 
 #サフィックスのエイリアス設定
 alias -s py=python3
+which mpv >/dev/null 2>&1 && alias -s mp3=mpv
 
 #grep
 alias -g grep='grep --color=always'
@@ -549,7 +562,7 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 #移動
 zplug "b4b4r07/enhancd", use:enhancd.sh, lazy:true
 #ハイライト
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "zsh-users/zsh-syntax-highlighting"
 #タイプ補完
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-completions"
