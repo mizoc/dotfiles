@@ -65,7 +65,8 @@ autoload -Uz colors
 colors
 # tab補完中も色つける
 zstyle ':completion:*' verbose yes
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:default' list-colors di=4 ex=33 '=*.cpp=35' '=*.py=34' '=*.rb=31' '=*.sh=32'
 #lessに色付ける
 export LESS='-R'
 test -f /usr/share/source-highlight/src-hilite-lesspipe.sh && export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s' #GNU source-highlightのインストール必須
@@ -150,6 +151,24 @@ if type "fzf" >/dev/null 2>&1;then
 else
 	bindkey '^R' history-incremental-search-backward
 fi
+
+#Ctrl-spaceでautosuggestを承認
+bindkey '^ ' autosuggest-accept
+
+#hjklでメニュー選択
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+
+#矢印キーの代わりにCtrl-hjklでヒストリーを使う
+bindkey '^k' up-history
+bindkey '^j' down-history
+bindkey '^h' backward-delete-char
+bindkey '^w' backward-kill-word
+
 
 #Setting of pushd
 setopt auto_pushd #自動でpushd実行

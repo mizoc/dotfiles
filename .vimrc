@@ -446,6 +446,7 @@ call NERDTreeHighlightFile('sh',    'red', 'none', '#ff00ff', '#151515')
 "tabで補完
 let g:SuperTabContextDefaultCompletionType = "context"
 let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:jedi#completions_command = "<c-n>"
 
 "Settings of braceless
 autocmd FileType python BracelessEnable +indent +fold "+highlight-cc
