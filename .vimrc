@@ -277,6 +277,14 @@ nmap <F2> :!g++ % && ./a.out
 "クリップボードの設定
 set clipboard=unnamed,autoselect
 
+"spell check
+set spell
+set spelllang=en,cjk
+hi clear SpellBad
+hi SpellBad cterm=underline
+hi clear SpellCap
+hi SpellCap cterm=underline,bold
+
 "show relative number
 " autocmd BufEnter * RltvNmbr
 

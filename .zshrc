@@ -560,7 +560,7 @@ source ~/.zplug/init.zsh
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
 #移動
-zplug "b4b4r07/enhancd", use:init.sh
+# zplug "b4b4r07/enhancd", use:init.sh
 zplug "mollifier/cd-gitroot", lazy:true
 #ハイライト
 zplug "zsh-users/zsh-syntax-highlighting"
@@ -574,10 +574,6 @@ zplug "chrissicool/zsh-256color"
 #fzf
 zplug "junegunn/fzf-bin", lazy:true
 zplug "junegunn/fzf", lazy:true
-
-#絵文字
-zplug "stedolan/jq", from:gh-r, as:command \
-    | zplug "b4b4r07/emoji-cli", if:"which jq"
 
 zplug load
 
