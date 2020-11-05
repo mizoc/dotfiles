@@ -86,9 +86,8 @@ Plug 'airblade/vim-gitgutter'
 "Gdiffを可視化
 Plug 'tpope/vim-fugitive'
 
-"日本語<=>英語を翻訳してくれるやつ
-Plug 'mattn/webapi-vim'
-Plug 'mattn/excitetranslate-vim'
+"翻訳
+Plug 'skanehira/translate.vim'
 
 "便利なもの
 Plug 'Shougo/Unite.vim'
@@ -307,6 +306,14 @@ let g:ctrlp_funky_matchtype = 'path'
 "-------------------neocompleteの設定-----------------
 let g:neocomplete#enable_at_startup = 1 "起動時に有効化
 
+"settings of translate.vim
+let g:translate_source = "en"
+let g:translate_target = "ja"
+let g:translate_popup_window = 1 "use pop-up window
+"grでその行を翻訳
+nmap gr <Plug>(Translate)
+"visual mode で選択してtで翻訳
+vmap t <Plug>(VTranslate)
 
 ".mdをmarkdown形式として読み込ませる
 autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown

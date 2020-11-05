@@ -12,3 +12,4 @@ if [ $UID -eq 0 ]; then
 else
 		PS1="\[\n\e[1;32m\]\u@\h:\[\e[1;37m\] \w \n\[\e[1;34m\][\s]\[\e[1;37m\]\\$"
 fi
+[ -f /home/taichi/src/alacritty/extra/completions/alacritty.bash ] && source /home/taichi/src/alacritty/extra/completions/alacritty.bash

@@ -114,6 +114,8 @@ cdpath=()
 #パス通す
 export PATH="$PATH:/sbin"
 export PATH=$PATH:$HOME/bin/bin/:"/home/taichi/.local/bin:/snap/bin"
+export PATH="$HOME/.cargo/bin:$PATH"
+
 # export PATH=$PATH:$HOME/.dotfiles/bin/
 
 # cdしたあとで、自動的に tree する(treeが泣ければls)
