@@ -263,16 +263,21 @@ set wrapscan
 set hlsearch
 " ESC連打でハイライト解除
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
-" 入力モード中に素早くjjと入力した場合はESCとみなす
+
+" insert modeで素早くjjと入力した場合はESCとみなす
 inoremap jj <Esc>
-"f5でpython3実行 f6でpython2の実行
+
+"f4でruby実行
+nmap <F4> :!ruby %
+"f5でpython3実行
 nmap <F5> :!python3 %
-nmap <F6> :!python %
+"f6でcpp実行
+nmap <F6> :!g++ % && ./a.out
+"f7でgolang実行
+nmap <F6> :!go run %
 "f10でsource
 nmap <F10> :source %
-"f8でruby実行
-nmap <F4> :!ruby %
-nmap <F2> :!g++ % && ./a.out
+
 "クリップボードの設定
 set clipboard=unnamed,autoselect
 
@@ -445,6 +450,7 @@ call NERDTreeHighlightFile('html',   'yellow',  'none', 'yellow',  '#151515')
 call NERDTreeHighlightFile('styl',   'cyan',    'none', 'cyan',    '#151515')
 call NERDTreeHighlightFile('css',    'cyan',    'none', 'cyan',    '#151515')
 call NERDTreeHighlightFile('rb',     'Red',     'none', 'red',     '#151515')
+call NERDTreeHighlightFile('asm',     'Red',     'none', 'cyan',     '#151515')
 call NERDTreeHighlightFile('cpp',     'blue',     'none', 'red',     '#151515')
 call NERDTreeHighlightFile('c',     'green',     'none', 'red',     '#151515')
 call NERDTreeHighlightFile('js',     'Red',     'none', '#ffa500', '#151515')
