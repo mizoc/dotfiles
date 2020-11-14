@@ -12,6 +12,7 @@ call plug#begin('~/.vim/plugged')
 
 "c++補完
 " Plug 'justmao945/vim-clang'
+" Plug 'vim-jp/cpp-vim'
 
 "cal
 Plug 'itchyny/calendar.vim'
@@ -23,9 +24,7 @@ Plug 'itchyny/calendar.vim'
 Plug 'ryanoasis/vim-devicons'
 
 "show relative number
-Plug 'vim-scripts/RltvNmbr.vim'
-
-" Plug 'vim-jp/cpp-vim'
+" Plug 'vim-scripts/RltvNmbr.vim'
 
 "lsp
 ":LspInstallServer
@@ -36,10 +35,6 @@ Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'Shougo/deoplete.nvim'
 Plug 'lighttiger2505/deoplete-vim-lsp'
-
-
-"Bash support plugin
-" Plug 'vim-scripts/bash-support.vim'
 
 "半角スペース可視化
 Plug 'bronson/vim-trailing-whitespace'
@@ -66,9 +61,6 @@ Plug 'tpope/vim-repeat'
 "ップレビュー一括置換
 Plug 'osyo-manga/vim-over'
 
-"スムーズなスクロール
-" Plug 'yuttie/comfortable-motion.vim'
-
 "ツリー表示
 Plug 'scrooloose/nerdtree'
 
@@ -83,6 +75,7 @@ Plug 'dhruvasagar/vim-table-mode'
 
 "git 関連
 Plug 'airblade/vim-gitgutter'
+
 "Gdiffを可視化
 Plug 'tpope/vim-fugitive'
 
@@ -91,13 +84,8 @@ Plug 'skanehira/translate.vim'
 
 "便利なもの
 Plug 'Shougo/Unite.vim'
-"Plug 'rhysd/vim-operator-surround'
 Plug 'tpope/vim-surround'
-"Plug 'vim-scripts/Align'
 Plug 'vim-scripts/YankRing.vim'
-
-" "to do list
-" Plug 'vim-scripts/TaskList.vim'
 
 "左側のやつ
 Plug 'Shougo/vimfiler'
@@ -114,16 +102,9 @@ Plug 'thinca/vim-quickrun'
 "カッコの自動入力
 Plug 'kana/vim-smartinput'
 
-"Python　文法チェック
-"Plug 'andviro/flake8-vim'
-
-"幅跳びゲーム
-Plug 'mattn/habatobi-vim'
-
-"gccで素の行を、V後gcで選択範囲をコメントアウト
+"gccでその行を、V後gcで選択範囲をコメントアウト
 Plug 'tomtom/tcomment_vim'
 Plug 'scrooloose/nerdcommenter'
-"Plug 'emonkak/vim-operator-comment'
 
 "選択したブロックの直感的な移動、複製
 Plug 't9md/vim-textmanip'
@@ -154,12 +135,12 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
 Plug 'suy/vim-ctrlp-commandline'
 
-"補完 下で設定
+"補完
 Plug 'shougo/neocomplete.vim'
-" スニペットの補完機能
-" Plug 'Shougo/neosnippet.vim'
-" スニペット集
-" Plug 'Shougo/neosnippet-snippets'
+
+"snippet
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 "カラーテーマ
 Plug 'flazz/vim-colorschemes'
@@ -172,7 +153,7 @@ Plug 'vim-ruby/vim-ruby'
 " Plug 'Xuyuanp/nerdtree-git-plugin'
 
 call plug#end()
-"
+
 "viとの互換性を無効にする(INSERT中にカーソルキーが有効になる)
 set nocompatible
 "BSで削除できるものを指定する
@@ -213,10 +194,12 @@ syntax enable
 colorscheme badwolf
 "行番号を表示
 set number
+"相対的な行表示
+set relativenumber
 " 現在の行を強調表示
 set cursorline
 " 現在の行を強調表示（縦）
-"set cursorcolumn
+" set cursorcolumn
 " 行末の1文字先までカーソルを移動できるように
 set virtualedit=onemore
 " インデントはスマートインデント
@@ -235,14 +218,16 @@ nnoremap k gk
 " 不可視文字を可視化(タブが「▸-」と表示される)
 set list listchars=tab:\▸\-
 " Tab文字を半角スペースにする
-"set expandtab
+set expandtab
 " 行頭以外のTab文字の表示幅（スペースいくつ分）
 set tabstop=4
 " 行頭でのTab文字の表示幅
 set shiftwidth=4
+
 autocmd BufEnter *.go,*.cpp,*.c set tabstop=2
 autocmd BufEnter *.go,*.cpp,*.c set shiftwidth=2
 autocmd BufEnter *.cpp,*.c set cindent
+autocmd BufEnter *.py set noexpandtab
 " autocmd BufEnter *.cpp,*.c ClangCompleteInit
 
 "eコマンドなどのtab補完
@@ -274,7 +259,7 @@ nmap <F5> :!python3 %
 "f6でcpp実行
 nmap <F6> :!g++ % && ./a.out
 "f7でgolang実行
-nmap <F6> :!go run %
+nmap <F7> :!go run %
 "f10でsource
 nmap <F10> :source %
 
@@ -457,10 +442,10 @@ call NERDTreeHighlightFile('js',     'Red',     'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('sh',    'red', 'none', '#ff00ff', '#151515')
 
 "tabで補完
-let g:SuperTabContextDefaultCompletionType = "context"
-let g:SuperTabDefaultCompletionType = "<c-n>"
-let g:jedi#completions_command = "<c-n>"
-
+" let g:SuperTabContextDefaultCompletionType = "context"
+" let g:SuperTabDefaultCompletionType = "<c-n>"
+" let g:jedi#completions_command = "<c-n>"
+"
 "Settings of braceless
 autocmd FileType python BracelessEnable +indent +fold "+highlight-cc
 
@@ -472,6 +457,11 @@ autocmd FileType python BracelessEnable +indent +fold "+highlight-cc
 let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'vimrc'] "無効
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
+
+"setting of ultisnips
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-n>"
+let g:UltiSnipsJumpBackwardTrigger="<c-p>"
 
 "setting of clang
 let g:clang_c_option = '-std=c11'
@@ -494,6 +484,7 @@ let g:clang_format_style#style_options = {
 " オムニ補完設定
 autocmd FileType typescript setlocal omnifunc=lsp#complete
 
+"key bindings
 " setting of leader
 let mapleader="\<Space>"
 "leader-sでプレビュー置換の起動
@@ -522,3 +513,12 @@ nnoremap <leader>aj <C-w>j
 nnoremap <leader>ah <C-w>h
 nnoremap <leader>ak <C-w>k
 nnoremap <leader>al <C-w>l
+
+"setting of vim-fugitive
+nnoremap <leader>gs :tab sp<CR>:Gstatus<CR>:only<CR>
+nnoremap <leader>ga :Gwrite<CR>
+nnoremap <leader>gc :Gcommit<CR>
+nnoremap <leader>gl :Git log<CR>
+nnoremap <leader>gh :tab sp<CR>:0Glog<CR>
+nnoremap <leader>gp :Gpush<CR>
+nnoremap <leader>gd :Gvdiff<CR>
