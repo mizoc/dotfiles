@@ -28,13 +28,13 @@ Plug 'ryanoasis/vim-devicons'
 
 "lsp
 ":LspInstallServer
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'mattn/vim-lsp-settings'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'Shougo/deoplete.nvim'
-Plug 'lighttiger2505/deoplete-vim-lsp'
+" Plug 'prabirshrestha/async.vim'
+" Plug 'prabirshrestha/vim-lsp'
+" Plug 'mattn/vim-lsp-settings'
+" Plug 'prabirshrestha/asyncomplete.vim'
+" Plug 'prabirshrestha/asyncomplete-lsp.vim'
+" Plug 'Shougo/deoplete.nvim'
+" Plug 'lighttiger2505/deoplete-vim-lsp'
 
 "半角スペース可視化
 Plug 'bronson/vim-trailing-whitespace'
@@ -227,7 +227,7 @@ set shiftwidth=4
 autocmd BufEnter *.go,*.cpp,*.c set tabstop=2
 autocmd BufEnter *.go,*.cpp,*.c set shiftwidth=2
 autocmd BufEnter *.cpp,*.c set cindent
-autocmd BufEnter *.py set noexpandtab
+" autocmd BufEnter *.rb set noexpandtab "tabをスペースにしたくない場合
 " autocmd BufEnter *.cpp,*.c ClangCompleteInit
 
 "eコマンドなどのtab補完
@@ -442,9 +442,9 @@ call NERDTreeHighlightFile('js',     'Red',     'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('sh',    'red', 'none', '#ff00ff', '#151515')
 
 "tabで補完
-" let g:SuperTabContextDefaultCompletionType = "context"
-" let g:SuperTabDefaultCompletionType = "<c-n>"
-" let g:jedi#completions_command = "<c-n>"
+let g:SuperTabContextDefaultCompletionType = "context"
+let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:jedi#completions_command = "<c-n>"
 "
 "Settings of braceless
 autocmd FileType python BracelessEnable +indent +fold "+highlight-cc
@@ -459,9 +459,15 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
 
 "setting of ultisnips
-let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsExpandTrigger='<c- >'
 let g:UltiSnipsJumpForwardTrigger="<c-n>"
 let g:UltiSnipsJumpBackwardTrigger="<c-p>"
+let g:ulti_expand_or_jump_res = 0 "enterでスニペット展開
+function! Ulti_ExpandOrJump_and_getRes()
+    call UltiSnips#ExpandSnippetOrJump()
+    return g:ulti_expand_or_jump_res
+endfunction
+inoremap <CR> <C-R>=(Ulti_ExpandOrJump_and_getRes() > 0)?"":"\n"<CR>
 
 "setting of clang
 let g:clang_c_option = '-std=c11'

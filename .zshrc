@@ -226,13 +226,12 @@ fi
 # コピペの設定
 which xsel >/dev/null 2>&1 && alias -g pbcopy="xsel --clipboard --input"; alias -g pbpaste="xsel --clipboard --output"
 
-#Ctrl-rでいけるけどね
-# %h history番号 -->でクリップボードに対応するコマンドをコピー -->Ctrl+Shift+vで貼り付けられる
+# $h history番号 -->でクリップボードに対応するコマンドをコピー
 function h(){
 	history $1 | sed -n 1P|awk '{$1=""; print}' | tr -d "\n"| sed -e 's/^[ ]*//g' | pbcopy #trで改行捨て,sedで行頭の空白削除
 }
 
-#新しいシェルスクリプトを作るとき.実行権限付与する
+#新しいシェルスクリプトを作るときに実行権限付与する
 function newsh(){
 	if test "`echo "$1"|rev |cut -c 1-3`" = "hs.";then
 		local FILENAME="$1"
