@@ -14,6 +14,9 @@ call plug#begin('~/.vim/plugged')
 " Plug 'justmao945/vim-clang'
 " Plug 'vim-jp/cpp-vim'
 
+" html close tag automatically
+Plug 'alvan/vim-closetag'
+
 "cal
 Plug 'itchyny/calendar.vim'
 
@@ -26,23 +29,13 @@ Plug 'ryanoasis/vim-devicons'
 "show relative number
 " Plug 'vim-scripts/RltvNmbr.vim'
 
-"lsp
-":LspInstallServer
-" Plug 'prabirshrestha/async.vim'
-" Plug 'prabirshrestha/vim-lsp'
-" Plug 'mattn/vim-lsp-settings'
-" Plug 'prabirshrestha/asyncomplete.vim'
-" Plug 'prabirshrestha/asyncomplete-lsp.vim'
-" Plug 'Shougo/deoplete.nvim'
-" Plug 'lighttiger2505/deoplete-vim-lsp'
-
 "半角スペース可視化
 Plug 'bronson/vim-trailing-whitespace'
 
 "minimap
 Plug 'severin-lemaignan/vim-minimap'
 
-"markdownのプラグイン 下で設定
+"preview markdown
 Plug 'kannokanno/previm'
 Plug 'tyru/open-browser.vim'
 
@@ -87,9 +80,6 @@ Plug 'Shougo/Unite.vim'
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/YankRing.vim'
 
-"左側のやつ
-Plug 'Shougo/vimfiler'
-
 "高機能undo管理
 Plug 'dsummersl/gundo.vim'
 
@@ -112,15 +102,8 @@ Plug 't9md/vim-textmanip'
 "python coding check(pep8違反じゃないかとか)
 Plug 'hynek/vim-python-pep8-indent'
 
-"編集中の関数の中のローカル変数をハイライト
-" Plug 'hachibeeDI/python_hl_lvar.vim'
-
 "インデント単位での調整が可能
-" Plug 'kana/vim-textobj-indent'
 Plug 'tweekmonster/braceless.vim'
-
-"インデント可視化
-" Plug 'nathanaelkane/vim-indent-guides'
 
 "airline thema(下で設定)
 Plug 'vim-airline/vim-airline'
@@ -142,15 +125,15 @@ Plug 'shougo/neocomplete.vim'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
-"カラーテーマ
+"template :template main
+Plug 'mattn/vim-sonictemplate'
+
+"colorscheme
 Plug 'flazz/vim-colorschemes'
 Plug 'ujihisa/unite-colorscheme'
 
-"rubyのプラグイン
+"ruby
 Plug 'vim-ruby/vim-ruby'
-
-"nerdtreeにgit情報を
-" Plug 'Xuyuanp/nerdtree-git-plugin'
 
 call plug#end()
 
@@ -458,6 +441,12 @@ let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'vimrc'] "無効
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
 
+"setting of vim-sonictemplate
+"my template
+let g:sonictemplate_vim_template_dir = [
+    \ '~/.dotfiles/template'
+    \]
+
 "setting of ultisnips
 let g:UltiSnipsExpandTrigger='<c- >'
 let g:UltiSnipsJumpForwardTrigger="<c-n>"
@@ -487,8 +476,24 @@ let g:clang_format_style#style_options = {
 	\ "AllowShortLoopsOnASingleLine" : "true",
 	\ "AlwaysBreakBeforeMultilineStrings" : "true"}
 
+"Setting of vim-python-pep8-indent
+let g:python_pep8_indent_hang_closing = 1
+
 " オムニ補完設定
 autocmd FileType typescript setlocal omnifunc=lsp#complete
+
+"Settings of vim-closetag
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
+let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
+let g:closetag_filetypes = 'html,xhtml,phtml'
+let g:closetag_xhtml_filetypes = 'xhtml,jsx'
+let g:closetag_emptyTags_caseSensitive = 1
+let g:closetag_regions = {
+    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
+    \ 'javascript.jsx': 'jsxRegion',
+    \ }
+let g:closetag_shortcut = '>'
+let g:closetag_close_shortcut = '<leader>>'
 
 "key bindings
 " setting of leader
