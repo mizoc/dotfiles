@@ -17,6 +17,13 @@ call plug#begin('~/.vim/plugged')
 " html close tag automatically
 Plug 'alvan/vim-closetag'
 
+"python formatter
+Plug 'psf/black', { 'branch': 'stable' }
+Plug 'fisadev/vim-isort'
+
+"python docstring
+Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
+
 "cal
 Plug 'itchyny/calendar.vim'
 
@@ -213,6 +220,18 @@ autocmd BufEnter *.cpp,*.c set cindent
 " autocmd BufEnter *.rb set noexpandtab "tabをスペースにしたくない場合
 " autocmd BufEnter *.cpp,*.c ClangCompleteInit
 
+"Python
+autocmd fileType python setlocal smarttab
+"Setting of python formatters(black, isort)
+let g:vim_isort_map=''
+let g:black_linelength=150
+let g:vim_isort_python_version = 'python3'
+autocmd BufWritePre *.py execute ':Black'
+" autocmd BufWritePre *.py execute ':Isort'
+
+"Setting of pydocstring
+let g:pydocstring_formatter='Google'
+
 "eコマンドなどのtab補完
 set wildmenu
 set wildmode=full
@@ -275,6 +294,18 @@ command! CtrlPCommandLine call ctrlp#init(ctrlp#commandline#id())
 
 " CtrlPFunkyの有効化
 let g:ctrlp_funky_matchtype = 'path'
+
+"C++ DoxygenToolkit
+"https://github.com/vim-scripts/DoxygenToolkit.vim
+"cp plug directory to ~/.vim/plugged
+":Dox
+let g:DoxygenToolkit_briefTag_pre="@Synopsis  "
+let g:DoxygenToolkit_paramTag_pre="@Param "
+let g:DoxygenToolkit_returnTag="@Returns   "
+let g:DoxygenToolkit_blockHeader="--------------------------------------------------------------------------"
+let g:DoxygenToolkit_blockFooter="----------------------------------------------------------------------------"
+let g:DoxygenToolkit_authorName="mizoc"
+let g:DoxygenToolkit_licenseTag="MIT"
 
 "-------------------neocompleteの設定-----------------
 let g:neocomplete#enable_at_startup = 1 "起動時に有効化

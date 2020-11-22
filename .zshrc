@@ -177,10 +177,10 @@ setopt auto_pushd #自動でpushd実行
 setopt pushd_ignore_dups #重複削除
 
 #Setting of alias
-alias vz="vim ~/.zshrc"
+alias vz="vim ~/.dotfiles/.zshrc"
 alias vzo="vim ~/.zsh_ownrc"
-alias vv="vim ~/.vimrc"
-alias vt="vim ~/.tmux.conf"
+alias vv="vim ~/.dotfiles/.vimrc"
+alias vt="vim ~/.dotfiles/.tmux.conf"
 alias sz="source ~/.zshrc"
 
 alias svim="vim -u ~/.simple_vimrc"

@@ -79,8 +79,16 @@ if $? -eq 0;then
 	sh $CURRENT_PATH/myeopkg.sh
 fi
 
+which 'apt' >/dev/null 2>&1
+if $? -eq 0;then
+	sh $CURRENT_PATH/myapt.sh
+fi
+
 #Last msg
 echo
 echo "OK. Finished all settings."
 echo 'Now, excute vim and :pluginstall and $zplug install'
 echo You should install GNU source-highlight
+
+#vim configure option
+# ./configure --prefix=/usr/local  --with-features=huge  --enable-multibyte  --enable-perlinterp  --enable-terminal  --enable-python3interp  --enable-rubyinterp  --enable-luainterp  --with-luajit  --enable-fail-if-missing --enable-gui=gtk2
