@@ -155,6 +155,7 @@ else
 fi
 
 #Ctrl-spaceでautosuggestを承認
+zle -N autosuggest-accept
 bindkey '^ ' autosuggest-accept
 
 #hjklでメニュー選択
@@ -575,27 +576,42 @@ else
 
 fi
 
-#excute
-source ~/.zplug/init.zsh
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+#Plugin
+if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+fi
+
+source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zinit-zsh/z-a-rust \
+    zinit-zsh/z-a-as-monitor \
+    zinit-zsh/z-a-patch-dl \
+    zinit-zsh/z-a-bin-gem-node
 
 #移動
-# zplug "b4b4r07/enhancd", use:init.sh
-zplug "mollifier/cd-gitroot", lazy:true
-#ハイライト
-zplug "zsh-users/zsh-syntax-highlighting"
-#タイプ補完
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-completions"
-zplug "chrissicool/zsh-256color"
-
-#peco これをコメントアウトするとなぜかzplugが壊れる
-# zplug "peco/peco", as:command, from:gh-r, use:"*amd64"
-#fzf
-zplug "junegunn/fzf-bin", lazy:true
-zplug "junegunn/fzf", lazy:true
-
-zplug load
+# zinit load b4b4r07/enhancd
+zinit load mollifier/cd-gitroot
+#highlight
+zinit load zsh-users/zsh-syntax-highlighting
+#補完
+zinit load zsh-users/zsh-autosuggestions
+zinit load zsh-users/zsh-completions
+zinit load chrissicool/zsh-256color
+#filter
+zinit load peco/peco
+zinit load junegunn/fzf-bin
+zinit load junegunn/fzf
+#emoji
+zinit load b4b4r07/emoji-cli
 
 # 起動速度の計測があればする
 which zprof >/dev/null 2>&1 || return 0 && zprof|less

@@ -37,10 +37,9 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.c
 #z.sh
 git clone https://github.com/rupa/z.git $HOME/src/z
 
-#zplug
-echo "Downloading zplug..."
-export ZPLUG_HOME=~/.zplug
-git clone https://github.com/zplug/zplug $ZPLUG_HOME && echo 'done'
+#zplugin
+echo "Downloading zplugin..."
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)" && echo done
 
 echo "Downloading fonts for vim..."
 mkdir -p ~/.local/share/fonts
@@ -52,7 +51,7 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 echo "Downloading tmux-powerline"
 git clone git://github.com/erikw/tmux-powerline.git ~/.tmux-powerline
 
-#git tree
+#git setting
 git config --global core.pager "more" #エスケープコード認識
 git config --global core.quotepath "false" #日本語文字化け対策
 git config --global alias.tree 'log --graph --all --format="%x09%C(cyan bold)%an%Creset%x09%C(yellow)%h%Creset %C(magenta reverse)%d%Creset %s"'
@@ -60,6 +59,10 @@ git config --global alias.tags "tag -l"
 git config --global alias.branches 'branch -a'
 git config --global alias.cm 'commit'
 git config --global alias.st 'status -sb'
+
+#emoji commit template
+git clone https://gist.github.com/Jung0/56d527ed5d2c783661f7d56c46332308 ~/src/commit_template
+git config --global commit.template ~/src/commit_template/.commit_template
 
 #ln dotfiles
 cd $CURRENT_PATH
