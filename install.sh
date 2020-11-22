@@ -4,12 +4,13 @@
 set -u
 export LANG=C
 export LC_ALL=C
-cd `dirname $0`
-CURRENT_PATH=`pwd`
+cd $(dirname $0)
+CURRENT_PATH=$(pwd)
 
 #show msg
-type "espeak" >/dev/null 2>&1 && espeak "Thank you for installing my dotfiles." ; clear
-cat << END
+type "espeak" >/dev/null 2>&1 && espeak "Thank you for installing my dotfiles."
+clear
+cat <<END
       __      __  _____ __
   ____/ /___  / /_/ __(_) /__  _____
  / __  / __ \/ __/ /_/ / / _ \/ ___/
@@ -18,7 +19,7 @@ cat << END
 END
 
 #Make zshownrc
-test -f $HOME/.zsh_ownrc || cat << END >> $HOME/.zsh_ownrc
+test -f $HOME/.zsh_ownrc || cat <<END >>$HOME/.zsh_ownrc
 #This is your ~/.zsh_ownrc.
 #This file will load automaly when zsh started.
 #You can open this file by %vzo on zsh.
@@ -34,6 +35,20 @@ mkdir -p $HOME/go
 cd $CURRENT_PATH
 ./update.sh
 
+#python pkgs
+sudo python3 -m pip install --upgrade pip
+sudo pip install -r $CURRENT_PATH/python-pkgs.txt
+
+#if has any package manager, install my favorit pkgs
+which test 'eopkg' >/dev/null 2>&1
+if test $? -eq 0; then
+  sh $CURRENT_PATH/myeopkg.sh
+fi
+which test 'apt' >/dev/null 2>&1
+if test $? -eq 0; then
+  sh $CURRENT_PATH/myapt.sh
+fi
+
 #vim-plug
 echo "Downloading vim-plug..."
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && echo 'done'
@@ -45,18 +60,24 @@ git clone https://github.com/rupa/z.git $HOME/src/z
 echo "Downloading zinit..."
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)" && echo done
 
+#font
 echo "Downloading fonts for vim..."
 mkdir -p ~/.local/share/fonts
 cd ~/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf && echo 'done'
 cd
 
+#tmux
 echo "Downloading tpm..."
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 echo "Downloading tmux-powerline"
 git clone git://github.com/erikw/tmux-powerline.git ~/.tmux-powerline
 
+#shfmt
+echo "Downloading shell formatter..."
+go get -u github.com/mvdan/sh/cmd/shfmt
+
 #git setting
-git config --global core.pager "more" #エスケープコード認識
+git config --global core.pager "more"      #エスケープコード認識
 git config --global core.quotepath "false" #日本語文字化け対策
 git config --global alias.tree 'log --graph --all --format="%x09%C(cyan bold)%an%Creset%x09%C(yellow)%h%Creset %C(magenta reverse)%d%Creset %s"'
 git config --global alias.tags "tag -l"
@@ -65,25 +86,14 @@ git config --global alias.cm 'commit'
 git config --global alias.st 'status -sb'
 git config --global commit.template ~/.commit_template
 
-
 #compile C/CXX functions
-test "$CURRENT_PATH" = "" || rm -rf "$CURRENT_PATH/bin/"; mkdir "$CURRENT_PATH/bin/"
-(cd $CURRENT_PATH/src;make clean; make && make install)
-
-#python pkgs
-sudo python3 -m pip install --upgrade pip
-sudo pip install -r $CURRENT_PATH/python-pkgs.txt
-
-#if solus, eopkg
-which test 'eopkg' >/dev/null 2>&1
-if test $? -eq 0;then
-	sh $CURRENT_PATH/myeopkg.sh
-fi
-
-which test 'apt' >/dev/null 2>&1
-if test $? -eq 0;then
-	sh $CURRENT_PATH/myapt.sh
-fi
+test "$CURRENT_PATH" = "" || rm -rf "$CURRENT_PATH/bin/"
+mkdir "$CURRENT_PATH/bin/"
+(
+  cd $CURRENT_PATH/src
+  make clean
+  make && make install
+)
 
 #Last msg
 echo

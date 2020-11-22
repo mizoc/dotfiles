@@ -57,3 +57,4 @@ sudo apt install -y xvfb
 sudo apt install -y vim-python
 sudo apt install -y python3-venv
 sudo apt install -y gnudoq
+sudo apt install -y isort python-isort python3-isort

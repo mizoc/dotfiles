@@ -221,7 +221,7 @@ autocmd BufEnter *.cpp,*.c set cindent
 " autocmd BufEnter *.cpp,*.c ClangCompleteInit
 
 "Python
-autocmd fileType python setlocal smarttab
+autocmd BufEnter *.py setlocal smarttab
 "Setting of python formatters(black, isort)
 let g:vim_isort_map=''
 let g:black_linelength=150
@@ -230,7 +230,7 @@ autocmd BufWritePre *.py execute ':Black'
 " autocmd BufWritePre *.py execute ':Isort'
 
 "Setting of pydocstring
-let g:pydocstring_formatter='Google'
+let g:pydocstring_formatter='google'
 
 "eコマンドなどのtab補完
 set wildmenu

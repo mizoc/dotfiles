@@ -2,12 +2,15 @@
   dbus = False
   geometry_hinting = True
   broadcast_default = off
+  scroll_tabbar = True
+  homogeneous_tabbar = False
   hide_from_taskbar = True
   sticky = True
   enabled_plugins = ActivityWatch, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
   title_use_system_font = False
   title_font = Waree Bold Oblique 10
 [keybindings]
+  split_vert = <Primary><Shift>r
 [profiles]
   [[default]]
     background_darkness = 0.87
