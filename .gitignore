@@ -2,3 +2,5 @@
 *.pyc
 ..zshrc.un\~
 .zshrc~
+
+src/color

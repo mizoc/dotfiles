@@ -7,8 +7,8 @@ export LC_ALL=C
 cd `dirname $0`
 CURRENT_PATH=`pwd`
 
+#show msg
 type "espeak" >/dev/null 2>&1 && espeak "Thank you for installing my dotfiles." ; clear
-#print msg
 cat << END
       __      __  _____ __
   ____/ /___  / /_/ __(_) /__  _____
@@ -30,6 +30,10 @@ mkdir -p $HOME/bin
 mkdir -p $HOME/tmp
 mkdir -p $HOME/go
 
+#link dotfiles
+cd $CURRENT_PATH
+./update.sh
+
 #vim-plug
 echo "Downloading vim-plug..."
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && echo 'done'
@@ -37,8 +41,8 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.c
 #z.sh
 git clone https://github.com/rupa/z.git $HOME/src/z
 
-#zplugin
-echo "Downloading zplugin..."
+#zinit
+echo "Downloading zinit..."
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)" && echo done
 
 echo "Downloading fonts for vim..."
@@ -59,14 +63,8 @@ git config --global alias.tags "tag -l"
 git config --global alias.branches 'branch -a'
 git config --global alias.cm 'commit'
 git config --global alias.st 'status -sb'
+git config --global commit.template ~/.commit_template
 
-#emoji commit template
-git clone https://gist.github.com/Jung0/56d527ed5d2c783661f7d56c46332308 ~/src/commit_template
-git config --global commit.template ~/src/commit_template/.commit_template
-
-#ln dotfiles
-cd $CURRENT_PATH
-./update.sh
 
 #compile C/CXX functions
 test "$CURRENT_PATH" = "" || rm -rf "$CURRENT_PATH/bin/"; mkdir "$CURRENT_PATH/bin/"
@@ -77,20 +75,20 @@ sudo python3 -m pip install --upgrade pip
 sudo pip install -r $CURRENT_PATH/python-pkgs.txt
 
 #if solus, eopkg
-which 'eopkg' >/dev/null 2>&1
-if $? -eq 0;then
+which test 'eopkg' >/dev/null 2>&1
+if test $? -eq 0;then
 	sh $CURRENT_PATH/myeopkg.sh
 fi
 
-which 'apt' >/dev/null 2>&1
-if $? -eq 0;then
+which test 'apt' >/dev/null 2>&1
+if test $? -eq 0;then
 	sh $CURRENT_PATH/myapt.sh
 fi
 
 #Last msg
 echo
 echo "OK. Finished all settings."
-echo 'Now, excute vim and :pluginstall and $zplug install'
+echo 'Now, excute vim and :pluginstall'
 echo You should install GNU source-highlight
 
 #vim configure option

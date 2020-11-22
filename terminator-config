@@ -1,13 +1,24 @@
 [global_config]
-  broadcast_default = off
   dbus = False
-  enabled_plugins = ActivityWatch, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
   geometry_hinting = True
+  broadcast_default = off
   hide_from_taskbar = True
   sticky = True
-  title_font = Waree Bold Oblique 10
+  enabled_plugins = ActivityWatch, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
   title_use_system_font = False
+  title_font = Waree Bold Oblique 10
 [keybindings]
+[profiles]
+  [[default]]
+    background_darkness = 0.87
+    cursor_color = "#aaaaaa"
+    font = RobotoMono Nerd Font Mono Bold Italic 9
+    foreground_color = "#ffffff"
+    show_titlebar = False
+    scrollback_lines = 10000
+    login_shell = True
+    use_system_font = False
+    copy_on_selection = True
 [layouts]
   [[default]]
     [[[child1]]]
@@ -19,14 +30,3 @@
 [plugins]
   [[ActivityWatch]]
     hush_period = 30.0
-[profiles]
-  [[default]]
-    background_darkness = 0.87
-    copy_on_selection = True
-    cursor_color = "#aaaaaa"
-    font = Ricty Diminished Discord Bold Oblique 11
-    foreground_color = "#00ff00"
-    login_shell = True
-    scrollback_lines = 10000
-    show_titlebar = False
-    use_system_font = False
