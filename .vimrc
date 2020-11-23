@@ -14,7 +14,7 @@ call plug#begin('~/.vim/plugged')
 " Plug 'justmao945/vim-clang'
 " Plug 'vim-jp/cpp-vim'
 
-" html close tag automatically
+" insert html close tag automatically
 Plug 'alvan/vim-closetag'
 
 "python formatter
@@ -354,20 +354,20 @@ let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#whitespace#mixed_indent_algo = 1
 "タブを大文字にする
 let g:airline#extensions#tabline#buffer_idx_format = {
-			\'0':'0',
-			\'1':'1',
-			\'2':'2',
-			\'3':'3',
-			\'4':'4',
-			\'5':'5',
-			\'6':'6',
-			\'7':'7',
-			\'8':'8',
-			\'9':'9',}
+            \'0':'0',
+            \'1':'1',
+            \'2':'2',
+            \'3':'3',
+            \'4':'4',
+            \'5':'5',
+            \'6':'6',
+            \'7':'7',
+            \'8':'8',
+            \'9':'9',}
 let g:airline_theme = 'simple'
 
 if !exists('g:airline_symbols')
-	let g:airline_symbols = {}
+    let g:airline_symbols = {}
 endif
 
 " unicode symbols
@@ -436,8 +436,8 @@ let g:NERDTreeDirArrowExpandable  = '▶'
 let g:NERDTreeDirArrowCollapsible = '▼'
 " NERDTress File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
-	exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
-	exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+    exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+    exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
 endfunction
 call NERDTreeHighlightFile('py',     'yellow',  'none', 'yellow',  '#151515')
 call NERDTreeHighlightFile('md',     'blue',    'none', '#3366FF', '#151515')
@@ -475,8 +475,8 @@ let g:indent_guides_guide_size = 1
 "setting of vim-sonictemplate
 "my template
 let g:sonictemplate_vim_template_dir = [
-    \ '~/.dotfiles/template'
-    \]
+            \ '~/.dotfiles/template'
+            \]
 
 "setting of ultisnips
 let g:UltiSnipsExpandTrigger='<c- >'
@@ -496,16 +496,16 @@ let g:clang_format_style = 'Google'
 let g:clang_format_auto = 1
 let g:clang_check_syntax = 1
 let g:clang_format_style#style_options = {
-	\ "Standard" : "C++11",
-	\ "AlignAfterOpenBracket" : "true",
-	\ "AlignConsecutiveAssignments" : "true",
-	\ "AlignEscapedNewlines" : "Right",
-	\ "AlignTrailingComments" : "true",
-	\ "ColumnLimit" : "150",
-	\ "AllowShortIfStatementsOnASingleLine" : "true",
-	\ "AllowShortBlocksOnASingleLine" : "true",
-	\ "AllowShortLoopsOnASingleLine" : "true",
-	\ "AlwaysBreakBeforeMultilineStrings" : "true"}
+            \ "Standard" : "C++11",
+            \ "AlignAfterOpenBracket" : "true",
+            \ "AlignConsecutiveAssignments" : "true",
+            \ "AlignEscapedNewlines" : "Right",
+            \ "AlignTrailingComments" : "true",
+            \ "ColumnLimit" : "150",
+            \ "AllowShortIfStatementsOnASingleLine" : "true",
+            \ "AllowShortBlocksOnASingleLine" : "true",
+            \ "AllowShortLoopsOnASingleLine" : "true",
+            \ "AlwaysBreakBeforeMultilineStrings" : "true"}
 
 "Setting of vim-python-pep8-indent
 let g:python_pep8_indent_hang_closing = 1
@@ -520,9 +520,9 @@ let g:closetag_filetypes = 'html,xhtml,phtml'
 let g:closetag_xhtml_filetypes = 'xhtml,jsx'
 let g:closetag_emptyTags_caseSensitive = 1
 let g:closetag_regions = {
-    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
-    \ 'javascript.jsx': 'jsxRegion',
-    \ }
+            \ 'typescript.tsx': 'jsxRegion,tsxRegion',
+            \ 'javascript.jsx': 'jsxRegion',
+            \ }
 let g:closetag_shortcut = '>'
 let g:closetag_close_shortcut = '<leader>>'
 

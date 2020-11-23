@@ -2,7 +2,7 @@
   dbus = False
   geometry_hinting = True
   broadcast_default = off
-  scroll_tabbar = True
+  scroll_tabbar = False
   homogeneous_tabbar = False
   hide_from_taskbar = True
   sticky = True

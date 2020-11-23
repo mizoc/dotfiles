@@ -79,7 +79,8 @@ go get -u github.com/mvdan/sh/cmd/shfmt
 #git setting
 git config --global core.pager "more"      #エスケープコード認識
 git config --global core.quotepath "false" #日本語文字化け対策
-git config --global alias.tree 'log --graph --all --format="%x09%C(cyan bold)%an%Creset%x09%C(yellow)%h%Creset %C(magenta reverse)%d%Creset %s"'
+git config --glob alias.tree 'log --graph --pretty=format:"%x09%C(auto) %h %Cgreen %ar %Creset%x09by \"%C(cyan ul)%an%Creset\" %x09%C(auto)%s %d"'
+git config --global pretty.medium-reverse "format:%C(red reverse)%d%Creset%C(white reverse) %h% Creset %C(green reverse) %an %Creset %C(cyan)%ar%Creset%n%C(white bold)%w(80)%s%Creset%n%n%w(80,2,2)%b" 
 git config --global alias.tags "tag -l"
 git config --global alias.branches 'branch -a'
 git config --global alias.cm 'commit'

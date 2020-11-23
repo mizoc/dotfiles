@@ -261,8 +261,8 @@ function newsh()
 }
 
 #fzfがあれば実行
-test -f ~/.fzf.zsh && source ~/.fzf.zsh && {alias -g his="history 0|tac|fzf --ansi --multi --reverse"
-alias gl="git log --color|fzf --ansi --select-1 --reverse --multi"} || alias his="history 0"
+test -f ~/.fzf.zsh && source ~/.fzf.zsh && alias -g his="history 0|tac|fzf --ansi --multi --reverse" || alias his="history 0"
+# alias gl="git log --color|fzf --ansi --select-1 --reverse --multi"} || alias his="history 0"
 
 #git系
 # if type "colorls" >/dev/null 2>&1;then
@@ -275,6 +275,7 @@ alias ga="git add ."
 alias gp="git push"
 alias gc="git commit"
 alias gd="git diff"
+alias gl='git log --pretty="medium-reverse" --graph --stat'
 
 alias -g mkdir="mkdir -p"
 
