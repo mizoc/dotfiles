@@ -328,6 +328,11 @@ function prompt-git-current-branch()
     k="%F{blue}"
   fi
 
+  if [[ -n $(echo "$st" | grep "^Your branch is ahead of ") ]]; then #push
+    branch_status="%F{blue}}"
+    k+="%F{yellow}^`echo "$st" | /bin/grep "^Your branch is ahead of "|sed -e 's/.*by //g' -e 's/ commit.*//g'`%F{reset_color}"
+  fi
+
   if [[ -n $(echo "$st" | grep "^Untracked files") ]]; then
     branch_status="%F{cyan}"
     k+="%F{cyan}?%F{reset_color}"
@@ -343,7 +348,7 @@ function prompt-git-current-branch()
     k+="%F{yellow}!%F{reset_color}"
   fi
 
-  if [[ -n $(echo "$st" | grep "^rebase in progress") ]]; then
+  if [[ -n $(echo "$st" | grep "^rebase in progress") ]]; then #conflict
     echo "%F{red}!(no branch)"
     return
   fi
@@ -366,32 +371,21 @@ precmd()
   RPROMPT="$(prompt-ssh)$(prompt-git-current-branch)"
 }
 
-#入力された文字列を赤色にして返す(パイプ対応)
-function reds()
-{
+#入力された文字列を指定色にして返す(パイプ対応)
+#Usage
+#    $color cyan say hello
+#    $echo hello world|color blue
+function color() {
   case $1 in
-    --help | -h)
-      printf "\033[31m\033[1m%s\033[m\n" "This is a program that echo red colored strings."
-      echo ""
-      echo '[Usage]'
-      printf "\033[31m%s\033[m\n" '$reds [-h|--help] string  OR  $reds [-h|--help] "two strings"  OR  $cat filename|reds'
-      ;;
-
-    *)
-      if [ -p /dev/stdin ]; then
-        if [ -n "$(echo $@)" ]; then
-          __str=$(cat -)
-
-        else
-          #__str=$@
-          __str=$(cat /dev/stdin)
-        fi
-      else
-        __str=$@
-      fi
-
-      printf "\033[31m%s\033[m\n" "${__str}"
-      ;;
+    black)    shift; echo -e "\033[1;30m$*";;
+    red)      shift; echo -e "\033[1;31m$*";;
+    green)    shift; echo -e "\033[1;32m$*";;
+    yellow)   shift; echo -e "\033[1;33m$*";;
+    blue)     shift; echo -e "\033[1;34m$*";;
+    magenta)  shift; echo -e "\033[1;35m$*";;
+    cyan)     shift; echo -e "\033[1;36m$*";;
+    white)    shift; echo -e "\033[1;37m$*";;
+    *) echo -e "\033[0m$*";;
   esac
 }
 
@@ -409,8 +403,9 @@ function dot()
       cd ~/.dotfiles
       ./uninstall.sh
       ;;
-    'version' | 'ver')
-      cat ~/.dotfiles/version.txt
+    'update')
+      cd ~/.dotfiles
+      ./update.sh
       ;;
   esac
 }

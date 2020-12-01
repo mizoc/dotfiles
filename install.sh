@@ -1,6 +1,20 @@
 #!/bin/bash
 #Author:mizoc <yaesuft729@gmail.com>
 #Licence:MIT
+
+#DL
+git clone https://github.com/mizoc/dotfiles ~/.dotfiles
+if [ $? -ne 0 ]; then
+    echo "Error cannot download via git"
+    exit 1
+fi
+
+cd ~/.dotfiles
+if [ $? -ne 0 ]; then
+    echo "Error ~/.dotfiles not found"
+    exit 1
+fi
+
 set -u
 export LANG=C
 export LC_ALL=C
@@ -80,7 +94,7 @@ go get -u github.com/mvdan/sh/cmd/shfmt
 git config --global core.pager "more"      #エスケープコード認識
 git config --global core.quotepath "false" #日本語文字化け対策
 git config --glob alias.tree 'log --graph --pretty=format:"%x09%C(auto) %h %Cgreen %ar %Creset%x09by \"%C(cyan ul)%an%Creset\" %x09%C(auto)%s %d"'
-git config --global pretty.medium-reverse "format:%C(red reverse)%d%Creset%C(white reverse) %h% Creset %C(green reverse) %an %Creset %C(cyan)%ar%Creset%n%C(white bold)%w(80)%s%Creset%n%n%w(80,2,2)%b" 
+git config --global pretty.medium-reverse "format:%C(red reverse)%d%Creset%C(white reverse) %h% Creset %C(green reverse) %an %Creset %C(cyan)%ar%Creset%n%C(white bold)%w(80)%s%Creset%n%n%w(80,2,2)%b"
 git config --global alias.tags "tag -l"
 git config --global alias.branches 'branch -a'
 git config --global alias.cm 'commit'
@@ -88,13 +102,13 @@ git config --global alias.st 'status -sb'
 git config --global commit.template ~/.commit_template
 
 #compile C/CXX functions
-test "$CURRENT_PATH" = "" || rm -rf "$CURRENT_PATH/bin/"
-mkdir "$CURRENT_PATH/bin/"
-(
-  cd $CURRENT_PATH/src
-  make clean
-  make && make install
-)
+# test "$CURRENT_PATH" = "" || rm -rf "$CURRENT_PATH/bin/"
+# mkdir "$CURRENT_PATH/bin/"
+# (
+#   cd $CURRENT_PATH/src
+#   make clean
+#   make && make install
+# )
 
 #Last msg
 echo
