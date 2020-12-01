@@ -10,16 +10,10 @@ if [ $? -ne 0 ]; then
 fi
 
 cd ~/.dotfiles
-if [ $? -ne 0 ]; then
-    echo "Error ~/.dotfiles not found"
-    exit 1
-fi
-
 set -u
 export LANG=C
 export LC_ALL=C
-cd $(dirname $0)
-CURRENT_PATH=$(pwd)
+CURRENT_PATH=~/.dotfiles
 
 #show msg
 type "espeak" >/dev/null 2>&1 && espeak "Thank you for installing my dotfiles."
@@ -101,20 +95,14 @@ git config --global alias.cm 'commit'
 git config --global alias.st 'status -sb'
 git config --global commit.template ~/.commit_template
 
-#compile C/CXX functions
-# test "$CURRENT_PATH" = "" || rm -rf "$CURRENT_PATH/bin/"
-# mkdir "$CURRENT_PATH/bin/"
-# (
-#   cd $CURRENT_PATH/src
-#   make clean
-#   make && make install
-# )
 
-#Last msg
-echo
-echo "OK. Finished all settings."
-echo 'Now, excute vim and :pluginstall'
-echo You should install GNU source-highlight
-
+#DL vim
+[ -f ~/src/vim ] || git clone https://github.com/vim/vim ~/src/vim
 #vim configure option
 # ./configure --prefix=/usr/local  --with-features=huge  --enable-multibyte  --enable-perlinterp  --enable-terminal  --enable-python3interp  --enable-rubyinterp  --enable-luainterp  --with-luajit  --enable-fail-if-missing --enable-gui=gtk2
+
+#Last msg
+echo OK, installed.
+echo Checking pkgs...
+bash $CURRENT_PATH/check.sh
+exec "${SHELL:-/bin/zsh}"

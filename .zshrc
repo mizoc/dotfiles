@@ -329,7 +329,7 @@ function prompt-git-current-branch()
   fi
 
   if [[ -n $(echo "$st" | grep "^Your branch is ahead of ") ]]; then #push
-    branch_status="%F{blue}}"
+    branch_status="%F{blue}"
     k+="%F{yellow}^`echo "$st" | /bin/grep "^Your branch is ahead of "|sed -e 's/.*by //g' -e 's/ commit.*//g'`%F{reset_color}"
   fi
 
@@ -393,18 +393,21 @@ function dot()
 {
   case "$1" in
     '')
-      cd ~/.dotfiles
+    cd ~/.dotfiles
       ;;
     'install')
-      cd ~/.dotfiles
+    cd ~/.dotfiles
       ./install.sh
       ;;
     'uninstall')
-      cd ~/.dotfiles
+    cd ~/.dotfiles
       ./uninstall.sh
       ;;
+    'check')
+     ~/.dotfiles/check.sh
+      ;;
     'update')
-      cd ~/.dotfiles
+    cd ~/.dotfiles
       ./update.sh
       ;;
   esac

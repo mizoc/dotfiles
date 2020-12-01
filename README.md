@@ -1,19 +1,34 @@
 # my dotfiles
 
 ## Installtion
-`$git clone https://github.com/mizoc/dotfiles ~/.dotfiles`  
-`$cd $_`  
-`$make`  
-Please install zsh and excute  
-`$chsh -s /bin/zsh`  
+install zsh, curl, git
 
-## Update  
-`$cd ~/.dotfiles`  
-`$./update.sh`  
+automatically:
+```bash
+$bash -c "$(curl -L raw.github.com/mizoc/dotfiles/master/install.sh)"
+```
 
-## Uninstalltion  
-`$cd ~/.dotfiles`  
-`$make uninstall`  
+manually
+```bash
+$git clone https://github.com/mizoc/dotfiles ~/.dotfiles
+$cd $_
+$make
+```
+
+## Update
+```bash
+$dot update
+```
+
+## Check
+```bash
+$dot check
+```
+
+## Uninstalltion
+```bash
+$dot uninstall
+```
 
 ## Licence
 [MIT](https://github.com/mizoc/dotfiles/blob/master/LICENSE)

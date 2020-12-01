@@ -214,8 +214,8 @@ set tabstop=4
 " 行頭でのTab文字の表示幅
 set shiftwidth=4
 
-autocmd BufEnter *.go,*.cpp,*.c set tabstop=2
-autocmd BufEnter *.go,*.cpp,*.c set shiftwidth=2
+autocmd BufEnter *.sh,*.go,*.cpp,*.c set tabstop=2
+autocmd BufEnter *.sh,*.go,*.cpp,*.c set shiftwidth=2
 autocmd BufEnter *.cpp,*.c set cindent
 " autocmd BufEnter *.rb set noexpandtab "tabをスペースにしたくない場合
 " autocmd BufEnter *.cpp,*.c ClangCompleteInit

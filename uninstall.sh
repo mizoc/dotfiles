@@ -11,9 +11,9 @@ echo
 
 echo Uninstalling...
 
-if test ! $(hostname) = 'taichi_Linux'; then
+if test ! $(hostname) = 'mizoc-debian'; then
   for i in .??*; do
     unlink "$HOME"/"$i"
   done
+  rm -rf ~/.dotfiles
 fi
-echo 'Now, $rm -rf ~/.dotfiles'

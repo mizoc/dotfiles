@@ -3,7 +3,7 @@ sudo apt update
 sudo apt -y upgrade
 sudo apt -y autoremove
 
-sudo apt install -y
+sudo apt install -y conky
 sudo apt install -y ncurses-devel make gcc
 sudo apt install -y build-essential make gcc
 sudo apt install -y build-dep
