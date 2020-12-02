@@ -48,6 +48,7 @@ done <<END
 git
 firefox
 zsh
+vagrant
 black
 terminator
 ruby
@@ -80,5 +81,6 @@ ssh
 peco
 gcc
 g++
+rofi
 END
 

@@ -393,22 +393,29 @@ function dot()
 {
   case "$1" in
     '')
-    cd ~/.dotfiles
+      PREVIOUS_DIR=`pwd`
+      cd ~/.dotfiles
       ;;
     'install')
-    cd ~/.dotfiles
+      PREVIOUS_DIR=`pwd`
+      cd ~/.dotfiles
       ./install.sh
       ;;
     'uninstall')
-    cd ~/.dotfiles
+      PREVIOUS_DIR=`pwd`
+      cd ~/.dotfiles
       ./uninstall.sh
       ;;
     'check')
-     ~/.dotfiles/check.sh
+       ~/.dotfiles/check.sh
       ;;
     'update')
-    cd ~/.dotfiles
+      PREVIOUS_DIR=`pwd`
+      cd ~/.dotfiles
       ./update.sh
+      ;;
+    'back')
+      cd $PREVIOUS_DIR
       ;;
   esac
 }

@@ -105,4 +105,4 @@ git config --global commit.template ~/.commit_template
 echo OK, installed.
 echo Checking pkgs...
 bash $CURRENT_PATH/check.sh
-exec "${SHELL:-/bin/zsh}"
+test -n $ZSH_VERSION && exec `which zsh`
