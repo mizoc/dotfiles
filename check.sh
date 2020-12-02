@@ -82,5 +82,6 @@ peco
 gcc
 g++
 rofi
+simplenote
 END
 
