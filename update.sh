@@ -7,8 +7,6 @@ export LC_ALL=C
 cd $(dirname $0)
 path=$(pwd)
 
-echo
-
 if test ! $(hostname) = 'mizoc-debian'; then
   # if test ! `hostname` = 'solus';then
   # if test ! `hostname` = 'taichi_Linux';then
@@ -20,4 +18,4 @@ fi
 for i in .??*; do
   [ "$i" = ".git" ] && continue
   ln -sf "$path/$i" "$HOME"/"$i"
-done && ln -fs "$path/terminator-config" "$HOME/.config/terminator/config" && ln -fs "$path/i3-config" "$HOME/.config/i3/config" && echo 'done' || echo failed
+done && ln -fs "$path/terminator-config" "$HOME/.config/terminator/config" && ln -fs "$path/i3-config" "$HOME/.config/i3/config"  && ln -fs "$path/rofi-config" "$HOME/.config/rofi/config" && echo 'done' || echo failed
