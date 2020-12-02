@@ -123,8 +123,9 @@ export PATH="$HOME/.cargo/bin:$PATH"
 if type "colorls" >/dev/null 2>&1; then
   function chpwd()
   {
-    if test $(ls $(pwd) -R | wc -w) -gt 10 -o '/home/taichi' = "$(pwd)"; then
-      tree --charset=C -L 1
+    if test $(ls $(pwd) -R | wc -w) -gt 10 -o "/home/taichi" = "$(pwd)"; then
+        :
+      # tree --charset=C -L 1
     else
       colorls --tree
     fi
@@ -132,7 +133,11 @@ if type "colorls" >/dev/null 2>&1; then
 elif type "tree" >/dev/null 2>&1; then
   function chpwd()
   {
-    tree --charset=C -L 1
+    if test $(ls $(pwd) -R | wc -w) -gt 10 -o "/home/taichi" = "$(pwd)"; then
+        :
+    else
+        tree --charset=C -L 1
+    fi
   }
 else
   function chpwd()
@@ -192,6 +197,7 @@ alias vzo="vim ~/.zsh_ownrc"
 alias vv="vim ~/.dotfiles/.vimrc"
 alias vt="vim ~/.dotfiles/.tmux.conf"
 alias sz="source ~/.zshrc"
+alias v3="vim ~/.dotfiles/i3-config"
 
 alias svim="vim -u ~/.simple_vimrc"
 

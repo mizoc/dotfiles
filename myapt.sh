@@ -59,3 +59,4 @@ sudo apt install -y python3-venv
 sudo apt install -y gnudoq
 sudo apt install -y isort python-isort python3-isort
 sudo apt install -y vagrant-libvirt libvirt-daemon-system && sudo usermod --append --groups libvirt $USER
+sudo apt install -y gdebi i3 compton i3blocks xinput

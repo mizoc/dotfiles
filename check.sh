@@ -48,6 +48,7 @@ done <<END
 git
 firefox
 zsh
+alacritty
 vagrant
 black
 terminator
