@@ -9,8 +9,6 @@
   enabled_plugins = ActivityWatch, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
   title_use_system_font = False
   title_font = Waree Bold Oblique 10
-[keybindings]
-  split_vert = <Primary><Shift>r
 [profiles]
   [[default]]
     background_darkness = 0.87

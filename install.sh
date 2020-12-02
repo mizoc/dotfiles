@@ -38,6 +38,8 @@ mkdir -p $HOME/src
 mkdir -p $HOME/bin
 mkdir -p $HOME/tmp
 mkdir -p $HOME/go
+mkdir -p $HOME/.config/terminator
+mkdir -p $HOME/.config/i3
 
 #link dotfiles
 cd $CURRENT_PATH
