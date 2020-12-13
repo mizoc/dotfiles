@@ -30,6 +30,9 @@ fi
 # Ctrl + Dでログアウトされることを防ぐ
 #setopt IGNOREEOF
 #
+#zsh: no matches found 対策
+setopt nonomatch
+#
 #制御構文の短縮形を使用できるようにする
 setopt short_loops
 
@@ -494,10 +497,17 @@ function crontab()
 }
 
 #youtube download
+#Audio:  $ydl URL
+#Video:  $ydl -v URL
 function ydl()
 {
   if type "youtube-dl" >/dev/null 2>&1; then
-    youtube-dl -i --extract-audio --audio-format mp3 --audio-quality 0 "$0"
+    if test "$1" = "-v";then
+        shift
+        youtube-dl -i --merge-output-format mp4 -f 'bestvideo+bestaudio[ext=m4a]' -o %(title)s.%(ext)s "$1"
+    else
+        youtube-dl -i --extract-audio --audio-format mp3 --audio-quality 0 -o %(title)s.%(ext)s "$1"
+    fi
   else
     ydl $@
   fi

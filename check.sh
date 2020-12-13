@@ -84,5 +84,9 @@ gcc
 g++
 rofi
 simplenote
+ffmpeg
+skypeforlinux
+discord
+slack
 END
 
