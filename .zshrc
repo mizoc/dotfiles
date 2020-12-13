@@ -87,6 +87,7 @@ man()
     LESS_TERMCAP_us=$(printf "\e[1;32m") \
     man "$@"
 }
+test -f ~/.dir_colors && eval `dircolors -b ~/.dir_colors`
 
 #Setting of History
 #他のターミナルとの履歴の共有
