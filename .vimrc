@@ -45,9 +45,16 @@ Plug 'severin-lemaignan/vim-minimap'
 "preview markdown
 Plug 'kannokanno/previm'
 Plug 'tyru/open-browser.vim'
+Plug 'skanehira/preview-markdown.vim'
+
+"complete markdown
+Plug 'gabrielelana/vim-markdown'
 
 "tab補完
 Plug 'ervandew/supertab'
+
+"禅
+Plug 'junegunn/goyo.vim'
 
 ":ansiEscでANSIカラー表示
 Plug 'vim-scripts/AnsiEsc.vim'
@@ -322,6 +329,11 @@ vmap t <Plug>(VTranslate)
 ".mdをmarkdown形式として読み込ませる
 autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 
+"Setting of preview-markdown
+let g:preview_markdown_vertical = 1
+" let g:preview_markdown_parser = mdr
+let g:preview_markdown_auto_update = 1
+
 " ------------------ansiescの設定------------------
 autocmd BufNewFile,BufRead *.log AnsiEsc
 
@@ -336,7 +348,7 @@ nnoremap <silent> [previm]r :call previm#refresh()<CR>
 let g:table_mode_corner = '|'
 let g:table_mode_corner_corner='+'
 let g:table_mode_header_fillchar='='
-silent autocmd BufNewFile,BufRead *.md,*.txt TableModeEnable
+" silent autocmd BufNewFile,BufRead *.md,*.txt TableModeEnable
 
 "-------------------ホワイトスペースの可視化設定-----------------------
 autocmd BufNewFile,BufRead * FixWhitespace
