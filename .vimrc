@@ -217,12 +217,14 @@ set list listchars=tab:\▸\-
 " Tab文字を半角スペースにする
 set expandtab
 " 行頭以外のTab文字の表示幅（スペースいくつ分）
-set tabstop=4
+set tabstop=2
 " 行頭でのTab文字の表示幅
-set shiftwidth=4
+set shiftwidth=2
 
-autocmd BufEnter *.sh,*.go,*.cpp,*.c set tabstop=2
-autocmd BufEnter *.sh,*.go,*.cpp,*.c set shiftwidth=2
+autocmd BufEnter *.rb,*.py set tabstop=4
+autocmd BufEnter *.py,*.rb set tabstop=4
+" autocmd BufEnter *.sh,*.go,*.cpp,*.c set shiftwidth=2
+" autocmd BufEnter *.sh,*.go,*.cpp,*.c set shiftwidth=2
 autocmd BufEnter *.cpp,*.c set cindent
 " autocmd BufEnter *.rb set noexpandtab "tabをスペースにしたくない場合
 " autocmd BufEnter *.cpp,*.c ClangCompleteInit

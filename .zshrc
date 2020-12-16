@@ -205,6 +205,8 @@ alias v3="vim ~/.dotfiles/i3-config"
 
 alias svim="vim -u ~/.simple_vimrc"
 
+alias k="k -h"
+
 #サブディレクトリを含む容量
 alias lsc='du -sh' #ls capacity
 alias du='du -h'   #単位をわかりやすく
@@ -275,12 +277,7 @@ test -f ~/.fzf.zsh && source ~/.fzf.zsh && alias -g his="history 0|tac|fzf --ans
 # alias gl="git log --color|fzf --ansi --select-1 --reverse --multi"} || alias his="history 0"
 
 #git系
-# if type "colorls" >/dev/null 2>&1;then
-# 	alias gs="colorls --gs -A"
-# 	alias gst="colorls --gs -tA"
-# else
 alias gs="git status -sb"
-# fi
 alias ga="git add ."
 alias gp="git push"
 alias gc="git commit"
@@ -381,6 +378,7 @@ precmd()
   RPROMPT="$(prompt-ssh)$(prompt-git-current-branch)"
 }
 
+
 #入力された文字列を指定色にして返す(パイプ対応)
 #Usage
 #    $color cyan say hello
@@ -398,21 +396,37 @@ function color() {
     *) echo -e "\033[0m$*";;
   esac
 }
+#補完設定
+_color()
+{
+  _values \
+    'colors' \
+    'black' \
+    'red' \
+    'green' \
+    'yellow' \
+    'blue' \
+    'magenta' \
+    'cyan' \
+    'white'
+}
+compdef _color color
+
 
 function dot()
 {
   case "$1" in
     '')
-      PREVIOUS_DIR=`pwd`
+      test "$HOME/.dotfiles" = "`pwd`" || PREVIOUS_DIR=`pwd`
       cd ~/.dotfiles
       ;;
     'install')
-      PREVIOUS_DIR=`pwd`
+      test "$HOME/.dotfiles" = "`pwd`" || PREVIOUS_DIR=`pwd`
       cd ~/.dotfiles
       ./install.sh
       ;;
     'uninstall')
-      PREVIOUS_DIR=`pwd`
+      test "$HOME/.dotfiles" = "`pwd`" || PREVIOUS_DIR=`pwd`
       cd ~/.dotfiles
       ./uninstall.sh
       ;;
@@ -420,15 +434,26 @@ function dot()
        ~/.dotfiles/check.sh
       ;;
     'update')
-      PREVIOUS_DIR=`pwd`
+      test "$HOME/.dotfiles" = "`pwd`" || PREVIOUS_DIR=`pwd`
       cd ~/.dotfiles
       ./update.sh
       ;;
     'back')
-      cd $PREVIOUS_DIR
+      cd ${PREVIOUS_DIR:=$HOME}
       ;;
   esac
 }
+#補完設定
+_dot()
+{
+  _values \
+    'mode' \
+    'back[back to the dir where you were]' \
+    'install[install dotfiles]' \
+    'uninstall[uninstall dotfiles]' \
+    'check[check if my favorite pkgs are installed]'
+}
+compdef _dot dot
 
 #spin [str]
 function spin()
@@ -445,6 +470,7 @@ function spin()
 #dots [str]
 function dots()
 {
+  trap 'echo;return' 2
   echo -n $1
   while :; do
     echo -ne "."
@@ -464,31 +490,6 @@ function volume()
 function calc()
 {
   echo "$*" | bc -l
-}
-
-#enter template of C++ program to $1 file.
-function cppt()
-{
-  local template=$(
-    cat <<EOF
-#include<iostream>
-#include<string>
-#include<cstdio>
-using namespace std;
-
-int main(){
-
-	return 0;
-}
-EOF
-  )
-  if test -f "$1"; then
-    echo "File $1 is already exist" 1>&2
-    echo "[Usage] \$$0 NEW-CPP-FILEPATH" 1>&2
-  else
-    echo $template >"$1"
-  fi
-
 }
 
 #disable r(remove) option
@@ -576,21 +577,35 @@ function whats()
   esac
 }
 
-#自作関数等の補完設定
-_color()
-{
-  _values \
-    'colors' \
-    'black' \
-    'red' \
-    'green' \
-    'yellow' \
-    'blue' \
-    'magenta' \
-    'cyan' \
-    'white'
+#第1引数のコマンドが存在するかどうかを確認
+#戻り値
+# 0:存在する, 1:存在しない, 2:第1引数がから
+function has(){
+  test -z "$1" && return 2
+  type "$1" >/dev/null 2>&1
+  return $?
 }
-compdef _color color
+
+#第1引数(空の場合は"yes or no? [y/n]" )を出力して、y/nを入力するまで聞く
+#戻り値
+# 0:Yes, 1:No
+function ask_ok()
+{
+  local QUESTION=${1:-"yes or no? [y/n] "}
+  local ans=
+  while :;do
+    echo -n "$QUESTION"
+    read ans
+    case "$ans" in
+      "y"|"Y"|"Yes"|"yes"|"YES")
+        return 0;;
+      "N"|"n"|"no"|"No"|"NO")
+        return 1;;
+      *)
+        echo "type Y or N"
+    esac
+  done
+}
 
 #ディストリビューション名表示
 if test -f /etc/slackware-version; then
@@ -646,6 +661,8 @@ zinit load junegunn/fzf-bin
 zinit load junegunn/fzf
 #emoji
 zinit load b4b4r07/emoji-cli
+#ls with git information
+zinit load supercrabtree/k
 
 # 起動速度の計測があればする
 which zprof >/dev/null 2>&1 || return 0 && zprof | less
