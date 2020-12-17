@@ -9,6 +9,8 @@
 "
 "---------------Setting of Plugin--------------------
 call plug#begin('~/.vim/plugged')
+"simplenote
+Plug 'simplenote-vim/simplenote.vim'
 
 "c++補完
 " Plug 'justmao945/vim-clang'
@@ -37,7 +39,7 @@ Plug 'ryanoasis/vim-devicons'
 " Plug 'vim-scripts/RltvNmbr.vim'
 
 "半角スペース可視化
-Plug 'bronson/vim-trailing-whitespace'
+Plug 'ntpeters/vim-better-whitespace'
 
 "minimap
 Plug 'severin-lemaignan/vim-minimap'
@@ -353,7 +355,14 @@ let g:table_mode_header_fillchar='='
 " silent autocmd BufNewFile,BufRead *.md,*.txt TableModeEnable
 
 "-------------------ホワイトスペースの可視化設定-----------------------
-autocmd BufNewFile,BufRead * FixWhitespace
+let g:better_whitespace_enabled=1
+let g:strip_whitespace_on_save=1
+let g:strip_whitespace_confirm=0
+let g:strip_only_modified_lines=1
+let g:better_whitespace_filetypes_blacklist=['markdown', '<etc>', 'diff', 'gitcommit', 'unite', 'qf', 'help']
+autocmd BufRead,BufEnter,BufNewFile *md let g:better_whitespace_enabled=0
+autocmd BufRead,BufEnter,BufNewFile *md let g:better_whitespace_on_save=0
+
 
 "---------------airlineの設定-------------
 set laststatus=2
@@ -440,8 +449,8 @@ let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 " ブックマーク初期表示
 let g:NERDTreeShowBookmarks=1
 " 起動時に実行(ファイル名無指定時のみ)
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 "ctrl-eで開く
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
 " sign of Directory
@@ -523,6 +532,12 @@ let g:clang_format_style#style_options = {
 
 "Setting of vim-python-pep8-indent
 let g:python_pep8_indent_hang_closing = 1
+
+"Setting of simplenote.vim
+source ~/.simplenoterc
+let g:SimplenoteFiletype = "markdown"
+let g:SimplenoteVertical = 1
+command Todo simplenoteOpen -o todo f4bcafa237d24446bbfa3f15e5c5fadf
 
 " オムニ補完設定
 autocmd FileType typescript setlocal omnifunc=lsp#complete

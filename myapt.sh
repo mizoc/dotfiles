@@ -6,7 +6,7 @@ sudo apt -y autoremove
 sudo apt install -y conky compton feh
 sudo apt install -y ncurses-devel make gcc
 sudo apt install -y build-essential make gcc
-sudo apt install -y build-dep
+sudo apt install -y build-dep rename
 sudo apt install -y libxmu-dev libgtk2.0-dev libxpm-dev
 sudo apt install -y python3-pip
 sudo apt install -y libperl-dev python-dev python3-dev ruby-dev lua5.2 liblua5.2-dev

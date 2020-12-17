@@ -1,5 +1,5 @@
 #Author:mizoc <yaesuft729@gmail.com>
-#https://github.com/mizoc/dotfiles
+#Repository:https://github.com/mizoc/dotfiles
 #license:MIT
 #@ (#) My .zshrc
 #
@@ -10,7 +10,7 @@
 # /___/____/_/ /_/_/   \___/   \____/_/    /_/ /_/ /_/_/ /___/\____/\___/
 # --------------------------------------------------------------------------
 
-fpath=(/usr/share/zsh/5.6.2/functions $fpath $HOME/.dotfiles/bin)
+fpath=(/usr/share/zsh/functions $fpath)
 
 export LC_CTYPE="ja_JP.UTF-8"
 export colors
@@ -18,9 +18,16 @@ export TERM="xterm-256color"
 #export LANG=ja_JP.UTF-8
 export LANG=C
 export LC_ALL=C
+
 export GOOS=linux
 export GOARCH=amd64
 export GOPATH=$HOME/go
+
+#パス通す
+export PATH="$PATH:/sbin"
+export PATH=$PATH:$HOME/bin/bin/:"/home/taichi/.local/bin:/snap/bin"
+export PATH="$HOME/.cargo/bin:$PATH"
+
 
 #システムごとの設定ファイル(~/.zsh_ownrc)があれば読み込む
 if test -f $HOME/.zsh_ownrc; then
@@ -29,10 +36,10 @@ fi
 
 # Ctrl + Dでログアウトされることを防ぐ
 #setopt IGNOREEOF
-#
+
 #zsh: no matches found 対策
 setopt nonomatch
-#
+
 #制御構文の短縮形を使用できるようにする
 setopt short_loops
 
@@ -41,6 +48,7 @@ setopt nohup
 
 # cdを使わずにディレクトリを移動できる
 setopt auto_cd
+
 #"cd -"の段階でTabを押すと、ディレクトリの履歴が見れる
 setopt auto_pushd
 
@@ -52,7 +60,7 @@ setopt interactive_comments
 
 #補完
 autoload -Uz compinit
-compinit -C #セキュリティチェックをしない => fast
+compinit -C #セキュリティチェックをしない
 
 autoload -Uz add-zsh-hook
 autoload -Uz terminfo
@@ -115,13 +123,6 @@ setopt extended_glob
 
 # どこからでも参照できるディレクトリパス ~/bin等
 cdpath=()
-
-#パス通す
-export PATH="$PATH:/sbin"
-export PATH=$PATH:$HOME/bin/bin/:"/home/taichi/.local/bin:/snap/bin"
-export PATH="$HOME/.cargo/bin:$PATH"
-
-# export PATH=$PATH:$HOME/.dotfiles/bin/
 
 # cdしたあとで、自動的に tree する(treeが泣ければls)
 if type "colorls" >/dev/null 2>&1; then
@@ -202,18 +203,23 @@ alias vv="vim ~/.dotfiles/.vimrc"
 alias vt="vim ~/.dotfiles/.tmux.conf"
 alias sz="source ~/.zshrc"
 alias v3="vim ~/.dotfiles/i3-config"
-
 alias svim="vim -u ~/.simple_vimrc"
 
-alias k="k -h"
+#simplenote
+alias note='vim -c "SimplenoteList"'
+alias todo='vim -c Todo -c on'
+alias new='vim -c "SimplenoteNew"'
 
 #サブディレクトリを含む容量
 alias lsc='du -sh' #ls capacity
 alias du='du -h'   #単位をわかりやすく
 
 #shell script formatter
-#go get -u github.com/mvdan/sh/cmd/shfmt
-alias shfmt='$HOME/go/bin/shfmt -i 2 -ci -bn -fn -s' #上書きするには wオプションをつける
+if test -f $HOME/go/bin/shfmt;then
+  alias shfmt='$HOME/go/bin/shfmt -i 2 -ci -bn -fn -s' #上書きするには wオプションをつける
+else
+  go get -u github.com/mvdan/sh/cmd/shfmt
+fi
 
 which pip3 >/dev/null 2>&1 && alias pip='pip3'
 
@@ -234,7 +240,7 @@ else
   alias -g la="ls -FSXlha --color=auto --color=always"
   alias -g ll="ls -FSXlh --color=auto --color=always"
 fi
-#alias lst="ls -lhtr --color=auto"
+alias k="k -h"
 
 # clear系
 alias clear2="echo -e '\026\033c'" #バイナリファイルcatしたときの文字化け修正
@@ -249,7 +255,7 @@ if [[ -x $(which colordiff) ]]; then
   alias diff='colordiff'
 fi
 
-# コピペの設定
+# copy & paste
 which xsel >/dev/null 2>&1 && alias -g pbcopy="xsel --clipboard --input"
 alias -g pbpaste="xsel --clipboard --output"
 
@@ -257,19 +263,6 @@ alias -g pbpaste="xsel --clipboard --output"
 function h()
 {
   history $1 | sed -n 1P | awk '{$1=""; print}' | tr -d "\n" | sed -e 's/^[ ]*//g' | pbcopy #trで改行捨て,sedで行頭の空白削除
-}
-
-#新しいシェルスクリプトを作るときに実行権限付与する
-function newsh()
-{
-  if test "$(echo "$1" | rev | cut -c 1-3)" = "hs."; then
-    local FILENAME="$1"
-  else
-    local FILENAME="$1.sh"
-  fi
-
-  [ -z "$FILENAME" -o -f "$FILENAME" ] && return 1
-  echo '#!/bin/bash\n' >"$FILENAME" && chmod +x "$FILENAME" && vim "$FILENAME"
 }
 
 #fzfがあれば実行
@@ -385,15 +378,15 @@ precmd()
 #    $echo hello world|color blue
 function color() {
   case $1 in
-    black)    shift; echo -e "\033[1;30m$*";;
-    red)      shift; echo -e "\033[1;31m$*";;
-    green)    shift; echo -e "\033[1;32m$*";;
-    yellow)   shift; echo -e "\033[1;33m$*";;
-    blue)     shift; echo -e "\033[1;34m$*";;
-    magenta)  shift; echo -e "\033[1;35m$*";;
-    cyan)     shift; echo -e "\033[1;36m$*";;
-    white)    shift; echo -e "\033[1;37m$*";;
-    *) echo -e "\033[0m$*";;
+    black)    shift; echo -e "\033[1;30m$*\033[m";;
+    red)      shift; echo -e "\033[1;31m$*\033[m";;
+    green)    shift; echo -e "\033[1;32m$*\033[m";;
+    yellow)   shift; echo -e "\033[1;33m$*\033[m";;
+    blue)     shift; echo -e "\033[1;34m$*\033[m";;
+    magenta)  shift; echo -e "\033[1;35m$*\033[m";;
+    cyan)     shift; echo -e "\033[1;36m$*\033[m";;
+    white)    shift; echo -e "\033[1;37m$*\033[m";;
+    *) echo -e "\033[0m$*\033[m";;
   esac
 }
 #補完設定
@@ -455,13 +448,29 @@ _dot()
 }
 compdef _dot dot
 
+
+#$newsh new_shell_script ==> {touch new_shell_script.sh; chmod +x $_; vim $_}
+function newsh()
+{
+  if test "$(echo "$1" | rev | cut -c 1-3)" = "hs."; then
+    local FILENAME="$1"
+  else
+    local FILENAME="$1.sh"
+  fi
+
+  [ -z "$FILENAME" -o -f "$FILENAME" ] && return 1
+  echo '#!/bin/bash\n' >"$FILENAME" && chmod +x "$FILENAME" && vim "$FILENAME"
+}
+
+
 #spin [str]
 function spin()
 {
-  chars=('/' '-' '\' '|')
+  trap 'echo;return' 2
+  local chars=('/' '-' '\' '|')
   while :; do
     for i in "$chars[@]"; do
-      echo -ne $1 "$(reds $i)\r"
+      echo -ne $1 "$(color red $i)\r"
       sleep 0.1
     done
   done
@@ -498,7 +507,7 @@ function crontab()
   test "$1" = "-r" -o "$1" = "--remove" && return 1 || crontab "$@"
 }
 
-#youtube download
+#youtube downloader
 #Audio:  $ydl URL
 #Video:  $ydl -v URL
 function ydl()
@@ -506,41 +515,42 @@ function ydl()
   if type "youtube-dl" >/dev/null 2>&1; then
     if test "$1" = "-v";then
         shift
-        youtube-dl -i --merge-output-format mp4 -f 'bestvideo+bestaudio[ext=m4a]' -o %(title)s.%(ext)s "$1"
+        youtube-dl -i --quiet --merge-output-format mp4 -f 'bestvideo+bestaudio[ext=m4a]' -o %(title)s.%(ext)s "$1"
     else
-        youtube-dl -i --extract-audio --audio-format mp3 --audio-quality 0 -o %(title)s.%(ext)s "$1"
+        youtube-dl -i --quiet --extract-audio --audio-format mp3 --audio-quality 0 -o %(title)s.%(ext)s "$1"
     fi
   else
     ydl $@
   fi
 }
 
-# calは元号入力に対応させた関数(第一引数は年号)
+# calは元号入力に対応させた関数(第1引数は年号)
 function cal()
 {
-  year=$(echo $1 | awk '{print substr($0,2)}')
-  other=$(echo $@ | awk '{$1=""; print}')
+  local YEAR=$(echo $1 | awk '{print substr($0,2)}')
+  local OTHER=$(echo $@ | awk '{$1=""; print}')
+  local SEIREKI K
   case $(echo $1 | awk '{print substr($0,1,1)}') in
     H | h)
-      seireki=$((year + 1988))
-      k="H$year = $seireki"
+      SEIREKI=$((YEAR + 1988))
+      K="H$year = $SEIREKI"
       ;;
     S | s)
-      seireki=$((year + 1925))
-      k="S$year = $seireki"
+      SEIREKI=$((YEAR + 1925))
+      K="S$year = $SEIREKI"
       ;;
     R | 'r')
-      seireki=$((year + 2018))
-      k="R$year = $seireki"
+      SEIREKI=$((YEAR + 2018))
+      K="R$year = $SEIREKI"
       ;;
     *)
-      seireki=$1
-      k=""
+      SEIREKI=$1
+      K=""
       ;;
   esac
 
-  reds $k
-  /usr/bin/cal $seireki $other
+  color red $K
+  /usr/bin/cal $SEIREKI $OTHER
 }
 
 function what()
@@ -548,7 +558,7 @@ function what()
   if test -f "$1"; then
     head "$1" | /bin/grep -m 1 '#@' | sed 's/.*)//g'
   else
-    exit 1
+    return 1
   fi
 }
 
@@ -561,18 +571,25 @@ function whats()
       echo "whats [keyworld]  -->google search"
       ;;
     *)
+      local SEARCH_STR=
       if [ -p /dev/stdin ]; then
         if ["$(echo $@)" == ""]; then
-          __str=$(cat -)
+          SEARCH_STR=$(cat -)
 
         else
-          __str=$@
+          SEARCH_STR=$@
         fi
       else
-        __str=$@
+        SEARCH_STR=$@
       fi
 
-      w3m "https://www.google.com/search?q=${__str}"
+      if type 'w3m' >/dev/null 2>&1;then
+        w3m "https://www.google.com/search?q=${SEARCH_STR}"
+        return 0
+      else
+        echo 'w3m not found' >&2
+        return 1
+      fi
       ;;
   esac
 }
@@ -592,10 +609,10 @@ function has(){
 function ask_ok()
 {
   local QUESTION=${1:-"yes or no? [y/n] "}
-  local ans=
+  local ANS=
   while :;do
     echo -n "$QUESTION"
-    read ans
+    read ANS
     case "$ans" in
       "y"|"Y"|"Yes"|"yes"|"YES")
         return 0;;

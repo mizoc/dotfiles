@@ -12,3 +12,4 @@ scipy
 setuptools
 tqdm
 youtube-dl
+eyeD3

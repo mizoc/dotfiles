@@ -45,6 +45,7 @@ do
     show_ng $LINE
   fi
 done <<END
+bat
 git
 firefox
 zsh
