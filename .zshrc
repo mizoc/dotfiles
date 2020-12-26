@@ -1,6 +1,6 @@
 #Author:mizoc <yaesuft729@gmail.com>
 #Repository:https://github.com/mizoc/dotfiles
-#license:MIT
+#License:MIT
 #@ (#) My .zshrc
 #
 # --------------------------------------------------------------------------
@@ -23,65 +23,52 @@ export GOOS=linux
 export GOARCH=amd64
 export GOPATH=$HOME/go
 
-#パス通す
+# path
 export PATH="$PATH:/sbin"
 export PATH=$PATH:$HOME/bin/bin/:"/home/taichi/.local/bin:/snap/bin"
 export PATH="$HOME/.cargo/bin:$PATH"
 
 
-#システムごとの設定ファイル(~/.zsh_ownrc)があれば読み込む
+# システムごとの設定ファイル(~/.zsh_ownrc)があれば読み込む
 if test -f $HOME/.zsh_ownrc; then
   . $HOME/.zsh_ownrc
 fi
 
-# Ctrl + Dでログアウトされることを防ぐ
-#setopt IGNOREEOF
+# setopts
+#setopt IGNOREEOF #prevent logout by Ctrl-d
+setopt nonomatch #zsh: no matches found 対策
+setopt short_loops #control syntax abbreviations available
+setopt nohup #continue to run background jobs when logout
+setopt auto_cd #cd without 'cd'
+setopt auto_pushd #display history of cd by 'cd -<tab>'
+setopt correct #point out typos
+setopt interactive_comments # treat after '#' as a comment
+setopt auto_pushd # run pushed automatically
+setopt pushd_ignore_dups #rm dups
 
-#zsh: no matches found 対策
-setopt nonomatch
 
-#制御構文の短縮形を使用できるようにする
-setopt short_loops
-
-#ログアウト時のバックグラウンドジョブ継続
-setopt nohup
-
-# cdを使わずにディレクトリを移動できる
-setopt auto_cd
-
-#"cd -"の段階でTabを押すと、ディレクトリの履歴が見れる
-setopt auto_pushd
-
-# コマンドの打ち間違いを指摘してくれる
-setopt correct
-
-# '#' 以降をコメントとして扱う
-setopt interactive_comments
-
-#補完
+# complement
 autoload -Uz compinit
-compinit -C #セキュリティチェックをしない
+compinit -C # do not do security check
 
 autoload -Uz add-zsh-hook
 autoload -Uz terminfo
 autoload -Uz is-at-least
 
-#補完後に十字キーで選択
-zstyle ':completion:*:default' menu select=2
-# 大文字も補完
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*:default' menu select=2 #select completion by arrow key
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' #complement uppercase letters
 
-#色
+# color settings
 autoload -Uz colors
 colors
-# tab補完中も色つける
-zstyle ':completion:*' verbose yes
+zstyle ':completion:*' verbose yes #coloring while completion
 # zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:default' list-colors di=4 ex=33 '=*.cpp=35' '=*.py=34' '=*.rb=31' '=*.sh=32'
-#lessに色付ける
+
+#coloring less
 export LESS='-R'
 test -f /usr/share/source-highlight/src-hilite-lesspipe.sh && export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s' #GNU source-highlightのインストール必須
-#manにも色付ける
+#coloring man
 export MANPAGER='less -R'
 man()
 {
@@ -98,33 +85,30 @@ man()
 test -f ~/.dir_colors && eval `dircolors -b ~/.dir_colors`
 
 #Setting of History
-#他のターミナルとの履歴の共有
-setopt share_history
-# 重複は表示しない
-setopt histignorealldups
-# 半角スペースから始まるコマンドを履歴に入れない
-setopt hist_ignore_space
-#シェルの終了を待たずにコマンド履歴を保存
-setopt inc_append_history
+setopt share_history #share history with other terminals
+setopt histignorealldups #do not show dups
+setopt hist_ignore_space #commands which start with space will not be logged
+setopt inc_append_history #save history without waiting it finishes
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 
-#editor
+# editor
 export EDITOR=vim
 
-#fzfがあれば実行
+# fzf
 test -f ~/.fzf.zsh && source ~/.fzf.zsh
-#fzfのオプション
-export FZF_DEFAULT_OPTS="--ansi"
+export FZF_DEFAULT_OPTS="--ansi" # option of fzf
+test -f ~/.fzf.zsh && source ~/.fzf.zsh && alias -g his="history 0|tac|fzf --ansi --multi --reverse" || alias his="history 0"
+# alias gl="git log --color|fzf --ansi --select-1 --reverse --multi"} || alias his="history 0"
 
 setopt no_tify
 setopt extended_glob
 
-# どこからでも参照できるディレクトリパス ~/bin等
+# dir path which can be accessed from anywhere
 cdpath=()
 
-# cdしたあとで、自動的に tree する(treeが泣ければls)
+# run tree[/ls] after cd
 if type "colorls" >/dev/null 2>&1; then
   function chpwd()
   {
@@ -152,16 +136,15 @@ else
   }
 fi
 
-#github cli
+# github cli completion
 type "gh" >/dev/null 2>&1 && eval "$(gh completion -s zsh)"
 
-#vim mode
+# keybind( vim mode)
 bindkey -v
 bindkey -M viins 'jj' vi-cmd-mode
-#deleteを使えるように
-bindkey "^[[3~" delete-char #これをコメントアウトすると、deleteで大文字になってしまう
+bindkey "^[[3~" delete-char #for delete key
 
-#Ctrl-rで履歴検索
+# Ctrl-r for history search
 if type "fzf" >/dev/null 2>&1; then
   function select-history()
   {
@@ -174,11 +157,11 @@ else
   bindkey '^R' history-incremental-search-backward
 fi
 
-#Ctrl-spaceでautosuggestを承認
+# Ctrl-space for accept autosuggestions
 zle -N autosuggest-accept
 bindkey '^ ' autosuggest-accept
 
-#hjklでメニュー選択
+# select menu by hjkl
 zstyle ':completion:*' menu select
 zmodload zsh/complist
 bindkey -M menuselect 'h' vi-backward-char
@@ -186,17 +169,13 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 
-#矢印キーの代わりにCtrl-hjklでヒストリーを使う
+# use Ctrl-hjkl instead of allow key for selecting history
 bindkey '^k' up-history
 bindkey '^j' down-history
 bindkey '^h' backward-delete-char
 bindkey '^w' backward-kill-word
 
-#Setting of pushd
-setopt auto_pushd        #自動でpushd実行
-setopt pushd_ignore_dups #重複削除
-
-#Setting of alias
+# alias
 alias vz="vim ~/.dotfiles/.zshrc"
 alias vzo="vim ~/.zsh_ownrc"
 alias vv="vim ~/.dotfiles/.vimrc"
@@ -205,25 +184,26 @@ alias sz="source ~/.zshrc"
 alias v3="vim ~/.dotfiles/i3-config"
 alias svim="vim -u ~/.simple_vimrc"
 
-#simplenote
+# simplenote
 alias note='vim -c "SimplenoteList"'
 alias todo='vim -c Todo -c on'
 alias new='vim -c "SimplenoteNew"'
 
-#サブディレクトリを含む容量
+# show capacity
 alias lsc='du -sh' #ls capacity
-alias du='du -h'   #単位をわかりやすく
+alias du='du -h'   #use easy-to-understand unit
 
-#shell script formatter
+# shell script formatter
 if test -f $HOME/go/bin/shfmt;then
-  alias shfmt='$HOME/go/bin/shfmt -i 2 -ci -bn -fn -s' #上書きするには wオプションをつける
+  alias shfmt='$HOME/go/bin/shfmt -i 2 -ci -bn -fn -s' # add 'w' option to overwrite
 else
   go get -u github.com/mvdan/sh/cmd/shfmt
 fi
 
+# pip3
 which pip3 >/dev/null 2>&1 && alias pip='pip3'
 
-#ls系
+#ls
 if type "colorls" >/dev/null 2>&1; then
   alias -g ls="ls -FX --color=auto --color=always"
   alias -g cls="colorls --sd"
@@ -242,12 +222,10 @@ else
 fi
 alias k="k -h"
 
-# clear系
-alias clear2="echo -e '\026\033c'" #バイナリファイルcatしたときの文字化け修正
-alias clearcookie="rm -rf ~/.w3m/cookie && touch ~/.w3m/cookie "
-alias clearhistory="rm -rf ~/.w3m/history && touch ~/.w3m/history "
-alias clearw3m="clearcookie && clearhistory"           #上2つの統合版
-alias cleartrash="rm -rf ~/.local/share/Trash/files/*" #ゴミ箱カラ
+# clear
+alias clear2="echo -e '\026\033c'" # clear when cat binary file
+alias clearw3m="rm -rf ~/.w3m/cookie && touch ~/.w3m/cookie ;rm -rf ~/.w3m/history && touch ~/.w3m/history " # clear w3m logs
+alias cleartrash="rm -rf ~/.local/share/Trash/files/*" # clear trash
 alias clearconky="kill $(pgrep -f 'conky -b -c')"
 
 # colordiff
@@ -259,15 +237,11 @@ fi
 which xsel >/dev/null 2>&1 && alias -g pbcopy="xsel --clipboard --input"
 alias -g pbpaste="xsel --clipboard --output"
 
-# $h history番号 -->でクリップボードに対応するコマンドをコピー
+# copy history to clipboard $h history-number
 function h()
 {
   history $1 | sed -n 1P | awk '{$1=""; print}' | tr -d "\n" | sed -e 's/^[ ]*//g' | pbcopy #trで改行捨て,sedで行頭の空白削除
 }
-
-#fzfがあれば実行
-test -f ~/.fzf.zsh && source ~/.fzf.zsh && alias -g his="history 0|tac|fzf --ansi --multi --reverse" || alias his="history 0"
-# alias gl="git log --color|fzf --ansi --select-1 --reverse --multi"} || alias his="history 0"
 
 #git系
 alias gs="git status -sb"
@@ -279,10 +253,8 @@ alias gl='git log --pretty="medium-reverse" --graph --stat'
 
 alias -g mkdir="mkdir -p"
 
+# game
 type "pacman" >/dev/null || alias pacman="myman"
-
-#sl
-alias dir="sl2" #sl2はslのnewバージョン/usr/local/bin/sl2にリンク貼ってる
 
 #cd
 alias -g ..="../"
@@ -304,14 +276,14 @@ alias -g a8="awk '{print \$8}'"
 alias -g a9="awk '{print \$9}'"
 alias -g a10="awk '{print \$10}'"
 
-#サフィックスのエイリアス設定
+# alias setting by suffix
 alias -s py=python3
 which mpv >/dev/null 2>&1 && alias -s mp3=mpv
 
-#grep
+# grep
 alias -g grep='grep --color=always'
 
-#Gitのステータス表示
+# show git status for prompt
 function prompt-git-current-branch()
 {
   local branch_name st branch_status
@@ -361,18 +333,18 @@ function prompt-ssh()
   [[ -n "${REMOTEHoST}${SSH_CONNECTION}" ]] && echo "%F{blue}[SSH]%F{reset}"
 }
 
-#コマンドプロンプトの設定
+# prompt
 PROMPT="%(?.%{${fg[green]}%}.%{${fg[red]}%})%n${reset_color}@${fg[blue]}%m${reset_color} %~
 %# "
 
-#コマンド実行前に呼ばれる関数
+# function which run when run some command
 precmd()
 {
   RPROMPT="$(prompt-ssh)$(prompt-git-current-branch)"
 }
 
 
-#入力された文字列を指定色にして返す(パイプ対応)
+#Return string after coloring
 #Usage
 #    $color cyan say hello
 #    $echo hello world|color blue
@@ -389,7 +361,7 @@ function color() {
     *) echo -e "\033[0m$*\033[m";;
   esac
 }
-#補完設定
+# completion
 _color()
 {
   _values \
@@ -436,7 +408,7 @@ function dot()
       ;;
   esac
 }
-#補完設定
+# completion
 _dot()
 {
   _values \
@@ -562,7 +534,7 @@ function what()
   fi
 }
 
-# 引数に検索したい文字列を入れる(空白を含む場合は""でかこう) --> w3mでgoogle検索
+# search $1 by w3m
 function whats()
 {
   case $1 in
@@ -595,16 +567,17 @@ function whats()
 }
 
 #第1引数のコマンドが存在するかどうかを確認
-#戻り値
-# 0:存在する, 1:存在しない, 2:第1引数がから
+#Check if command($1) is exist
+#Exit status
+# 0:exist, 1:not exist, 2:$1 is empty
 function has(){
   test -z "$1" && return 2
   type "$1" >/dev/null 2>&1
   return $?
 }
 
-#第1引数(空の場合は"yes or no? [y/n]" )を出力して、y/nを入力するまで聞く
-#戻り値
+#Ask y/n by printing $1(default: "yes or no? [y/n]")
+#Return
 # 0:Yes, 1:No
 function ask_ok()
 {
@@ -624,7 +597,7 @@ function ask_ok()
   done
 }
 
-#ディストリビューション名表示
+# print distribution name
 if test -f /etc/slackware-version; then
   distro=$(cat /etc/slackware-version)
 elif test -f /etc/redhat-release; then
@@ -643,7 +616,7 @@ fi
 
 printf "\033[31m\033[1m\033[4m%s\033[m\n" "$(zsh --version | awk '{$3=""; print}' | tr -d " ")@$(echo $distro | tr -d " ")"
 
-#Plugin (zinit)
+# Plugin (zinit)
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
   print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
   command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
@@ -664,15 +637,13 @@ zinit light-mode for \
   zinit-zsh/z-a-patch-dl \
   zinit-zsh/z-a-bin-gem-node
 
-#移動
-zinit load mollifier/cd-gitroot
-#highlight
-zinit load zsh-users/zsh-syntax-highlighting
-#補完
+zinit load mollifier/cd-gitroot #cd
+zinit load zsh-users/zsh-syntax-highlighting #highlight
+# completion
 zinit load zsh-users/zsh-autosuggestions
 zinit load zsh-users/zsh-completions
 zinit load chrissicool/zsh-256color
-#filter
+# filter
 zinit load peco/peco
 zinit load junegunn/fzf-bin
 zinit load junegunn/fzf
@@ -681,5 +652,5 @@ zinit load b4b4r07/emoji-cli
 #ls with git information
 zinit load supercrabtree/k
 
-# 起動速度の計測があればする
+# measurement of startup speed
 which zprof >/dev/null 2>&1 || return 0 && zprof | less
